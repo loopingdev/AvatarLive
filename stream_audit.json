@@ -190,5 +190,3154 @@
     "data": {
       "time": "2026-11-06T04:23:47.246Z"
     }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T04:35:26.710Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T04:35:26.710Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:46:26.644Z",
+    "uptime_seconds": 659,
+    "uptime": "00h 10m 59s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:46:26.644Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:46:30.702Z",
+    "uptime_seconds": 663,
+    "uptime": "00h 11m 03s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:46:30.702Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:46:34.759Z",
+    "uptime_seconds": 668,
+    "uptime": "00h 11m 08s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:46:34.759Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:46:38.822Z",
+    "uptime_seconds": 672,
+    "uptime": "00h 11m 12s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:46:38.822Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:46:42.892Z",
+    "uptime_seconds": 676,
+    "uptime": "00h 11m 16s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:46:42.892Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:46:46.960Z",
+    "uptime_seconds": 680,
+    "uptime": "00h 11m 20s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:46:46.960Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:46:51.023Z",
+    "uptime_seconds": 684,
+    "uptime": "00h 11m 24s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:46:51.022Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:46:55.081Z",
+    "uptime_seconds": 688,
+    "uptime": "00h 11m 28s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:46:55.081Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:46:59.136Z",
+    "uptime_seconds": 692,
+    "uptime": "00h 11m 32s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:46:59.136Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:03.202Z",
+    "uptime_seconds": 696,
+    "uptime": "00h 11m 36s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:03.202Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:07.262Z",
+    "uptime_seconds": 700,
+    "uptime": "00h 11m 40s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:07.262Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:11.334Z",
+    "uptime_seconds": 704,
+    "uptime": "00h 11m 44s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:11.334Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:15.391Z",
+    "uptime_seconds": 708,
+    "uptime": "00h 11m 48s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:15.391Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:19.455Z",
+    "uptime_seconds": 712,
+    "uptime": "00h 11m 52s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:19.455Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:23.517Z",
+    "uptime_seconds": 716,
+    "uptime": "00h 11m 56s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:23.517Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:27.573Z",
+    "uptime_seconds": 720,
+    "uptime": "00h 12m 00s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:27.573Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:31.640Z",
+    "uptime_seconds": 724,
+    "uptime": "00h 12m 04s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:31.640Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:35.701Z",
+    "uptime_seconds": 728,
+    "uptime": "00h 12m 08s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:35.701Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:39.756Z",
+    "uptime_seconds": 733,
+    "uptime": "00h 12m 13s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:39.756Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:43.812Z",
+    "uptime_seconds": 737,
+    "uptime": "00h 12m 17s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:43.812Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:47.884Z",
+    "uptime_seconds": 741,
+    "uptime": "00h 12m 21s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:47.884Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:51.949Z",
+    "uptime_seconds": 745,
+    "uptime": "00h 12m 25s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:51.949Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:47:56.016Z",
+    "uptime_seconds": 749,
+    "uptime": "00h 12m 29s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:47:56.016Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:00.074Z",
+    "uptime_seconds": 753,
+    "uptime": "00h 12m 33s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:00.074Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:04.172Z",
+    "uptime_seconds": 757,
+    "uptime": "00h 12m 37s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:04.172Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:08.235Z",
+    "uptime_seconds": 761,
+    "uptime": "00h 12m 41s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:08.234Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:12.294Z",
+    "uptime_seconds": 765,
+    "uptime": "00h 12m 45s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:12.294Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:16.432Z",
+    "uptime_seconds": 769,
+    "uptime": "00h 12m 49s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:16.432Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:20.502Z",
+    "uptime_seconds": 773,
+    "uptime": "00h 12m 53s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:20.502Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:24.557Z",
+    "uptime_seconds": 777,
+    "uptime": "00h 12m 57s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:24.557Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:31.192Z",
+    "uptime_seconds": 784,
+    "uptime": "00h 13m 04s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:31.192Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:35.248Z",
+    "uptime_seconds": 788,
+    "uptime": "00h 13m 08s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:35.248Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:39.302Z",
+    "uptime_seconds": 792,
+    "uptime": "00h 13m 12s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:39.302Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:43.368Z",
+    "uptime_seconds": 796,
+    "uptime": "00h 13m 16s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:43.368Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:47.430Z",
+    "uptime_seconds": 800,
+    "uptime": "00h 13m 20s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:47.430Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:51.489Z",
+    "uptime_seconds": 804,
+    "uptime": "00h 13m 24s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:51.489Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:55.552Z",
+    "uptime_seconds": 808,
+    "uptime": "00h 13m 28s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:55.552Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:48:59.619Z",
+    "uptime_seconds": 812,
+    "uptime": "00h 13m 32s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:48:59.619Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:03.683Z",
+    "uptime_seconds": 816,
+    "uptime": "00h 13m 36s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:03.683Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:07.749Z",
+    "uptime_seconds": 821,
+    "uptime": "00h 13m 41s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:07.749Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:11.814Z",
+    "uptime_seconds": 825,
+    "uptime": "00h 13m 45s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:11.814Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:15.877Z",
+    "uptime_seconds": 829,
+    "uptime": "00h 13m 49s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:15.877Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:19.956Z",
+    "uptime_seconds": 833,
+    "uptime": "00h 13m 53s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:19.956Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:24.024Z",
+    "uptime_seconds": 837,
+    "uptime": "00h 13m 57s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:24.024Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:28.089Z",
+    "uptime_seconds": 841,
+    "uptime": "00h 14m 01s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:28.089Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:32.147Z",
+    "uptime_seconds": 845,
+    "uptime": "00h 14m 05s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:32.147Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:36.206Z",
+    "uptime_seconds": 849,
+    "uptime": "00h 14m 09s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:36.206Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:40.275Z",
+    "uptime_seconds": 853,
+    "uptime": "00h 14m 13s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:40.275Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:44.336Z",
+    "uptime_seconds": 857,
+    "uptime": "00h 14m 17s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:44.336Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:48.398Z",
+    "uptime_seconds": 861,
+    "uptime": "00h 14m 21s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:48.398Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:52.459Z",
+    "uptime_seconds": 865,
+    "uptime": "00h 14m 25s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:52.459Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:49:56.517Z",
+    "uptime_seconds": 869,
+    "uptime": "00h 14m 29s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:49:56.517Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:00.585Z",
+    "uptime_seconds": 873,
+    "uptime": "00h 14m 33s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:00.585Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:04.669Z",
+    "uptime_seconds": 877,
+    "uptime": "00h 14m 37s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:04.669Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:08.725Z",
+    "uptime_seconds": 882,
+    "uptime": "00h 14m 42s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:08.725Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:12.868Z",
+    "uptime_seconds": 886,
+    "uptime": "00h 14m 46s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:12.868Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:16.940Z",
+    "uptime_seconds": 890,
+    "uptime": "00h 14m 50s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:16.940Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:21.009Z",
+    "uptime_seconds": 894,
+    "uptime": "00h 14m 54s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:21.009Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:25.117Z",
+    "uptime_seconds": 898,
+    "uptime": "00h 14m 58s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:25.117Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:29.188Z",
+    "uptime_seconds": 902,
+    "uptime": "00h 15m 02s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:29.188Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:33.251Z",
+    "uptime_seconds": 906,
+    "uptime": "00h 15m 06s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:33.251Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:37.309Z",
+    "uptime_seconds": 910,
+    "uptime": "00h 15m 10s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:37.309Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:41.376Z",
+    "uptime_seconds": 914,
+    "uptime": "00h 15m 14s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:41.376Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:45.452Z",
+    "uptime_seconds": 918,
+    "uptime": "00h 15m 18s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:45.452Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:49.509Z",
+    "uptime_seconds": 922,
+    "uptime": "00h 15m 22s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:49.509Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:50:53.578Z",
+    "uptime_seconds": 926,
+    "uptime": "00h 15m 26s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:50:53.578Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:04.607Z",
+    "uptime_seconds": 937,
+    "uptime": "00h 15m 37s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:04.607Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:08.669Z",
+    "uptime_seconds": 941,
+    "uptime": "00h 15m 41s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:08.669Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:12.785Z",
+    "uptime_seconds": 946,
+    "uptime": "00h 15m 46s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:12.785Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:16.852Z",
+    "uptime_seconds": 950,
+    "uptime": "00h 15m 50s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:16.852Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:20.920Z",
+    "uptime_seconds": 954,
+    "uptime": "00h 15m 54s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:20.920Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:25.059Z",
+    "uptime_seconds": 958,
+    "uptime": "00h 15m 58s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:25.059Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:29.116Z",
+    "uptime_seconds": 962,
+    "uptime": "00h 16m 02s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:29.116Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:33.185Z",
+    "uptime_seconds": 966,
+    "uptime": "00h 16m 06s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:33.185Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:37.244Z",
+    "uptime_seconds": 970,
+    "uptime": "00h 16m 10s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:37.244Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:41.301Z",
+    "uptime_seconds": 974,
+    "uptime": "00h 16m 14s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:41.301Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:45.360Z",
+    "uptime_seconds": 978,
+    "uptime": "00h 16m 18s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:45.360Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:49.427Z",
+    "uptime_seconds": 982,
+    "uptime": "00h 16m 22s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:49.427Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:53.494Z",
+    "uptime_seconds": 986,
+    "uptime": "00h 16m 26s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:53.494Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:51:57.555Z",
+    "uptime_seconds": 990,
+    "uptime": "00h 16m 30s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:51:57.555Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:01.612Z",
+    "uptime_seconds": 994,
+    "uptime": "00h 16m 34s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:01.612Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:05.684Z",
+    "uptime_seconds": 998,
+    "uptime": "00h 16m 38s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:05.684Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:09.744Z",
+    "uptime_seconds": 1003,
+    "uptime": "00h 16m 43s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:09.744Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:13.805Z",
+    "uptime_seconds": 1007,
+    "uptime": "00h 16m 47s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:13.805Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:17.876Z",
+    "uptime_seconds": 1011,
+    "uptime": "00h 16m 51s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:17.876Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:21.933Z",
+    "uptime_seconds": 1015,
+    "uptime": "00h 16m 55s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:21.933Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:25.993Z",
+    "uptime_seconds": 1019,
+    "uptime": "00h 16m 59s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:25.993Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:30.061Z",
+    "uptime_seconds": 1023,
+    "uptime": "00h 17m 03s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:30.061Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:34.128Z",
+    "uptime_seconds": 1027,
+    "uptime": "00h 17m 07s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:34.128Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:38.193Z",
+    "uptime_seconds": 1031,
+    "uptime": "00h 17m 11s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:38.193Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:42.263Z",
+    "uptime_seconds": 1035,
+    "uptime": "00h 17m 15s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:42.263Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:46.330Z",
+    "uptime_seconds": 1039,
+    "uptime": "00h 17m 19s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:46.330Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:50.392Z",
+    "uptime_seconds": 1043,
+    "uptime": "00h 17m 23s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:50.392Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:54.450Z",
+    "uptime_seconds": 1047,
+    "uptime": "00h 17m 27s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:54.450Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:52:58.530Z",
+    "uptime_seconds": 1051,
+    "uptime": "00h 17m 31s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:52:58.530Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:02.600Z",
+    "uptime_seconds": 1055,
+    "uptime": "00h 17m 35s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:02.600Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:06.665Z",
+    "uptime_seconds": 1059,
+    "uptime": "00h 17m 39s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:06.665Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:10.719Z",
+    "uptime_seconds": 1064,
+    "uptime": "00h 17m 44s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:10.719Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:14.780Z",
+    "uptime_seconds": 1068,
+    "uptime": "00h 17m 48s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:14.780Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:18.888Z",
+    "uptime_seconds": 1072,
+    "uptime": "00h 17m 52s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:18.888Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:22.966Z",
+    "uptime_seconds": 1076,
+    "uptime": "00h 17m 56s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:22.966Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:27.038Z",
+    "uptime_seconds": 1080,
+    "uptime": "00h 18m 00s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:27.038Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:31.148Z",
+    "uptime_seconds": 1084,
+    "uptime": "00h 18m 04s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:31.148Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:35.211Z",
+    "uptime_seconds": 1088,
+    "uptime": "00h 18m 08s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:35.211Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:39.275Z",
+    "uptime_seconds": 1092,
+    "uptime": "00h 18m 12s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:39.275Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:43.339Z",
+    "uptime_seconds": 1096,
+    "uptime": "00h 18m 16s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:43.339Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:47.399Z",
+    "uptime_seconds": 1100,
+    "uptime": "00h 18m 20s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:47.399Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:51.457Z",
+    "uptime_seconds": 1104,
+    "uptime": "00h 18m 24s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:51.457Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:55.515Z",
+    "uptime_seconds": 1108,
+    "uptime": "00h 18m 28s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:55.515Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:53:59.573Z",
+    "uptime_seconds": 1112,
+    "uptime": "00h 18m 32s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:53:59.573Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:03.626Z",
+    "uptime_seconds": 1116,
+    "uptime": "00h 18m 36s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:03.626Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:07.694Z",
+    "uptime_seconds": 1120,
+    "uptime": "00h 18m 40s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:07.694Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:11.764Z",
+    "uptime_seconds": 1125,
+    "uptime": "00h 18m 45s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:11.764Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:15.833Z",
+    "uptime_seconds": 1129,
+    "uptime": "00h 18m 49s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:15.833Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:19.891Z",
+    "uptime_seconds": 1133,
+    "uptime": "00h 18m 53s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:19.891Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:23.955Z",
+    "uptime_seconds": 1137,
+    "uptime": "00h 18m 57s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:23.955Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:28.012Z",
+    "uptime_seconds": 1141,
+    "uptime": "00h 19m 01s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:28.012Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:32.077Z",
+    "uptime_seconds": 1145,
+    "uptime": "00h 19m 05s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:32.077Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:36.137Z",
+    "uptime_seconds": 1149,
+    "uptime": "00h 19m 09s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:36.137Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:40.201Z",
+    "uptime_seconds": 1153,
+    "uptime": "00h 19m 13s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:40.201Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:44.259Z",
+    "uptime_seconds": 1157,
+    "uptime": "00h 19m 17s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:44.259Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:48.313Z",
+    "uptime_seconds": 1161,
+    "uptime": "00h 19m 21s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:48.313Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:52.373Z",
+    "uptime_seconds": 1165,
+    "uptime": "00h 19m 25s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:52.373Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:54:56.439Z",
+    "uptime_seconds": 1169,
+    "uptime": "00h 19m 29s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:54:56.439Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:00.500Z",
+    "uptime_seconds": 1173,
+    "uptime": "00h 19m 33s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:00.500Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:04.567Z",
+    "uptime_seconds": 1177,
+    "uptime": "00h 19m 37s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:04.567Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:08.619Z",
+    "uptime_seconds": 1181,
+    "uptime": "00h 19m 41s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:08.619Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:12.697Z",
+    "uptime_seconds": 1185,
+    "uptime": "00h 19m 45s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:12.697Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:16.763Z",
+    "uptime_seconds": 1190,
+    "uptime": "00h 19m 50s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:16.763Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:20.847Z",
+    "uptime_seconds": 1194,
+    "uptime": "00h 19m 54s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:20.847Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:24.945Z",
+    "uptime_seconds": 1198,
+    "uptime": "00h 19m 58s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:24.945Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:29.021Z",
+    "uptime_seconds": 1202,
+    "uptime": "00h 20m 02s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:29.021Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:33.086Z",
+    "uptime_seconds": 1206,
+    "uptime": "00h 20m 06s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:33.086Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:37.187Z",
+    "uptime_seconds": 1210,
+    "uptime": "00h 20m 10s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:37.187Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:41.255Z",
+    "uptime_seconds": 1214,
+    "uptime": "00h 20m 14s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:41.255Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:45.312Z",
+    "uptime_seconds": 1218,
+    "uptime": "00h 20m 18s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:45.312Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:49.426Z",
+    "uptime_seconds": 1222,
+    "uptime": "00h 20m 22s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:49.426Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:53.495Z",
+    "uptime_seconds": 1226,
+    "uptime": "00h 20m 26s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:53.495Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:55:57.551Z",
+    "uptime_seconds": 1230,
+    "uptime": "00h 20m 30s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:55:57.551Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:08.488Z",
+    "uptime_seconds": 1241,
+    "uptime": "00h 20m 41s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:08.488Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:12.554Z",
+    "uptime_seconds": 1245,
+    "uptime": "00h 20m 45s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:12.554Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:16.619Z",
+    "uptime_seconds": 1249,
+    "uptime": "00h 20m 49s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:16.619Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:20.683Z",
+    "uptime_seconds": 1253,
+    "uptime": "00h 20m 53s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:20.683Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:24.816Z",
+    "uptime_seconds": 1258,
+    "uptime": "00h 20m 58s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:24.816Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:28.873Z",
+    "uptime_seconds": 1262,
+    "uptime": "00h 21m 02s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:28.873Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:32.931Z",
+    "uptime_seconds": 1266,
+    "uptime": "00h 21m 06s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:32.931Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:37.025Z",
+    "uptime_seconds": 1270,
+    "uptime": "00h 21m 10s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:37.025Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:41.091Z",
+    "uptime_seconds": 1274,
+    "uptime": "00h 21m 14s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:41.091Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:45.158Z",
+    "uptime_seconds": 1278,
+    "uptime": "00h 21m 18s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:45.158Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:49.227Z",
+    "uptime_seconds": 1282,
+    "uptime": "00h 21m 22s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:49.227Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:53.284Z",
+    "uptime_seconds": 1286,
+    "uptime": "00h 21m 26s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:53.284Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:56:57.346Z",
+    "uptime_seconds": 1290,
+    "uptime": "00h 21m 30s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:56:57.346Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:01.418Z",
+    "uptime_seconds": 1294,
+    "uptime": "00h 21m 34s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:01.418Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:05.482Z",
+    "uptime_seconds": 1298,
+    "uptime": "00h 21m 38s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:05.482Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:09.543Z",
+    "uptime_seconds": 1302,
+    "uptime": "00h 21m 42s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:09.543Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:13.598Z",
+    "uptime_seconds": 1306,
+    "uptime": "00h 21m 46s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:13.598Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:17.664Z",
+    "uptime_seconds": 1310,
+    "uptime": "00h 21m 50s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:17.664Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:21.738Z",
+    "uptime_seconds": 1315,
+    "uptime": "00h 21m 55s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:21.738Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:25.797Z",
+    "uptime_seconds": 1319,
+    "uptime": "00h 21m 59s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:25.797Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:29.855Z",
+    "uptime_seconds": 1323,
+    "uptime": "00h 22m 03s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:29.855Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:33.910Z",
+    "uptime_seconds": 1327,
+    "uptime": "00h 22m 07s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:33.910Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:37.975Z",
+    "uptime_seconds": 1331,
+    "uptime": "00h 22m 11s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:37.975Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:42.041Z",
+    "uptime_seconds": 1335,
+    "uptime": "00h 22m 15s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:42.041Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:46.103Z",
+    "uptime_seconds": 1339,
+    "uptime": "00h 22m 19s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:46.103Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:50.162Z",
+    "uptime_seconds": 1343,
+    "uptime": "00h 22m 23s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:50.162Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:54.214Z",
+    "uptime_seconds": 1347,
+    "uptime": "00h 22m 27s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:54.214Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:57:58.271Z",
+    "uptime_seconds": 1351,
+    "uptime": "00h 22m 31s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:57:58.271Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:02.324Z",
+    "uptime_seconds": 1355,
+    "uptime": "00h 22m 35s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:02.324Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:06.388Z",
+    "uptime_seconds": 1359,
+    "uptime": "00h 22m 39s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:06.388Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:10.446Z",
+    "uptime_seconds": 1363,
+    "uptime": "00h 22m 43s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:10.446Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:14.513Z",
+    "uptime_seconds": 1367,
+    "uptime": "00h 22m 47s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:14.513Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:18.579Z",
+    "uptime_seconds": 1371,
+    "uptime": "00h 22m 51s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:18.579Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:22.635Z",
+    "uptime_seconds": 1375,
+    "uptime": "00h 22m 55s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:22.635Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:26.691Z",
+    "uptime_seconds": 1379,
+    "uptime": "00h 22m 59s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:26.691Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:30.852Z",
+    "uptime_seconds": 1384,
+    "uptime": "00h 23m 04s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:30.852Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:34.918Z",
+    "uptime_seconds": 1388,
+    "uptime": "00h 23m 08s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:34.918Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:38.988Z",
+    "uptime_seconds": 1392,
+    "uptime": "00h 23m 12s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:38.988Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:43.095Z",
+    "uptime_seconds": 1396,
+    "uptime": "00h 23m 16s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:43.095Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:47.151Z",
+    "uptime_seconds": 1400,
+    "uptime": "00h 23m 20s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:47.151Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:51.222Z",
+    "uptime_seconds": 1404,
+    "uptime": "00h 23m 24s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:51.221Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:55.286Z",
+    "uptime_seconds": 1408,
+    "uptime": "00h 23m 28s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:55.286Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:58:59.346Z",
+    "uptime_seconds": 1412,
+    "uptime": "00h 23m 32s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:58:59.346Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:03.426Z",
+    "uptime_seconds": 1416,
+    "uptime": "00h 23m 36s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:03.426Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:07.489Z",
+    "uptime_seconds": 1420,
+    "uptime": "00h 23m 40s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:07.489Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:11.546Z",
+    "uptime_seconds": 1424,
+    "uptime": "00h 23m 44s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:11.546Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:15.613Z",
+    "uptime_seconds": 1428,
+    "uptime": "00h 23m 48s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:15.613Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:19.686Z",
+    "uptime_seconds": 1432,
+    "uptime": "00h 23m 52s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:19.686Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:23.755Z",
+    "uptime_seconds": 1437,
+    "uptime": "00h 23m 57s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:23.755Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:27.815Z",
+    "uptime_seconds": 1441,
+    "uptime": "00h 24m 01s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:27.815Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:31.870Z",
+    "uptime_seconds": 1445,
+    "uptime": "00h 24m 05s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:31.870Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:35.935Z",
+    "uptime_seconds": 1449,
+    "uptime": "00h 24m 09s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:35.935Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:39.998Z",
+    "uptime_seconds": 1453,
+    "uptime": "00h 24m 13s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:39.998Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:44.061Z",
+    "uptime_seconds": 1457,
+    "uptime": "00h 24m 17s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:44.061Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:48.120Z",
+    "uptime_seconds": 1461,
+    "uptime": "00h 24m 21s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:48.120Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:52.178Z",
+    "uptime_seconds": 1465,
+    "uptime": "00h 24m 25s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:52.178Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T04:59:56.236Z",
+    "uptime_seconds": 1469,
+    "uptime": "00h 24m 29s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T04:59:56.236Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:00.300Z",
+    "uptime_seconds": 1473,
+    "uptime": "00h 24m 33s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:00.300Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:04.360Z",
+    "uptime_seconds": 1477,
+    "uptime": "00h 24m 37s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:04.360Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:08.425Z",
+    "uptime_seconds": 1481,
+    "uptime": "00h 24m 41s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:08.425Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:12.487Z",
+    "uptime_seconds": 1485,
+    "uptime": "00h 24m 45s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:12.487Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:16.583Z",
+    "uptime_seconds": 1489,
+    "uptime": "00h 24m 49s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:16.583Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:20.676Z",
+    "uptime_seconds": 1493,
+    "uptime": "00h 24m 53s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:20.676Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:24.793Z",
+    "uptime_seconds": 1498,
+    "uptime": "00h 24m 58s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:24.793Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:28.863Z",
+    "uptime_seconds": 1502,
+    "uptime": "00h 25m 02s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:28.863Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:32.922Z",
+    "uptime_seconds": 1506,
+    "uptime": "00h 25m 06s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:32.922Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:37.052Z",
+    "uptime_seconds": 1510,
+    "uptime": "00h 25m 10s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:37.052Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:41.126Z",
+    "uptime_seconds": 1514,
+    "uptime": "00h 25m 14s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:41.126Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:45.196Z",
+    "uptime_seconds": 1518,
+    "uptime": "00h 25m 18s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:45.196Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:49.253Z",
+    "uptime_seconds": 1522,
+    "uptime": "00h 25m 22s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:49.253Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:53.312Z",
+    "uptime_seconds": 1526,
+    "uptime": "00h 25m 26s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:53.312Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:00:57.369Z",
+    "uptime_seconds": 1530,
+    "uptime": "00h 25m 30s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:00:57.369Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:01.439Z",
+    "uptime_seconds": 1534,
+    "uptime": "00h 25m 34s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:01.439Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:16.329Z",
+    "uptime_seconds": 1549,
+    "uptime": "00h 25m 49s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:16.329Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:20.401Z",
+    "uptime_seconds": 1553,
+    "uptime": "00h 25m 53s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:20.401Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:24.468Z",
+    "uptime_seconds": 1557,
+    "uptime": "00h 25m 57s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:24.468Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:28.538Z",
+    "uptime_seconds": 1561,
+    "uptime": "00h 26m 01s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:28.538Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:32.605Z",
+    "uptime_seconds": 1565,
+    "uptime": "00h 26m 05s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:32.605Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:36.660Z",
+    "uptime_seconds": 1569,
+    "uptime": "00h 26m 09s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:36.660Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:40.716Z",
+    "uptime_seconds": 1574,
+    "uptime": "00h 26m 14s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:40.716Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:44.771Z",
+    "uptime_seconds": 1578,
+    "uptime": "00h 26m 18s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:44.771Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:48.868Z",
+    "uptime_seconds": 1582,
+    "uptime": "00h 26m 22s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:48.868Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:52.949Z",
+    "uptime_seconds": 1586,
+    "uptime": "00h 26m 26s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:52.949Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:01:57.020Z",
+    "uptime_seconds": 1590,
+    "uptime": "00h 26m 30s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:01:57.020Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:01.183Z",
+    "uptime_seconds": 1594,
+    "uptime": "00h 26m 34s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:01.183Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:05.245Z",
+    "uptime_seconds": 1598,
+    "uptime": "00h 26m 38s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:05.245Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:09.311Z",
+    "uptime_seconds": 1602,
+    "uptime": "00h 26m 42s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:09.311Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:13.374Z",
+    "uptime_seconds": 1606,
+    "uptime": "00h 26m 46s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:13.374Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:17.430Z",
+    "uptime_seconds": 1610,
+    "uptime": "00h 26m 50s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:17.430Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:21.493Z",
+    "uptime_seconds": 1614,
+    "uptime": "00h 26m 54s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:21.493Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:25.554Z",
+    "uptime_seconds": 1618,
+    "uptime": "00h 26m 58s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:25.554Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:29.636Z",
+    "uptime_seconds": 1622,
+    "uptime": "00h 27m 02s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:29.636Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:33.713Z",
+    "uptime_seconds": 1627,
+    "uptime": "00h 27m 07s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:33.713Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:37.794Z",
+    "uptime_seconds": 1631,
+    "uptime": "00h 27m 11s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:37.794Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:41.856Z",
+    "uptime_seconds": 1635,
+    "uptime": "00h 27m 15s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:41.856Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:45.923Z",
+    "uptime_seconds": 1639,
+    "uptime": "00h 27m 19s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:45.923Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:49.983Z",
+    "uptime_seconds": 1643,
+    "uptime": "00h 27m 23s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:49.983Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:54.061Z",
+    "uptime_seconds": 1647,
+    "uptime": "00h 27m 27s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:54.061Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:02:58.121Z",
+    "uptime_seconds": 1651,
+    "uptime": "00h 27m 31s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:02:58.121Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:02.187Z",
+    "uptime_seconds": 1655,
+    "uptime": "00h 27m 35s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:02.187Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:06.260Z",
+    "uptime_seconds": 1659,
+    "uptime": "00h 27m 39s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:06.260Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:10.321Z",
+    "uptime_seconds": 1663,
+    "uptime": "00h 27m 43s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:10.321Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:14.381Z",
+    "uptime_seconds": 1667,
+    "uptime": "00h 27m 47s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:14.381Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:18.459Z",
+    "uptime_seconds": 1671,
+    "uptime": "00h 27m 51s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:18.459Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:22.521Z",
+    "uptime_seconds": 1675,
+    "uptime": "00h 27m 55s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:22.521Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:26.580Z",
+    "uptime_seconds": 1679,
+    "uptime": "00h 27m 59s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:26.580Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:30.646Z",
+    "uptime_seconds": 1683,
+    "uptime": "00h 28m 03s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:30.646Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:34.700Z",
+    "uptime_seconds": 1687,
+    "uptime": "00h 28m 07s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:34.700Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:38.789Z",
+    "uptime_seconds": 1692,
+    "uptime": "00h 28m 12s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:38.789Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:42.928Z",
+    "uptime_seconds": 1696,
+    "uptime": "00h 28m 16s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:42.928Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:47.044Z",
+    "uptime_seconds": 1700,
+    "uptime": "00h 28m 20s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:47.044Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:51.102Z",
+    "uptime_seconds": 1704,
+    "uptime": "00h 28m 24s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:51.102Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:55.270Z",
+    "uptime_seconds": 1708,
+    "uptime": "00h 28m 28s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:55.270Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:03:59.340Z",
+    "uptime_seconds": 1712,
+    "uptime": "00h 28m 32s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:03:59.340Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:03.400Z",
+    "uptime_seconds": 1716,
+    "uptime": "00h 28m 36s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:03.400Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:07.454Z",
+    "uptime_seconds": 1720,
+    "uptime": "00h 28m 40s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:07.454Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:11.518Z",
+    "uptime_seconds": 1724,
+    "uptime": "00h 28m 44s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:11.518Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:15.579Z",
+    "uptime_seconds": 1728,
+    "uptime": "00h 28m 48s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:15.579Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:19.657Z",
+    "uptime_seconds": 1732,
+    "uptime": "00h 28m 52s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:19.657Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:23.710Z",
+    "uptime_seconds": 1737,
+    "uptime": "00h 28m 57s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:23.710Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:27.776Z",
+    "uptime_seconds": 1741,
+    "uptime": "00h 29m 01s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:27.776Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:31.836Z",
+    "uptime_seconds": 1745,
+    "uptime": "00h 29m 05s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:31.836Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:35.900Z",
+    "uptime_seconds": 1749,
+    "uptime": "00h 29m 09s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:35.900Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:39.953Z",
+    "uptime_seconds": 1753,
+    "uptime": "00h 29m 13s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:39.953Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:44.009Z",
+    "uptime_seconds": 1757,
+    "uptime": "00h 29m 17s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:44.009Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:48.061Z",
+    "uptime_seconds": 1761,
+    "uptime": "00h 29m 21s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:48.061Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:52.126Z",
+    "uptime_seconds": 1765,
+    "uptime": "00h 29m 25s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:52.126Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:04:56.177Z",
+    "uptime_seconds": 1769,
+    "uptime": "00h 29m 29s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:04:56.177Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:00.243Z",
+    "uptime_seconds": 1773,
+    "uptime": "00h 29m 33s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:00.242Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:04.301Z",
+    "uptime_seconds": 1777,
+    "uptime": "00h 29m 37s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:04.301Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:08.358Z",
+    "uptime_seconds": 1781,
+    "uptime": "00h 29m 41s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:08.358Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:12.434Z",
+    "uptime_seconds": 1785,
+    "uptime": "00h 29m 45s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:12.434Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:16.500Z",
+    "uptime_seconds": 1789,
+    "uptime": "00h 29m 49s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:16.500Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:20.563Z",
+    "uptime_seconds": 1793,
+    "uptime": "00h 29m 53s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:20.563Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:24.624Z",
+    "uptime_seconds": 1797,
+    "uptime": "00h 29m 57s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:24.624Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:28.689Z",
+    "uptime_seconds": 1801,
+    "uptime": "00h 30m 01s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:28.689Z"
+    }
+  },
+  {
+    "event": "JUDGES_CHECKPOINT",
+    "timestamp": "2026-11-06T05:05:31.482Z",
+    "uptime_seconds": 1804,
+    "uptime": "00h 30m 04s",
+    "data": {
+      "uptime": "00h 30m 04s",
+      "rounds_played": 40,
+      "status": "LIVE_AND_HEALTHY"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:32.763Z",
+    "uptime_seconds": 1806,
+    "uptime": "00h 30m 06s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:32.763Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:36.885Z",
+    "uptime_seconds": 1810,
+    "uptime": "00h 30m 10s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:36.885Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:40.946Z",
+    "uptime_seconds": 1814,
+    "uptime": "00h 30m 14s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:40.946Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:45.037Z",
+    "uptime_seconds": 1818,
+    "uptime": "00h 30m 18s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:45.036Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:49.136Z",
+    "uptime_seconds": 1822,
+    "uptime": "00h 30m 22s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:49.136Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:53.205Z",
+    "uptime_seconds": 1826,
+    "uptime": "00h 30m 26s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:53.205Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T05:05:57.284Z",
+    "uptime_seconds": 1830,
+    "uptime": "00h 30m 30s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'DocumentFragment': 'button.hl-p-auto, button:has-text(\"Auto\"), button:has-text(\"Pick\")' is not a valid selector.\n    at eval (eval at evaluate (:370:30), <anonymous>:16:31)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "timestamp": "2026-11-06T05:05:57.284Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T05:14:50.257Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T05:14:50.257Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T05:16:42.900Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T05:16:42.900Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T05:26:16.030Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T05:26:16.030Z"
+    }
   }
 ]

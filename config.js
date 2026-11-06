@@ -40,22 +40,26 @@ export const CONFIG = {
   HOUSEBETS_BASE_URL: 'https://www.housebets.com/house-games',
   HEADLESS_BROWSER: ['true', '1', 'yes'].includes((process.env.HEADLESS_BROWSER || 'false').toLowerCase()),
 
+  // Real Stream Chat Channels (Kick or Twitch)
+  KICK_CHANNEL: process.env.KICK_CHANNEL || '',
+  TWITCH_CHANNEL: process.env.TWITCH_CHANNEL || '',
+
   // All 14 House Original Games on housebets.com
   HOUSE_GAMES: [
-    { id: 'hubies_road', name: "Hubie's Road", slug: 'housegames-hubie-s-road', url: 'https://www.housebets.com/games/housegames-hubie-s-road' },
-    { id: 'plinko', name: 'Plinko', slug: 'housegames-plinko', url: 'https://www.housebets.com/games/housegames-plinko' },
+    { id: 'keno', name: 'Keno', slug: 'housegames-keno', url: 'https://www.housebets.com/games/housegames-keno' },
     { id: 'mines', name: 'Mines', slug: 'housegames-mines', url: 'https://www.housebets.com/games/housegames-mines' },
+    { id: 'dragon_tower', name: 'Dragon Tower', slug: 'housegames-dragon-tower', url: 'https://www.housebets.com/games/housegames-dragon-tower' },
+    { id: 'hubies_road', name: "Hubie's Road", slug: 'housegames-hubie-s-road', url: 'https://www.housebets.com/games/housegames-hubie-s-road' },
+    { id: 'coinflip', name: 'Coinflip', slug: 'housegames-coin-flip', url: 'https://www.housebets.com/games/housegames-coin-flip' },
+    { id: 'hilo', name: 'Hilo', slug: 'housegames-hilo', url: 'https://www.housebets.com/games/housegames-hilo' },
+    { id: 'roulette', name: 'Roulette', slug: 'housegames-roulette', url: 'https://www.housebets.com/games/housegames-roulette' },
+    { id: 'plinko', name: 'Plinko', slug: 'housegames-plinko', url: 'https://www.housebets.com/games/housegames-plinko' },
     { id: 'dice', name: 'Dice', slug: 'housegames-dice', url: 'https://www.housebets.com/games/housegames-dice' },
     { id: 'limbo', name: 'Limbo', slug: 'housegames-limbo', url: 'https://www.housebets.com/games/housegames-limbo' },
-    { id: 'coinflip', name: 'Coinflip', slug: 'housegames-coin-flip', url: 'https://www.housebets.com/games/housegames-coin-flip' },
     { id: 'wheel', name: 'Wheel', slug: 'housegames-wheel', url: 'https://www.housebets.com/games/housegames-wheel' },
-    { id: 'dragon_tower', name: 'Dragon Tower', slug: 'housegames-dragon-tower', url: 'https://www.housebets.com/games/housegames-dragon-tower' },
-    { id: 'keno', name: 'Keno', slug: 'housegames-keno', url: 'https://www.housebets.com/games/housegames-keno' },
-    { id: 'hilo', name: 'Hilo', slug: 'housegames-hilo', url: 'https://www.housebets.com/games/housegames-hilo' },
-    { id: 'max_win', name: 'Max Win', slug: 'housegames-max-win', url: 'https://www.housebets.com/games/housegames-max-win' },
-    { id: 'roulette', name: 'Roulette', slug: 'housegames-roulette', url: 'https://www.housebets.com/games/housegames-roulette' },
     { id: 'blackjack', name: 'Blackjack', slug: 'housegames-blackjack', url: 'https://www.housebets.com/games/housegames-blackjack' },
-    { id: 'baccarat', name: 'Baccarat', slug: 'housegames-baccarat', url: 'https://www.housebets.com/games/housegames-baccarat' }
+    { id: 'baccarat', name: 'Baccarat', slug: 'housegames-baccarat', url: 'https://www.housebets.com/games/housegames-baccarat' },
+    { id: 'max_win', name: 'Max Win', slug: 'housegames-max-win', url: 'https://www.housebets.com/games/housegames-max-win' }
   ],
   ROUNDS_PER_GAME: parseInt(process.env.ROUNDS_PER_GAME || '12', 10),
 

@@ -37,12 +37,39 @@ export class TTSEngine {
 
   stop() {
     this.running = false;
+    this.clearQueue();
   }
 
-  speak(text) {
+  clearQueue() {
+    this.queue = [];
+  }
+
+  get isBusy() {
+    return this.isSpeaking || this.queue.length > 0;
+  }
+
+  speak(text, priority = false) {
     const clean = (text || '').trim();
     if (!clean) return;
-    this.queue.push(clean);
+
+    if (priority) {
+      // Clear backlog immediately for priority commentary
+      this.queue = [clean];
+    } else {
+      // Keep only the freshest line (max 1 pending) to prevent audio lag behind gameplay
+      if (this.queue.length > 0) {
+        this.queue = [clean];
+      } else {
+        this.queue.push(clean);
+      }
+    }
+  }
+
+  async waitForSpeech(maxMs = 5000) {
+    const start = Date.now();
+    while (this.isBusy && (Date.now() - start < maxMs)) {
+      await new Promise(r => setTimeout(r, 150));
+    }
   }
 
   async synthesizeToFile(text) {
@@ -58,14 +85,17 @@ export class TTSEngine {
       await this.tts.ttsPromise(text, filePath);
       return filename;
     } catch (err) {
-      console.error(`[HubieTTS] Failed to synthesize audio for "${text}":`, err.message);
+      if (err.message?.includes('429')) {
+        this.tts = new EdgeTTS({ voice: this.voice, rate: this.rate, pitch: this.pitch });
+        await new Promise(r => setTimeout(r, 1000));
+      }
       return null;
     }
   }
 
   estimateDuration(text) {
     const words = text.split(/\s+/).length;
-    return Math.max(1.8, words * 0.38);
+    return Math.max(1.8, words * 0.36);
   }
 
   async processQueue() {
@@ -83,18 +113,17 @@ export class TTSEngine {
         }
 
         // Wait for speech duration plus brief pacing buffer
-        await new Promise(r => setTimeout(r, (duration + 0.3) * 1000));
+        await new Promise(r => setTimeout(r, (duration + 0.2) * 1000));
 
         this.isSpeaking = false;
         if (this.onSpeechEnd) {
           await this.onSpeechEnd();
         }
 
-        await new Promise(r => setTimeout(r, 450));
-      } else {
         await new Promise(r => setTimeout(r, 200));
+      } else {
+        await new Promise(r => setTimeout(r, 150));
       }
     }
   }
 }
-

@@ -145,10 +145,12 @@
         } else if (msg.type === 'hubie_speaking_end') {
           avatar.setSpeaking(false);
         } else if (msg.type === 'chat_message') {
-          appendChatMessage(msg.message.user, msg.message.text);
+          appendChatMessage(msg.message.user, msg.message.text, msg.message.platform);
           if (msg.message.text.toLowerCase().includes('hubie')) {
             avatar.reactToChat(msg.message.user);
           }
+        } else if (msg.type === 'chat_moderated') {
+          appendModeratedNotice(msg.message.user);
         }
       }
 
@@ -175,15 +177,31 @@
         }
       }
 
-      function appendChatMessage(user, text) {
+      function appendChatMessage(user, text, platform) {
         const item = document.createElement('div');
         item.className = 'chat-item';
-        item.innerHTML = `<span class="chat-user">@${user}:</span><span class="chat-text">${escapeHtml(text)}</span>`;
+
+        let badge = '<span class="chat-badge live">LIVE</span>';
+        if (platform === 'kick') {
+          badge = '<span class="chat-badge kick">KICK</span>';
+        } else if (platform === 'twitch') {
+          badge = '<span class="chat-badge twitch">TWITCH</span>';
+        }
+
+        item.innerHTML = `${badge}<span class="chat-user">@${user}:</span><span class="chat-text">${escapeHtml(text)}</span>`;
         chatMessagesEl.appendChild(item);
         chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
         if (chatMessagesEl.children.length > 50) {
           chatMessagesEl.removeChild(chatMessagesEl.firstChild);
         }
+      }
+
+      function appendModeratedNotice(user) {
+        const item = document.createElement('div');
+        item.className = 'chat-item moderated';
+        item.innerHTML = `<span class="chat-mod-notice">🛡️ [Auto-Mod] Removed toxic message from @${escapeHtml(user)}</span>`;
+        chatMessagesEl.appendChild(item);
+        chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
       }
 
       function escapeHtml(str) {

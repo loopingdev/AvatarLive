@@ -261,11 +261,45 @@ body {
   gap: 10px;
 }
 
+.chat-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-right: 6px;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+.chat-badge.kick {
+  background: #53fc18;
+  color: #000;
+}
+.chat-badge.twitch {
+  background: #9146ff;
+  color: #fff;
+}
+.chat-badge.live {
+  background: #00ffcc;
+  color: #000;
+}
+
 .chat-item {
   font-size: 13px;
   line-height: 1.4;
   word-break: break-word;
   animation: fadeIn 0.2s ease-in;
+}
+
+.chat-item.moderated {
+  opacity: 0.7;
+  font-style: italic;
+  font-size: 11px;
+}
+
+.chat-mod-notice {
+  color: #ef4444;
+  font-weight: 600;
 }
 
 @keyframes fadeIn {

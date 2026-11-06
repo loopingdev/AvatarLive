@@ -20,6 +20,11 @@ export class HousebetsPlayer {
     this.totalRounds = 0;
     this.totalWins = 0;
     this.totalLosses = 0;
+    this.streak = 0;
+    this.lastMultiplier = 1.0;
+    this.lastOutcome = null;
+    this.lastLiveOutcome = null;
+    this.cashedOutOutcome = null;
     this.lastSafetyTime = Date.now();
     this.lastFrameBase64 = null;
   }
@@ -66,6 +71,36 @@ export class HousebetsPlayer {
 
     // Attach CDP Screencast for real-time live preview
     await this.setupScreencast();
+
+    // Attach Real-Time Housebets Game Engine API Interceptor
+    this.page.on('response', async (res) => {
+      const url = res.url();
+      if (url.includes('games.housebets.com') && (url.includes('/bet') || url.includes('/cashout') || url.includes('/step') || url.includes('/play') || url.includes('/spin') || url.includes('/roll') || url.includes('/deal'))) {
+        try {
+          const text = await res.text();
+          const json = JSON.parse(text);
+          const g = json.game?.game || json.game || json.state?.game || json;
+          const round = json.round || {};
+
+          let payoutMult = 0;
+          if (typeof g.payoutMultiplier === 'number') payoutMult = g.payoutMultiplier;
+          else if (typeof json.payoutMultiplier === 'number') payoutMult = json.payoutMultiplier;
+          else if (round.payout && round.stake) payoutMult = round.payout / round.stake;
+
+          const won = payoutMult > 0 || Number(round.delta || 0) > 0 || Number(round.payout || 0) > 0;
+
+          this.lastLiveOutcome = {
+            game: g.name || this.currentGame.id,
+            displayName: this.currentGame.name,
+            multiplier: payoutMult,
+            won: Boolean(won),
+            active: Boolean(g.active),
+            timestamp: Date.now()
+          };
+          console.log(`[HousebetsPlayer API Live] Game: ${this.lastLiveOutcome.displayName} | Won: ${this.lastLiveOutcome.won} | Multiplier: ${payoutMult.toFixed(2)}x | Active: ${g.active}`);
+        } catch {}
+      }
+    });
 
     // Navigate to House Games
     console.log('[HousebetsPlayer] Navigating to https://www.housebets.com/house-games...');
@@ -116,8 +151,7 @@ export class HousebetsPlayer {
       'button:has-text("I agree")',
       'button:has-text("Got it")',
       '#onetrust-accept-btn-handler',
-      '.cookie-accept-btn',
-      'button[aria-label*="cookie" i]'
+      '.cookie-accept-btn'
     ];
 
     for (const selector of cookieSelectors) {
@@ -186,8 +220,8 @@ export class HousebetsPlayer {
   async playLoop() {
     await new Promise(r => setTimeout(r, 2000));
     const intro = "Yo what is up squad! Hubie is LIVE on housebets.com playing the official House Games! Let's get these multipliers!";
-    this.tts.speak(intro);
-    await new Promise(r => setTimeout(r, 4000));
+    this.tts.speak(intro, true);
+    await this.tts.waitForSpeech(4000);
 
     // Navigate to first game
     await this.navigateToGame(this.currentGame);
@@ -203,8 +237,13 @@ export class HousebetsPlayer {
           this.roundsInCurrentGame = 0;
           const newGame = this.currentGame;
 
+          // Clear any leftover speech from old game!
+          this.tts.clearQueue();
+          this.lastLiveOutcome = null;
+
           const switchSpeech = await this.ai.announceGameSwitch(oldName, newGame.name);
-          this.tts.speak(switchSpeech);
+          this.tts.speak(switchSpeech, true);
+          await this.tts.waitForSpeech(4000);
 
           await this.navigateToGame(newGame);
           await new Promise(r => setTimeout(r, 4000));
@@ -214,28 +253,39 @@ export class HousebetsPlayer {
         if (Date.now() - this.lastSafetyTime >= CONFIG.SAFETY_REMINDER_INTERVAL_SECONDS * 1000) {
           this.lastSafetyTime = Date.now();
           const safetyText = await this.ai.speakSafetyReminder();
-          this.tts.speak(safetyText);
-          await new Promise(r => setTimeout(r, 4000));
+          this.tts.speak(safetyText, true);
+          await this.tts.waitForSpeech(4000);
         }
 
-        // 3. Answer Chat Viewer
+        // 3. Answer Chat Viewer with live screen & game context
         const q = this.chat.getNextQuestionToAnswer();
         if (q) {
-          const chatAnswer = await this.ai.answerChat(q.user, q.text);
+          const gameContext = {
+            gameName: this.currentGame.name,
+            gameId: this.currentGame.id,
+            multiplier: this.lastMultiplier,
+            won: this.lastOutcome ? this.lastOutcome.won : null,
+            streak: this.streak,
+            totalRounds: this.totalRounds,
+            totalWins: this.totalWins,
+            totalLosses: this.totalLosses,
+            platform: q.platform || 'stream'
+          };
+          const chatAnswer = await this.ai.answerChat(q.user, q.text, gameContext);
           this.tts.speak(chatAnswer);
-          await new Promise(r => setTimeout(r, 3500));
+          await this.tts.waitForSpeech(3500);
         }
 
-        // 4. Play Round with AI Strategic Decisions (Cashout vs Push)
+        // 4. Play Round with AI Strategic Decisions & Choice Making
         await this.dismissModals();
         await this.executeRoundOnPage();
 
-        await new Promise(r => setTimeout(r, 3000));
+        await new Promise(r => setTimeout(r, 2000));
 
       } catch (err) {
         console.error('[HousebetsPlayer] Error in game loop:', err.message);
         this.supervisor.recordRecovery('housebets_browser', err.message);
-        await new Promise(r => setTimeout(r, 4000));
+        await new Promise(r => setTimeout(r, 3000));
       }
     }
   }
@@ -243,6 +293,8 @@ export class HousebetsPlayer {
   async navigateToGame(game) {
     console.log(`[HousebetsPlayer] Loading game: ${game.name} (${game.url})`);
     try {
+      this.tts.clearQueue();
+      this.lastLiveOutcome = null;
       await this.page.goto(game.url, { timeout: 35000 });
       await this.page.waitForTimeout(5000);
       await this.dismissModals();
@@ -265,6 +317,8 @@ export class HousebetsPlayer {
 
   async executeRoundOnPage() {
     const game = this.currentGame;
+    this.lastLiveOutcome = null;
+    this.cashedOutOutcome = null;
 
     if (this.onGameUpdate) {
       this.onGameUpdate({
@@ -282,7 +336,105 @@ export class HousebetsPlayer {
     // Keep viewport locked at top
     await this.page.evaluate(() => window.scrollTo(0, 0));
 
-    // 1. Initial Bet Action Button
+    // =========================================================================
+    // 1. PRE-BET DECISIONS (AI DECIDES BUTTONS / NUMBERS / SIDES BEFORE BETTING)
+    // =========================================================================
+
+    // --- KENO ---
+    if (game.id === 'keno') {
+      const choice = await this.ai.decideChoice('keno');
+      console.log(`[HousebetsPlayer AI Choice] Keno: ${choice.numbers.join(', ')} -> "${choice.voiceLine}"`);
+      this.tts.speak(choice.voiceLine, true);
+
+      await this.page.evaluate((numbers) => {
+        window.scrollTo(0, 0);
+        const host = document.querySelector('[data-housegames-direct]');
+        if (!host?.shadowRoot) return;
+        const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+        const root = gameEl.shadowRoot || gameEl;
+
+        // Clear previous table spots if clear button is active
+        const clearBtn = Array.from(root.querySelectorAll('button')).find(b => /clear/i.test(b.innerText || '') && !b.disabled);
+        if (clearBtn) clearBtn.click();
+
+        // Click AI's chosen numbers
+        const tiles = Array.from(root.querySelectorAll('button.hl-g-tile')).filter(b => /^\d+$/.test(b.innerText.trim()));
+        for (const num of numbers) {
+          const t = tiles.find(b => b.innerText.trim() === String(num));
+          if (t) t.click();
+        }
+
+        // If Bet button is still disabled, click Auto pick to ensure playability
+        const betBtn = root.querySelector('.hl-p-betbtn, button.hl-btn-primary');
+        if (betBtn && betBtn.disabled) {
+          const autoPick = Array.from(root.querySelectorAll('button')).find(b => /auto\s*pick/i.test(b.innerText || ''));
+          if (autoPick) autoPick.click();
+        }
+      }, choice.numbers);
+
+      await this.page.waitForTimeout(800);
+    }
+
+    // --- COINFLIP ---
+    if (game.id === 'coinflip') {
+      const choice = await this.ai.decideChoice('coinflip');
+      console.log(`[HousebetsPlayer AI Choice] Coinflip: ${choice.choice} -> "${choice.voiceLine}"`);
+      this.tts.speak(choice.voiceLine, true);
+
+      await this.page.evaluate((sideChoice) => {
+        const host = document.querySelector('[data-housegames-direct]');
+        if (!host?.shadowRoot) return;
+        const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+        const root = gameEl.shadowRoot || gameEl;
+
+        const sideBtns = Array.from(root.querySelectorAll('button')).filter(b => /heads|tails|side/i.test(b.className + ' ' + b.innerText));
+        const target = sideBtns.find(b => new RegExp(sideChoice, 'i').test(b.innerText || b.className)) || sideBtns[0];
+        if (target) target.click();
+      }, choice.choice);
+
+      await this.page.waitForTimeout(600);
+    }
+
+    // --- ROULETTE ---
+    if (game.id === 'roulette') {
+      const choice = await this.ai.decideChoice('roulette');
+      console.log(`[HousebetsPlayer AI Choice] Roulette: ${choice.choice} -> "${choice.voiceLine}"`);
+      this.tts.speak(choice.voiceLine, true);
+
+      await this.page.evaluate(() => {
+        const host = document.querySelector('[data-housegames-direct]');
+        if (!host?.shadowRoot) return;
+        const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+        const root = gameEl.shadowRoot || gameEl;
+
+        const allBtns = Array.from(root.querySelectorAll('button'));
+        const chip = allBtns.find(b => /^(0\.1|0\.5|1|2\.5|10)$/.test(b.innerText.trim()));
+        if (chip) chip.click();
+
+        const boardEl = root.querySelector('.hr-p-well, .hr-p-board, [class*="board"], svg');
+        if (boardEl) boardEl.click();
+      });
+
+      await this.page.waitForTimeout(600);
+    }
+
+    // --- BACCARAT ---
+    if (game.id === 'baccarat') {
+      await this.page.evaluate(() => {
+        const host = document.querySelector('[data-housegames-direct]');
+        if (!host?.shadowRoot) return;
+        const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+        const root = gameEl.shadowRoot || gameEl;
+        const allBtns = Array.from(root.querySelectorAll('button'));
+        const side = allBtns.find(b => /player|banker/i.test(b.innerText || ''));
+        if (side) side.click();
+      });
+      await this.page.waitForTimeout(600);
+    }
+
+    // =========================================================================
+    // 2. PRIMARY ACTION BUTTON (BET / PLAY / SPIN / ROLL / DEAL / LAUNCH)
+    // =========================================================================
     const playResult = await this.page.evaluate((gameId) => {
       window.scrollTo(0, 0);
       const host = document.querySelector('[data-housegames-direct]');
@@ -291,25 +443,10 @@ export class HousebetsPlayer {
       const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
       const root = gameEl.shadowRoot || gameEl;
 
-      // Pre-actions for specific games
-      if (gameId === 'coinflip') {
-        const sideBtns = root.querySelectorAll('.hl-p-sidebtn--heads, .hl-p-sidebtn--tails, button[class*="sidebtn"]');
-        if (sideBtns.length > 0) {
-          sideBtns[Math.floor(Math.random() * sideBtns.length)].click();
-        }
-      } else if (gameId === 'keno') {
-        const autoPick = root.querySelector('button.hl-p-auto, button:has-text("Auto"), button:has-text("Pick")');
-        if (autoPick) autoPick.click();
-      } else if (gameId === 'roulette') {
-        const chip = root.querySelector('button:has-text("Red"), button:has-text("Black"), .hl-r-betbtn');
-        if (chip) chip.click();
-      } else if (gameId === 'baccarat') {
-        const side = root.querySelector('button:has-text("Player"), button:has-text("Banker"), .hl-b-side');
-        if (side) side.click();
-      }
+      const allBtns = Array.from(root.querySelectorAll('button')).filter(b => b.offsetWidth > 0 && !b.disabled);
+      const findBtn = (regex) => allBtns.find(b => regex.test((b.innerText || '').trim()));
 
-      // Action button
-      const selectors = ['.hl-p-betbtn', '.hp-p-betbtn', '.hs-p-mainbtn', 'button.hl-btn-primary'];
+      const selectors = ['.hl-p-betbtn', '.hp-p-betbtn', '.hs-p-mainbtn', '.hr-p-betbtn', 'button.hl-btn-primary'];
       for (const sel of selectors) {
         const btn = root.querySelector(sel);
         if (btn && btn.offsetWidth > 0 && !btn.disabled) {
@@ -319,13 +456,11 @@ export class HousebetsPlayer {
         }
       }
 
-      const allButtons = Array.from(root.querySelectorAll('button')).filter(b => b.offsetWidth > 0 && !b.disabled);
-      for (const btn of allButtons) {
-        const t = btn.innerText?.trim();
-        if (/^(Bet|Go|Play|Roll|Drop|Spin|Deal|Flip|Draw|Launch)$/i.test(t)) {
-          btn.click();
-          return { success: true, text: t };
-        }
+      const betBtn = findBtn(/^(bet|go|play|roll|drop|spin|deal|flip|draw|launch)$/i);
+      if (betBtn) {
+        const t = betBtn.innerText.trim();
+        betBtn.click();
+        return { success: true, text: t };
       }
 
       return { success: false, reason: 'no primary action button' };
@@ -338,7 +473,9 @@ export class HousebetsPlayer {
     await this.page.waitForTimeout(2000);
     await this.page.evaluate(() => window.scrollTo(0, 0));
 
-    // 2. Multi-Step Strategic Decision Loop (Hubie's Road, Mines, Dragon Tower, Hilo)
+    // =========================================================================
+    // 3. IN-ROUND INTERACTIVE CHOICES & STRATEGIC CASHOUT LOOP
+    // =========================================================================
     const isMultiStepGame = ['hubies_road', 'mines', 'dragon_tower', 'hilo'].includes(game.id);
 
     if (isMultiStepGame) {
@@ -346,7 +483,7 @@ export class HousebetsPlayer {
       const maxSteps = game.id === 'mines' ? 4 : 5;
 
       while (step < maxSteps) {
-        // Read live state inside shadow DOM
+        // Read live state inside game shadow DOM
         const state = await this.page.evaluate(() => {
           const host = document.querySelector('[data-housegames-direct]');
           if (!host?.shadowRoot) return { active: false, multiplier: 1.0, canCashout: false };
@@ -357,94 +494,187 @@ export class HousebetsPlayer {
           const multMatch = text.match(/(\d+(\.\d+)?)x/i);
           const mult = multMatch ? parseFloat(multMatch[1]) : 1.25;
 
-          const mainBtn = root.querySelector('.hl-p-betbtn, .hs-p-mainbtn, button.hl-btn-primary');
-          const canCashout = mainBtn && /cash\s*out|take/i.test(mainBtn.innerText);
+          const allBtns = Array.from(root.querySelectorAll('button'));
+          const cashoutBtn = allBtns.find(b => /cash\s*out|take/i.test(b.innerText || ''));
+          const canCashout = Boolean(cashoutBtn && cashoutBtn.offsetWidth > 0 && !cashoutBtn.disabled);
 
           return { active: true, multiplier: mult, canCashout };
         });
 
         if (!state.active) break;
 
-        // Hubie AI Strategic Decision!
-        const decision = await this.ai.decideGameMove(game.name, state.multiplier, step + 1);
-        console.log(`[HousebetsPlayer AI Decision] Step ${step + 1} (${state.multiplier}x): ${decision.action} -> "${decision.voiceLine}"`);
-        this.tts.speak(decision.voiceLine);
-
-        if (decision.action === 'CASHOUT' && state.canCashout) {
-          // Cash out!
-          await this.page.evaluate(() => {
+        // --- MINES: AI CHOOSES TILE ---
+        if (game.id === 'mines') {
+          const availableTilesCount = await this.page.evaluate(() => {
             const host = document.querySelector('[data-housegames-direct]');
-            if (!host?.shadowRoot) return;
+            if (!host?.shadowRoot) return 0;
             const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
             const root = gameEl.shadowRoot || gameEl;
-            const cashoutBtn = root.querySelector('.hl-p-betbtn, .hs-p-mainbtn, button.hl-btn-primary');
-            if (cashoutBtn) cashoutBtn.click();
+            return Array.from(root.querySelectorAll('button.hl-g-tile')).filter(b => b.offsetWidth > 0 && !b.disabled).length;
           });
-          console.log(`[HousebetsPlayer] Successfully CASHOUT at ${state.multiplier}x!`);
-          break;
-        } else {
-          // Push to next step!
-          const advanced = await this.page.evaluate((gameId) => {
-            window.scrollTo(0, 0);
-            const host = document.querySelector('[data-housegames-direct]');
-            if (!host?.shadowRoot) return false;
-            const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
-            const root = gameEl.shadowRoot || gameEl;
 
-            if (gameId === 'hubies_road') {
-              const lanes = Array.from(root.querySelectorAll('.hs-g-buoy, button[aria-label*="Lane" i]')).filter(b => b.offsetWidth > 0);
-              if (lanes.length > 0) {
-                lanes[0].click();
+          if (availableTilesCount > 0) {
+            const choice = await this.ai.decideChoice('mines', { step: step + 1, totalTiles: availableTilesCount });
+            console.log(`[HousebetsPlayer AI Choice] Mines: Tile Choice -> "${choice.voiceLine}"`);
+            this.tts.speak(choice.voiceLine);
+
+            const clicked = await this.page.evaluate((pickIdx) => {
+              const host = document.querySelector('[data-housegames-direct]');
+              if (!host?.shadowRoot) return false;
+              const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+              const root = gameEl.shadowRoot || gameEl;
+              const tiles = Array.from(root.querySelectorAll('button.hl-g-tile')).filter(b => b.offsetWidth > 0 && !b.disabled);
+              if (tiles.length === 0) return false;
+              const chosen = tiles[pickIdx % tiles.length];
+              if (chosen) {
+                chosen.click();
                 return true;
               }
-            } else if (gameId === 'mines') {
-              const tiles = Array.from(root.querySelectorAll('.hl-g-tile, button[aria-label*="Tile" i]')).filter(t => t.offsetWidth > 0 && !t.disabled);
-              if (tiles.length > 0) {
-                const pick = tiles[Math.floor(Math.random() * Math.min(tiles.length, 6))];
+              return false;
+            }, choice.tileIndex);
+
+            if (!clicked) break;
+            await this.page.waitForTimeout(1800);
+          }
+        }
+
+        // --- DRAGON TOWER: AI CHOOSES EGG ON CURRENT FLOOR ---
+        else if (game.id === 'dragon_tower') {
+          const eggCount = await this.page.evaluate(() => {
+            const host = document.querySelector('[data-housegames-direct]');
+            if (!host?.shadowRoot) return 0;
+            const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+            const root = gameEl.shadowRoot || gameEl;
+            return Array.from(root.querySelectorAll('button.tw-tile, button[class*="tile"], button[class*="egg"]'))
+              .filter(b => b.offsetWidth > 0 && !b.disabled).length;
+          });
+
+          if (eggCount > 0) {
+            const choice = await this.ai.decideChoice('dragon_tower', { floor: step + 1, eggCount });
+            console.log(`[HousebetsPlayer AI Choice] Dragon Tower: Egg #${choice.eggIndex + 1} -> "${choice.voiceLine}"`);
+            this.tts.speak(choice.voiceLine);
+
+            const clicked = await this.page.evaluate((eggIdx) => {
+              const host = document.querySelector('[data-housegames-direct]');
+              if (!host?.shadowRoot) return false;
+              const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+              const root = gameEl.shadowRoot || gameEl;
+              const activeEggs = Array.from(root.querySelectorAll('button.tw-tile, button[class*="tile"], button[class*="egg"]'))
+                .filter(b => b.offsetWidth > 0 && !b.disabled);
+              if (activeEggs.length > 0) {
+                const pick = activeEggs[eggIdx % activeEggs.length];
                 if (pick) {
                   pick.click();
                   return true;
                 }
               }
-            } else if (gameId === 'hilo') {
-              const hiloBtn = root.querySelector('button:has-text("Higher"), button:has-text("Lower"), .hl-hilo-opt');
-              if (hiloBtn) {
-                hiloBtn.click();
-                return true;
-              }
-            } else if (gameId === 'dragon_tower') {
-              const eggs = Array.from(root.querySelectorAll('button[class*="egg"], button[class*="tile"]')).filter(b => b.offsetWidth > 0);
-              if (eggs.length > 0) {
-                eggs[0].click();
-                return true;
-              }
-            }
-            return false;
-          }, game.id);
+              return false;
+            }, choice.eggIndex);
 
-          if (!advanced) break;
+            if (!clicked) break;
+            await this.page.waitForTimeout(1800);
+          }
         }
 
-        await this.page.waitForTimeout(2200);
-        await this.page.evaluate(() => window.scrollTo(0, 0));
+        // --- HUBIE'S ROAD: AI CHOOSES BUOY ---
+        else if (game.id === 'hubies_road') {
+          const buoyCount = await this.page.evaluate(() => {
+            const host = document.querySelector('[data-housegames-direct]');
+            if (!host?.shadowRoot) return 0;
+            const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+            const root = gameEl.shadowRoot || gameEl;
+            return Array.from(root.querySelectorAll('.hs-g-buoy, button[aria-label*="Lane" i]')).filter(b => b.offsetWidth > 0).length;
+          });
+
+          if (buoyCount > 0) {
+            const buoyPick = Math.floor(Math.random() * buoyCount);
+            console.log(`[HousebetsPlayer AI Choice] Hubie's Road: Buoy #${buoyPick + 1}`);
+            this.tts.speak(`Sloth hopping to buoy #${buoyPick + 1}, clear navigation squad!`);
+
+            await this.page.evaluate((idx) => {
+              const host = document.querySelector('[data-housegames-direct]');
+              if (!host?.shadowRoot) return;
+              const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+              const root = gameEl.shadowRoot || gameEl;
+              const lanes = Array.from(root.querySelectorAll('.hs-g-buoy, button[aria-label*="Lane" i]')).filter(b => b.offsetWidth > 0);
+              if (lanes.length > 0) {
+                lanes[idx % lanes.length].click();
+              }
+            }, buoyPick);
+
+            await this.page.waitForTimeout(1800);
+          }
+        }
+
+        // --- HILO: AI CHOOSES HIGHER / LOWER ---
+        else if (game.id === 'hilo') {
+          const choice = await this.ai.decideChoice('hilo');
+          console.log(`[HousebetsPlayer AI Choice] Hilo: ${choice.choice} -> "${choice.voiceLine}"`);
+          this.tts.speak(choice.voiceLine);
+
+          await this.page.evaluate((hiloChoice) => {
+            const host = document.querySelector('[data-housegames-direct]');
+            if (!host?.shadowRoot) return;
+            const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+            const root = gameEl.shadowRoot || gameEl;
+            const allBtns = Array.from(root.querySelectorAll('button'));
+            const btn = allBtns.find(b => new RegExp(hiloChoice, 'i').test(b.innerText || '')) || root.querySelector('.hl-hilo-opt');
+            if (btn) btn.click();
+          }, choice.choice);
+
+          await this.page.waitForTimeout(1800);
+        }
+
+        // --- AI STRATEGIC CASHOUT DECISION (CASHOUT OR PUSH TO NEXT STEP) ---
+        const decision = await this.ai.decideGameMove(game.name, state.multiplier, step + 1);
+        console.log(`[HousebetsPlayer AI Decision] Step ${step + 1} (${state.multiplier}x): ${decision.action} -> "${decision.voiceLine}"`);
+
+        if (decision.action === 'CASHOUT' && state.canCashout) {
+          this.cashedOutOutcome = {
+            won: true,
+            multiplier: state.multiplier || 1.25
+          };
+          this.tts.speak(decision.voiceLine, true);
+
+          await this.page.evaluate(() => {
+            const host = document.querySelector('[data-housegames-direct]');
+            if (!host?.shadowRoot) return;
+            const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+            const root = gameEl.shadowRoot || gameEl;
+            const allBtns = Array.from(root.querySelectorAll('button'));
+            const cashoutBtn = allBtns.find(b => /cash\s*out|take/i.test(b.innerText || ''));
+            if (cashoutBtn) cashoutBtn.click();
+          });
+          console.log(`[HousebetsPlayer] Successfully CASHOUT at ${state.multiplier}x!`);
+          break;
+        }
+
         step++;
+        await this.page.waitForTimeout(1200);
       }
     }
 
-    await this.page.waitForTimeout(2000);
+    // Wait for round settlement
+    await this.page.waitForTimeout(2200);
     await this.page.evaluate(() => window.scrollTo(0, 0));
 
-    // 3. Extract Outcome & Commentate
+    // =========================================================================
+    // 4. EXTRACT AUTHORITATIVE OUTCOME & LIVE COMMENTARY
+    // =========================================================================
     const outcome = await this.extractOutcomeFromPage(game);
 
     this.totalRounds++;
     this.roundsInCurrentGame++;
+    this.lastOutcome = outcome;
+    this.lastMultiplier = outcome.multiplier;
     this.supervisor.recordRoundCompletion();
 
     if (outcome.won) {
       this.totalWins++;
+      this.streak = this.streak > 0 ? this.streak + 1 : 1;
     } else {
       this.totalLosses++;
+      this.streak = this.streak < 0 ? this.streak - 1 : -1;
     }
 
     if (this.onGameUpdate) {
@@ -456,53 +686,86 @@ export class HousebetsPlayer {
           game_url: game.url,
           total_rounds: this.totalRounds,
           total_wins: this.totalWins,
-          total_losses: this.totalLosses
+          total_losses: this.totalLosses,
+          streak: this.streak
         },
         event_data: outcome
       });
     }
 
-    const commentary = await this.ai.commentateRound(game.name, 10.0, outcome);
-    this.tts.speak(commentary);
+    // Spontaneous live commentary for the current game
+    const commentary = await this.ai.commentateRound(game.name, 10.0, outcome, { streak: this.streak });
+    this.tts.speak(commentary, true);
+    await this.tts.waitForSpeech(4500);
   }
 
   async extractOutcomeFromPage(game) {
+    // 1. If round was successfully cashed out by AI
+    if (this.cashedOutOutcome) {
+      const res = this.cashedOutOutcome;
+      this.cashedOutOutcome = null;
+      console.log(`[HousebetsPlayer] Using CASHOUT outcome for ${game.name}: Won=true, Mult=${res.multiplier.toFixed(2)}x`);
+      return {
+        game: game.id,
+        displayName: game.name,
+        won: true,
+        multiplier: res.multiplier,
+        profit: (res.multiplier - 1.0) * 10,
+        detail: `Cashed out at ${res.multiplier.toFixed(2)}x on ${game.name}!`
+      };
+    }
+
+    // 2. Authoritative: Use live API response captured from games.housebets.com
+    if (this.lastLiveOutcome && (Date.now() - this.lastLiveOutcome.timestamp < 10000)) {
+      const { won, multiplier } = this.lastLiveOutcome;
+      console.log(`[HousebetsPlayer] Using authoritative API result for ${game.name}: Won=${won}, Mult=${multiplier.toFixed(2)}x`);
+      return {
+        game: game.id,
+        displayName: game.name,
+        won,
+        multiplier,
+        profit: won ? (multiplier - 1.0) * 10 : -10,
+        detail: won ? `Hit ${multiplier.toFixed(2)}x on ${game.name}!` : `Busted round on ${game.name}!`
+      };
+    }
+
+    // 3. DOM inspection for actual win/loss badges
     try {
-      const outcomeText = await this.page.evaluate(() => {
+      const domResult = await this.page.evaluate(() => {
         const host = document.querySelector('[data-housegames-direct]');
-        if (host?.shadowRoot) {
-          const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
-          const root = gameEl.shadowRoot || gameEl;
-          return root.innerText || '';
-        }
-        return '';
+        if (!host?.shadowRoot) return null;
+        const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+        const root = gameEl.shadowRoot || gameEl;
+
+        const hasWin = Boolean(root.querySelector('.hl-win, .hs-g-win, .win, [class*="won"], [class*="payout--win"]'));
+        const hasLoss = Boolean(root.querySelector('.hl-loss, .hs-g-loss, .loss, [class*="payout--loss"]'));
+
+        if (hasWin) return { won: true, mult: 2.0 };
+        if (hasLoss) return { won: false, mult: 0.0 };
+
+        return null;
       });
 
-      const multMatch = outcomeText.match(/(\d+(\.\d+)?)x/i);
-      const mult = multMatch ? parseFloat(multMatch[1]) : null;
-
-      if (mult !== null) {
-        const won = mult >= 1.0;
+      if (domResult) {
         return {
           game: game.id,
           displayName: game.name,
-          won,
-          multiplier: mult,
-          profit: won ? (mult - 1.0) * 10 : -10,
-          detail: `Played ${game.name} on housebets.com with outcome ${mult.toFixed(2)}x!`
+          won: domResult.won,
+          multiplier: domResult.mult,
+          profit: domResult.won ? (domResult.mult - 1.0) * 10 : -10,
+          detail: domResult.won ? `Hit ${domResult.mult.toFixed(2)}x on ${game.name}!` : `Round lost on ${game.name}!`
         };
       }
     } catch {}
 
-    const won = Math.random() < 0.52;
-    const mult = won ? parseFloat((Math.random() * 3.5 + 1.1).toFixed(2)) : 0.0;
+    // 4. Truthful fallback: never fabricate fake high wins
     return {
       game: game.id,
       displayName: game.name,
-      won,
-      multiplier: mult,
-      profit: won ? mult * 10 - 10 : -10,
-      detail: `Played round of ${game.name} on housebets.com!`
+      won: false,
+      multiplier: 0.0,
+      profit: -10,
+      detail: `Round completed on ${game.name}!`
     };
   }
 }
