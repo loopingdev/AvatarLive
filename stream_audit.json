@@ -3748,5 +3748,16 @@
     "data": {
       "time": "2026-11-06T18:14:20.885Z"
     }
+  },
+  {
+    "event": "JUDGES_CHECKPOINT",
+    "timestamp": "2026-11-06T18:44:22.717Z",
+    "uptime_seconds": 1801,
+    "uptime": "00h 30m 01s",
+    "data": {
+      "uptime": "00h 30m 01s",
+      "rounds_played": 74,
+      "status": "LIVE_AND_HEALTHY"
+    }
   }
 ]
