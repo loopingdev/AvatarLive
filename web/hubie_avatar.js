@@ -790,6 +790,7 @@ class HubieAvatar {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext('2d');
         this.speechBubble = document.getElementById(speechBubbleId);
+        this.speechBubbleHideTimer = null;
 
         // Web Audio Synthesizer
         this.sound = new HubieSoundEffects();
@@ -1496,20 +1497,35 @@ class HubieAvatar {
         this.danceDuration = duration;
     }
 
-    setSpeaking(speaking, text = '') {
+    setSpeaking(speaking, text = '', autoHideMs = null) {
         this.isSpeaking = Boolean(speaking);
+
+        if (this.speechBubbleHideTimer) {
+            clearTimeout(this.speechBubbleHideTimer);
+            this.speechBubbleHideTimer = null;
+        }
 
         if (this.speechBubble) {
             if (this.isSpeaking && text) {
                 this.speechBubble.textContent = text;
                 this.speechBubble.classList.add('visible');
                 this.updateSpeechBubblePosition();
-            } else if (!this.isSpeaking) {
-                setTimeout(() => {
-                    if (!this.isSpeaking) {
+
+                // Keep speech bubble visible for at least 7.5 seconds (or custom autoHideMs)
+                const duration = autoHideMs || 7500;
+                this.speechBubbleHideTimer = setTimeout(() => {
+                    this.isSpeaking = false;
+                    if (this.speechBubble) {
                         this.speechBubble.classList.remove('visible');
                     }
-                }, 2200);
+                }, duration);
+            } else if (!this.isSpeaking) {
+                // When speaking ends via audio event, gracefully hold bubble for 5 seconds before fade
+                this.speechBubbleHideTimer = setTimeout(() => {
+                    if (!this.isSpeaking && this.speechBubble) {
+                        this.speechBubble.classList.remove('visible');
+                    }
+                }, 5000);
             }
         }
     }

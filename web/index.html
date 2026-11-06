@@ -62,7 +62,7 @@
       <div class="modal-header">
         <span class="modal-icon">🎮</span>
         <h3>Hubie Live 24/7 — Viewer Interactive Commands</h3>
-        <span class="modal-close-hint">Auto-closes in 12s</span>
+        <span class="modal-close-hint">Auto-closes in 22s</span>
       </div>
       <div class="modal-grid">
         <div class="modal-col">
@@ -194,7 +194,7 @@
 
           // Help / Commands Cheatsheet Viewer Command
           if (lower.startsWith('!commands') || lower.startsWith('!command') || lower.startsWith('!help') || lower.startsWith('!poses') || lower.startsWith('!pose') || lower.startsWith('!menu')) {
-            showCommandsModal(12000);
+            showCommandsModal(22000);
             avatar.playSpecialPose('flag', 3500);
             avatar.setSpeaking(true, `On-screen command guide opened for @${msg.message.user}! Try !costume, !flex, !dance, !snack, or !surf! 🎮`);
           }
@@ -266,12 +266,17 @@
         return USER_COLORS[Math.abs(hash) % USER_COLORS.length];
       }
 
-      // Streamer Floating Chat Messages (Auto-fades after 8 seconds, zero persistent box)
+      // Streamer Floating Chat Messages (Configured to stay on screen for 28 seconds so viewers and streamer can comfortably read)
       function appendChatMessage(user, text, platform) {
         const item = document.createElement('div');
         item.className = 'chat-item';
         const color = getUserColor(user);
         item.style.setProperty('--user-color', color);
+
+        const isCommand = (text || '').startsWith('!') || (text || '').toLowerCase().includes('@hubie');
+        if (isCommand) {
+          item.classList.add('command-highlight');
+        }
 
         let badge = '<span class="chat-badge live">LIVE</span>';
         if (platform === 'kick') {
@@ -283,18 +288,19 @@
         item.innerHTML = `${badge}<span class="chat-user" style="color: ${color}; text-shadow: 0 0 10px ${color}88;">@${escapeHtml(user)}:</span><span class="chat-text">${escapeHtml(text)}</span>`;
         chatMessagesEl.appendChild(item);
 
-        // Limit visible stack to at most 6 messages
-        if (chatMessagesEl.children.length > 6) {
+        // Limit visible stack to at most 8 messages (scrolls upward nicely)
+        if (chatMessagesEl.children.length > 8) {
           chatMessagesEl.removeChild(chatMessagesEl.firstChild);
         }
 
-        // Auto-fade after 8 seconds, remove after 9 seconds (just like Twitch/Kick stream overlays!)
+        // Auto-fade duration: 28 seconds for standard comments, 34 seconds for viewer commands
+        const stayDuration = isCommand ? 34000 : 28000;
         setTimeout(() => {
           item.classList.add('fade-out');
           setTimeout(() => {
             if (item.parentNode) item.parentNode.removeChild(item);
-          }, 800);
-        }, 8000);
+          }, 1200);
+        }, stayDuration);
       }
 
       function appendModeratedNotice(user) {
@@ -306,8 +312,8 @@
           item.classList.add('fade-out');
           setTimeout(() => {
             if (item.parentNode) item.parentNode.removeChild(item);
-          }, 800);
-        }, 6000);
+          }, 1200);
+        }, 12000);
       }
 
       function escapeHtml(str) {
@@ -320,7 +326,7 @@
       const commandsModal = document.getElementById('commands-modal');
       let modalHideTimer = null;
 
-      function showCommandsModal(durationMs = 12000) {
+      function showCommandsModal(durationMs = 22000) {
         if (!commandsModal) return;
         commandsModal.classList.remove('hidden');
         if (modalHideTimer) clearTimeout(modalHideTimer);
