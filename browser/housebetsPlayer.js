@@ -56,15 +56,22 @@ export class HousebetsPlayer {
     const userDataDir = path.join(CONFIG.BASE_DIR, 'chrome_data');
     console.log(`[HousebetsPlayer] Launching persistent Chrome profile: ${userDataDir}`);
 
-    this.browserContext = await chromium.launchPersistentContext(userDataDir, {
-      channel: 'chrome',
+    const launchOptions = {
       headless: CONFIG.HEADLESS_BROWSER,
       viewport: { width: 1280, height: 720 },
       args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
         '--disable-blink-features=AutomationControlled',
         '--start-maximized'
       ]
-    });
+    };
+    if (process.platform === 'win32') {
+      launchOptions.channel = 'chrome';
+    }
+
+    this.browserContext = await chromium.launchPersistentContext(userDataDir, launchOptions);
 
     const pages = this.browserContext.pages();
     this.page = pages.length > 0 ? pages[0] : await this.browserContext.newPage();
