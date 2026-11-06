@@ -19,6 +19,88 @@
     <!-- 2. FLOATING AUTO-FADING STREAM CHAT (Zero static boxes, only appears when a message arrives) -->
     <div id="chat-messages" class="floating-chat-stream"></div>
 
+    <!-- 2b. INTERACTIVE STREAM COMMANDS PILL / TICKER (Visible at Bottom Right) -->
+    <div id="stream-commands-widget" class="commands-widget">
+      <div class="commands-header">
+        <span id="connection-status-dot" class="commands-pulse-dot" title="Live WebSocket Status"></span>
+        <span class="commands-badge">LIVE CONTROLS</span>
+        <span class="commands-prompt">Type <span class="cmd-highlight">!commands</span> in chat</span>
+      </div>
+      <div id="commands-ticker" class="commands-ticker">
+        <span class="ticker-slide active">👕 <b>Outfits:</b> !costume &lt;classic | halloween&gt;</span>
+        <span class="ticker-slide">💪 <b>Poses:</b> !boss • !surf • !flex • !dance • !flag • !snack</span>
+        <span class="ticker-slide">💬 <b>Interactive:</b> @Hubie &lt;msg&gt; • !blush • !whistle • !inspect</span>
+      </div>
+    </div>
+
+    <!-- 2d. STREAMER LOCAL TEST BAR (Quick testing from local browser / OBS Dock) -->
+    <div id="streamer-test-dock" class="streamer-test-dock">
+      <button id="toggle-test-dock" class="test-dock-toggle" title="Toggle Streamer Command Tester">🧪 Test Chat Commands</button>
+      <div id="test-dock-panel" class="test-dock-panel hidden">
+        <div class="test-dock-chips">
+          <button type="button" class="test-chip" data-cmd="!commands">!commands</button>
+          <button type="button" class="test-chip" data-cmd="!dance">!dance</button>
+          <button type="button" class="test-chip" data-cmd="!surf">!surf</button>
+          <button type="button" class="test-chip" data-cmd="!flex">!flex</button>
+          <button type="button" class="test-chip" data-cmd="!boss">!boss</button>
+          <button type="button" class="test-chip" data-cmd="!flag">!flag</button>
+          <button type="button" class="test-chip" data-cmd="!snack">!snack</button>
+          <button type="button" class="test-chip" data-cmd="!blush">!blush</button>
+          <button type="button" class="test-chip" data-cmd="!whistle">!whistle</button>
+          <button type="button" class="test-chip" data-cmd="!costume halloween">!costume halloween</button>
+          <button type="button" class="test-chip" data-cmd="!costume classic">!costume classic</button>
+        </div>
+        <form id="test-chat-form" class="test-chat-form">
+          <input id="test-chat-input" type="text" placeholder="Type test command or message (!dance, @Hubie hello)..." autocomplete="off" />
+          <button type="submit" class="test-send-btn">Send Test</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 2c. FULL INTERACTIVE COMMANDS CHEATSHEET MODAL (Triggered by !commands or !help in chat) -->
+    <div id="commands-modal" class="commands-modal hidden">
+      <div class="modal-header">
+        <span class="modal-icon">🎮</span>
+        <h3>Hubie Live 24/7 — Viewer Interactive Commands</h3>
+        <span class="modal-close-hint">Auto-closes in 12s</span>
+      </div>
+      <div class="modal-grid">
+        <div class="modal-col">
+          <h4>👕 VIP Wardrobe Outfits</h4>
+          <ul>
+            <li><code>!costume classic</code> — Signature top hat & waistcoat (Hubie OG)</li>
+            <li><code>!costume halloween</code> — Spooky wizard cape & magic glow</li>
+            <li><i>(Outfits change automatically when switching games!)</i></li>
+          </ul>
+        </div>
+        <div class="modal-col">
+          <h4>⚡ Special Poses & FX</h4>
+          <ul>
+            <li><code>!boss</code> — Executive boss sloth stance (💼)</li>
+            <li><code>!surf</code> — Wave 2 surfboard champion (🏄)</li>
+            <li><code>!flex</code> — Strong bicep flex pose (Sparkles ✦)</li>
+            <li><code>!dance</code> — Disco celebration (Confetti 🎊)</li>
+            <li><code>!flag</code> — Waves Housebets victory flag 🚩</li>
+            <li><code>!snack</code> — Sits down to eat orange slices 🍊</li>
+            <li><code>!blush</code> — Blushing heart hands (Hearts 💕)</li>
+            <li><code>!whistle</code> — Whistling stroll (Music ♪ ♫)</li>
+            <li><code>!card</code> / <code>!highroller</code> — Golden chip & card 🃏</li>
+            <li><code>!magnifier</code> / <code>!inspect</code> — Inspects screen 🔍</li>
+            <li><code>@Hubie &lt;message&gt;</code> — Speaks to viewer by name</li>
+            <li><code>!flex</code> — Strong bicep flex pose (Sparkles ✦)</li>
+            <li><code>!dance</code> — Disco celebration (Confetti 🎊)</li>
+            <li><code>!flag</code> — Waves Housebets victory flag 🚩</li>
+            <li><code>!snack</code> — Sits down to eat orange slices 🍊</li>
+            <li><code>!blush</code> — Blushing heart hands (Hearts 💕)</li>
+            <li><code>!whistle</code> — Whistling stroll (Music ♪ ♫)</li>
+            <li><code>!card</code> / <code>!highroller</code> — Golden chip & card 🃏</li>
+            <li><code>!magnifier</code> / <code>!inspect</code> — Inspects screen 🔍</li>
+            <li><code>@Hubie &lt;message&gt;</code> — Speaks to viewer by name</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <!-- 3. FULL-SCREEN AVATAR OVERLAY (Hubie Roams & Speaks Over Stream) -->
     <div id="avatar-stage">
       <div id="speech-bubble"></div>
@@ -41,18 +123,42 @@
       const screenLoading = document.getElementById('screen-loading');
       const chatMessagesEl = document.getElementById('chat-messages');
 
-      // WebSocket Connection
-      const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const ws = new WebSocket(`${protocol}//${location.host}/ws`);
+      // WebSocket Connection with Auto-Reconnect Engine
+      let ws = null;
+      let wsReconnectTimeout = null;
 
-      ws.onmessage = (event) => {
-        try {
-          const msg = JSON.parse(event.data);
-          handleServerMessage(msg);
-        } catch (e) {
-          console.error('WS Parse Error:', e);
-        }
-      };
+      function connectWebSocket() {
+        if (wsReconnectTimeout) clearTimeout(wsReconnectTimeout);
+        const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+        ws = new WebSocket(`${protocol}//${location.host}/ws`);
+
+        ws.onopen = () => {
+          console.log('[Hubie WS] Live WebSocket connected successfully.');
+          const dot = document.getElementById('connection-status-dot');
+          if (dot) dot.classList.add('connected');
+        };
+
+        ws.onmessage = (event) => {
+          try {
+            const msg = JSON.parse(event.data);
+            handleServerMessage(msg);
+          } catch (e) {
+            console.error('WS Parse Error:', e);
+          }
+        };
+
+        ws.onclose = () => {
+          console.warn('[Hubie WS] Connection lost. Reconnecting in 2.5s...');
+          const dot = document.getElementById('connection-status-dot');
+          if (dot) dot.classList.remove('connected');
+          wsReconnectTimeout = setTimeout(connectWebSocket, 2500);
+        };
+
+        ws.onerror = () => {
+          try { ws.close(); } catch {}
+        };
+      }
+      connectWebSocket();
 
       function handleServerMessage(msg) {
         if (msg.type === 'screencast_frame') {
@@ -84,14 +190,58 @@
           avatar.setSpeaking(false);
         } else if (msg.type === 'chat_message') {
           appendChatMessage(msg.message.user, msg.message.text, msg.message.platform);
-          const lower = msg.message.text.toLowerCase();
-          if (lower.includes('hubie')) {
-            avatar.reactToChat(msg.message.user);
+          const lower = (msg.message.text || '').toLowerCase().trim();
+
+          // Help / Commands Cheatsheet Viewer Command
+          if (lower.startsWith('!commands') || lower.startsWith('!command') || lower.startsWith('!help') || lower.startsWith('!poses') || lower.startsWith('!pose') || lower.startsWith('!menu')) {
+            showCommandsModal(12000);
+            avatar.playSpecialPose('flag', 3500);
+            avatar.setSpeaking(true, `On-screen command guide opened for @${msg.message.user}! Try !costume, !flex, !dance, !snack, or !surf! 🎮`);
           }
-          if (lower.includes('!costume') || lower.includes('!outfit') || lower.includes('change clothes')) {
-            if (lower.includes('spooky') || lower.includes('halloween') || lower.includes('witch')) avatar.triggerCostumeChangeRoutine('halloween');
-            else if (lower.includes('classic') || lower.includes('gent') || lower.includes('suit')) avatar.triggerCostumeChangeRoutine('classic');
-            else avatar.triggerCostumeChangeRoutine();
+          // Viewer Outfit / Costume Wardrobe Commands
+          else if (lower.startsWith('!costume') || lower.startsWith('!outfit') || lower.startsWith('!skin')) {
+            if (lower.includes('spooky') || lower.includes('halloween') || lower.includes('witch') || lower.includes('cape')) {
+              avatar.triggerCostumeChangeRoutine('halloween');
+            } else if (lower.includes('classic') || lower.includes('gent') || lower.includes('og') || lower.includes('tophat')) {
+              avatar.triggerCostumeChangeRoutine('classic');
+            } else {
+              avatar.triggerCostumeChangeRoutine();
+            }
+          }
+          // Direct Viewer Pose & Action Commands (The avatar moves freely and never loses animation)
+          else if (lower.startsWith('!dance') || lower.startsWith('!disco')) {
+            avatar.startHypeDance(4200);
+            avatar.triggerConfetti();
+            avatar.setSpeaking(true, `Disco dance party for @${msg.message.user}! Let's groove! 🕺`);
+          } else if (lower.startsWith('!surf') || lower.startsWith('!surfing') || lower.startsWith('!wave')) {
+            avatar.startSurfCruise();
+            avatar.setSpeaking(true, `Surfing the multiplier wave for @${msg.message.user}! 🏄`);
+          } else if (lower.startsWith('!flex') || lower.startsWith('!muscle') || lower.includes('!pose flex')) {
+            avatar.playSpecialPose('flex', 3500);
+            avatar.setSpeaking(true, `Flex check for @${msg.message.user}! Sloth strength in the house! 💪`);
+          } else if (lower.startsWith('!boss') || lower.startsWith('!suit') || lower.includes('!pose boss')) {
+            avatar.playSpecialPose('boss', 3500);
+            avatar.setSpeaking(true, `Boss stance activated for @${msg.message.user}! Big moves today! 💼`);
+          } else if (lower.startsWith('!flag') || lower.startsWith('!waveflag') || lower.includes('!pose flag')) {
+            avatar.playSpecialPose('flag', 3500);
+            avatar.setSpeaking(true, `Waving the Housebets victory flag for @${msg.message.user}! 🚩`);
+          } else if (lower.startsWith('!snack') || lower.startsWith('!eat') || lower.startsWith('!orange') || lower.includes('!pose snack')) {
+            avatar.playSpecialPose('snack', 3500);
+            avatar.setSpeaking(true, `Orange slice snack break for @${msg.message.user}! 🍊 Energy restored!`);
+          } else if (lower.startsWith('!blush') || lower.startsWith('!love') || lower.startsWith('!heart') || lower.includes('!pose blush')) {
+            avatar.playSpecialPose('blush', 3500);
+            avatar.setSpeaking(true, `Aw, thank you @${msg.message.user}! Much love squad! 💕`);
+          } else if (lower.startsWith('!whistle') || lower.startsWith('!music') || lower.includes('!pose whistle')) {
+            avatar.playSpecialPose('whistle', 3500);
+            avatar.setSpeaking(true, `Whistling into the multiplier zone for @${msg.message.user}! 🎶`);
+          } else if (lower.startsWith('!card') || lower.startsWith('!highroller') || lower.startsWith('!chips') || lower.includes('!pose card')) {
+            avatar.playSpecialPose('highroller', 3500);
+            avatar.setSpeaking(true, `Ace up the sleeve for @${msg.message.user}! Playing with style! 🃏`);
+          } else if (lower.startsWith('!magnifier') || lower.startsWith('!inspect') || lower.startsWith('!search') || lower.includes('!pose magnifier')) {
+            avatar.playSpecialPose('magnifier', 3500);
+            avatar.setSpeaking(true, `Inspecting the multipliers closely for @${msg.message.user}! 🔍`);
+          } else {
+            avatar.reactToChat(msg.message.user);
           }
         } else if (msg.type === 'chat_moderated') {
           appendModeratedNotice(msg.message.user);
@@ -166,6 +316,91 @@
         return div.innerHTML;
       }
 
+      // Interactive Commands Modal & Ticker Controller
+      const commandsModal = document.getElementById('commands-modal');
+      let modalHideTimer = null;
+
+      function showCommandsModal(durationMs = 12000) {
+        if (!commandsModal) return;
+        commandsModal.classList.remove('hidden');
+        if (modalHideTimer) clearTimeout(modalHideTimer);
+        modalHideTimer = setTimeout(() => {
+          commandsModal.classList.add('hidden');
+        }, durationMs);
+      }
+
+      function setupCommandsTicker() {
+        const slides = document.querySelectorAll('#commands-ticker .ticker-slide');
+        if (!slides || slides.length === 0) return;
+        let activeIdx = 0;
+        setInterval(() => {
+          slides[activeIdx].classList.remove('active');
+          activeIdx = (activeIdx + 1) % slides.length;
+          slides[activeIdx].classList.add('active');
+        }, 6500);
+      }
+      setupCommandsTicker();
+
+      const widgetEl = document.getElementById('stream-commands-widget');
+      if (widgetEl) {
+        widgetEl.addEventListener('click', () => showCommandsModal(12000));
+      }
+
+      // Streamer Interactive Local Command Tester
+      const toggleTestDockBtn = document.getElementById('toggle-test-dock');
+      const testDockPanel = document.getElementById('test-dock-panel');
+      const testChatForm = document.getElementById('test-chat-form');
+      const testChatInput = document.getElementById('test-chat-input');
+
+      if (toggleTestDockBtn && testDockPanel) {
+        toggleTestDockBtn.addEventListener('click', () => {
+          testDockPanel.classList.toggle('hidden');
+          if (!testDockPanel.classList.contains('hidden') && testChatInput) {
+            testChatInput.focus();
+          }
+        });
+      }
+
+      async function sendTestChatMessage(text) {
+        const clean = (text || '').trim();
+        if (!clean) return;
+        try {
+          await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: 'thehustler2030', text: clean })
+          });
+        } catch (e) {
+          console.error('Failed to send test chat:', e);
+        }
+      }
+
+      if (testChatForm && testChatInput) {
+        testChatForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const val = testChatInput.value.trim();
+          if (val) {
+            sendTestChatMessage(val);
+            testChatInput.value = '';
+          }
+        });
+      }
+
+      document.querySelectorAll('.test-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cmd = btn.getAttribute('data-cmd');
+          if (cmd) sendTestChatMessage(cmd);
+        });
+      });
+
+      // Hotkey: press '`' (backtick) or 't' to quickly open test bar when in browser
+      window.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.key === '`' || e.key === '~' || e.key.toLowerCase() === 't') {
+          if (testDockPanel) testDockPanel.classList.toggle('hidden');
+        }
+      });
+
       // Auto-scale full-screen borderless overlay to fit any resolution or OBS canvas
       const container = document.getElementById('stream-container');
       function resizeOverlay() {
@@ -179,16 +414,12 @@
       window.addEventListener('resize', resizeOverlay);
       resizeOverlay();
 
-      // Poll telemetry every second
+      // Poll telemetry every 2 seconds
       setInterval(async () => {
         try {
-          const res = await fetch('/api/status');
-          if (res.ok) {
-            const data = await res.json();
-            updateTelemetry(data);
-          }
+          await fetch('/api/status');
         } catch {}
-      }, 1000);
+      }, 2000);
     });
   </script>
 </body>

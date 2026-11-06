@@ -241,3 +241,320 @@ html, body {
   display: block;
   width: 0;
 }
+
+/* =========================================================================
+   STREAM INTERACTIVE COMMANDS WIDGET & CHEATSHEET MODAL
+   ========================================================================= */
+
+/* STREAM COMMANDS WIDGET (Bottom Right Corner Ticker) */
+.commands-widget {
+  position: absolute;
+  bottom: 25px;
+  right: 35px;
+  width: 440px;
+  background: rgba(10, 15, 26, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 255, 204, 0.28);
+  border-radius: 12px;
+  padding: 8px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 255, 204, 0.12);
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  pointer-events: auto;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.commands-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 4px;
+}
+
+.commands-pulse-dot {
+  width: 7px;
+  height: 7px;
+  background: #00ffcc;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00ffcc;
+  animation: pulseDot 1.5s infinite alternate;
+}
+
+@keyframes pulseDot {
+  from { opacity: 0.4; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1.2); }
+}
+
+.commands-badge {
+  font-weight: 800;
+  color: #00ffcc;
+}
+
+.commands-prompt {
+  margin-left: auto;
+  font-size: 10.5px;
+  color: #cbd5e1;
+}
+
+.cmd-highlight {
+  color: #ffd700;
+  font-weight: 700;
+  background: rgba(255, 215, 0, 0.15);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.commands-ticker {
+  position: relative;
+  height: 22px;
+  overflow: hidden;
+}
+
+.ticker-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 12.5px;
+  color: #f1f5f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ticker-slide.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ticker-slide b {
+  color: #38bdf8;
+}
+
+/* COMMAND CHEATSHEET MODAL (Triggered by !commands or !help) */
+.commands-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 780px;
+  background: rgba(8, 12, 22, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(0, 255, 204, 0.4);
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 255, 204, 0.2);
+  z-index: 60;
+  color: #f8fafc;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+.commands-modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -46%) scale(0.95);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.modal-icon {
+  font-size: 24px;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #00ffcc;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.modal-close-hint {
+  margin-left: auto;
+  font-size: 12px;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.modal-col h4 {
+  font-size: 13.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #38bdf8;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+}
+
+.modal-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.modal-col li {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: #e2e8f0;
+}
+
+.modal-col code {
+  background: rgba(0, 255, 204, 0.12);
+  color: #00ffcc;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+/* ==========================================================================
+   STREAMER LOCAL TEST DOCK (Bottom-Left Streamer Control)
+   ========================================================================== */
+.commands-pulse-dot.connected {
+  background: #00ffcc;
+  box-shadow: 0 0 10px #00ffcc;
+}
+
+.streamer-test-dock {
+  position: absolute;
+  bottom: 24px;
+  left: 28px;
+  z-index: 55;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.test-dock-toggle {
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 255, 204, 0.4);
+  color: #00ffcc;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.test-dock-toggle:hover {
+  background: rgba(0, 255, 204, 0.2);
+  border-color: #00ffcc;
+  transform: translateY(-1px);
+}
+
+.test-dock-panel {
+  background: rgba(10, 15, 28, 0.95);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 480px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.test-dock-panel.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px) scale(0.96);
+  display: none;
+}
+
+.test-dock-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.test-chip {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  font-size: 11px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.test-chip:hover {
+  background: rgba(0, 255, 204, 0.25);
+  border-color: #00ffcc;
+  color: #00ffcc;
+}
+
+.test-chat-form {
+  display: flex;
+  gap: 8px;
+}
+
+.test-chat-form input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #fff;
+  padding: 7px 12px;
+  font-size: 12px;
+  outline: none;
+}
+
+.test-chat-form input:focus {
+  border-color: #00ffcc;
+}
+
+.test-send-btn {
+  background: #00ffcc;
+  color: #090d16;
+  font-weight: 800;
+  font-size: 11px;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.test-send-btn:hover {
+  opacity: 0.9;
+}

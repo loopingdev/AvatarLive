@@ -813,10 +813,10 @@ class HubieAvatar {
         this.inDressingRoom = false;
         this.pendingCostume = 'classic';
 
-        // Costume System ('classic' | 'halloween' | 'astronaut')
+        // Costume System ('classic' | 'boss' | 'halloween' | 'surfer')
         this.currentCostume = 'classic';
 
-        // Classic Gent Costume Metrics
+        // Classic Gent & Official Housebets X Pose Metrics
         this.classicMetrics = {
             spriteSizes: {
                 stand: [458, 562],
@@ -825,7 +825,18 @@ class HubieAvatar {
                 land: [450, 509],
                 celebrate: [390, 580],
                 scared: [272, 462],
-                fall: [505, 572]
+                fall: [505, 572],
+                // Official Housebets X Media Poses:
+                flex: [958, 991],
+                flag: [790, 965],
+                dance: [867, 1028],
+                highroller: [574, 958],
+                snack: [862, 796],
+                blush: [619, 895],
+                whistle: [910, 989],
+                magnifier: [907, 926],
+                boss: [809, 972],
+                surfer: [850, 942]
             },
             anchors: {
                 stand: 0.3809,
@@ -834,7 +845,18 @@ class HubieAvatar {
                 land: 0.4241,
                 celebrate: 0.5228,
                 scared: 0.4984,
-                fall: 0.4719
+                fall: 0.4719,
+                // Official Housebets X Media Anchors:
+                flex: 0.50,
+                flag: 0.46,
+                dance: 0.50,
+                highroller: 0.45,
+                snack: 0.50,
+                blush: 0.50,
+                whistle: 0.48,
+                magnifier: 0.48,
+                boss: 0.48,
+                surfer: 0.52
             },
             mouthOffsets: {
                 stand:     [217, 193],
@@ -843,10 +865,22 @@ class HubieAvatar {
                 land:      [266, 193],
                 celebrate: [222, 205],
                 scared:    [136, 115],
-                fall:      [232, 196]
+                fall:      [232, 196],
+                // Official Housebets X Media Mouth Coordinates:
+                flex:       [480, 290],
+                flag:       [380, 310],
+                dance:      [510, 270],
+                highroller: [360, 220],
+                snack:      [440, 330],
+                blush:      [300, 340],
+                whistle:    [420, 340],
+                magnifier:  [450, 290],
+                boss:       [330, 270],
+                surfer:     [330, 220]
             },
             smileWidths: {
-                stand: 54, crouch: 58, jump: 56, land: 54, celebrate: 52, scared: 38, fall: 50
+                stand: 54, crouch: 58, jump: 56, land: 54, celebrate: 52, scared: 38, fall: 50,
+                flex: 56, flag: 56, dance: 60, highroller: 52, snack: 54, blush: 48, whistle: 30, magnifier: 54, boss: 56, surfer: 56
             }
         };
 
@@ -859,7 +893,17 @@ class HubieAvatar {
                 land: [424, 500],
                 celebrate: [411, 582],
                 scared: [335, 468],
-                fall: [461, 485]
+                fall: [461, 485],
+                flex: [958, 991],
+                flag: [790, 965],
+                dance: [867, 1028],
+                highroller: [574, 958],
+                snack: [862, 796],
+                blush: [619, 895],
+                whistle: [910, 989],
+                magnifier: [907, 926],
+                boss: [809, 972],
+                surfer: [850, 942]
             },
             anchors: {
                 stand: 0.4334,
@@ -868,7 +912,9 @@ class HubieAvatar {
                 land: 0.4697,
                 celebrate: 0.4911,
                 scared: 0.4938,
-                fall: 0.4334
+                fall: 0.4334,
+                flex: 0.50, flag: 0.46, dance: 0.50, highroller: 0.45,
+                snack: 0.50, blush: 0.50, whistle: 0.48, magnifier: 0.48, boss: 0.48, surfer: 0.52
             },
             mouthOffsets: {
                 stand:     [184, 198],
@@ -877,10 +923,21 @@ class HubieAvatar {
                 land:      [215, 192],
                 celebrate: [208, 204],
                 scared:    [168, 120],
-                fall:      [212, 188]
+                fall:      [212, 188],
+                flex:       [480, 290],
+                flag:       [380, 310],
+                dance:      [510, 270],
+                highroller: [360, 220],
+                snack:      [440, 330],
+                blush:      [300, 340],
+                whistle:    [420, 340],
+                magnifier:  [450, 290],
+                boss:       [330, 270],
+                surfer:     [330, 220]
             },
             smileWidths: {
-                stand: 52, crouch: 56, jump: 54, land: 52, celebrate: 50, scared: 36, fall: 48
+                stand: 52, crouch: 56, jump: 54, land: 52, celebrate: 50, scared: 36, fall: 48,
+                flex: 56, flag: 56, dance: 60, highroller: 52, snack: 54, blush: 48, whistle: 30, magnifier: 54, boss: 56, surfer: 56
             }
         };
 
@@ -951,8 +1008,14 @@ class HubieAvatar {
         this.waterRipples = [];
         this.surfSprayParticles = [];
         this.spaceThrusterParticles = [];
+        this.floatingSymbolParticles = []; // For hearts (♥), music notes (♪ ♫), stars (✦)
         this.hatFly = { active: false, x: 0, y: 0, vx: 0, vy: 0, rot: 0, vrot: 0 };
         this.splashFx = { active: false, timer: 0, maxTime: 750, x: 0, y: 0 };
+
+        // Special Poses & Expressions from Official @HousebetsHubie
+        this.isSpecialPose = false;
+        this.specialPoseTimer = 0;
+        this.specialPoseDuration = 0;
 
         // Roaming Waypoints
         this.waypoints = [
@@ -983,7 +1046,18 @@ class HubieAvatar {
             scared: '/assets/hubie_road/hubie-scared.webp',
             fall: '/assets/hubie_road/hubie-fall.webp',
             splash: '/assets/hubie_road/splash-big.webp',
-            hat: '/assets/hubie_road/hat-solo.webp'
+            hat: '/assets/hubie_road/hat-solo.webp',
+            // Official Housebets X Media Poses:
+            flex: '/assets/hubie_poses/hubie_flex.png',
+            flag: '/assets/hubie_poses/hubie_flag.png',
+            dance: '/assets/hubie_poses/hubie_dance.png',
+            highroller: '/assets/hubie_poses/hubie_highroller.png',
+            snack: '/assets/hubie_poses/hubie_snack.png',
+            blush: '/assets/hubie_poses/hubie_blush.png',
+            whistle: '/assets/hubie_poses/hubie_whistle.png',
+            magnifier: '/assets/hubie_poses/hubie_magnifier.png',
+            boss: '/assets/hubie_poses/hubie_boss.png',
+            surfer: '/assets/hubie_poses/hubie_surfer.png'
         };
 
         const halloweenAssets = {
@@ -995,7 +1069,17 @@ class HubieAvatar {
             scared: '/assets/hubie_halloween/hubie-scared.webp',
             fall: '/assets/hubie_halloween/hubie-fall.webp',
             splash: '/assets/hubie_halloween/splash-big.webp',
-            hat: '/assets/hubie_halloween/hat-solo.webp'
+            hat: '/assets/hubie_halloween/hat-solo.webp',
+            flex: '/assets/hubie_poses/hubie_flex.png',
+            flag: '/assets/hubie_poses/hubie_flag.png',
+            dance: '/assets/hubie_poses/hubie_dance.png',
+            highroller: '/assets/hubie_poses/hubie_highroller.png',
+            snack: '/assets/hubie_poses/hubie_snack.png',
+            blush: '/assets/hubie_poses/hubie_blush.png',
+            whistle: '/assets/hubie_poses/hubie_whistle.png',
+            magnifier: '/assets/hubie_poses/hubie_magnifier.png',
+            boss: '/assets/hubie_poses/hubie_boss.png',
+            surfer: '/assets/hubie_poses/hubie_surfer.png'
         };
 
         let loadedCount = 0;
@@ -1055,6 +1139,96 @@ class HubieAvatar {
         this.poseBlend = 0.0;
     }
 
+    // =========================================================================
+    // SPECIAL CHARACTER POSES & FLOATING SYMBOL PARTICLES (FROM OFFICIAL X)
+    // =========================================================================
+    addHearts(x, y, count = 12) {
+        for (let i = 0; i < count; i++) {
+            this.floatingSymbolParticles.push({
+                type: 'heart',
+                char: Math.random() < 0.6 ? '♥' : '💕',
+                x: x + (Math.random() * 140 - 70),
+                y: y - 100 - Math.random() * 80,
+                vx: (Math.random() - 0.5) * 1.8,
+                vy: -(Math.random() * 2.5 + 1.2),
+                size: Math.random() * 12 + 18,
+                color: Math.random() < 0.5 ? '#ff2a70' : '#ff7597',
+                alpha: 1.0,
+                life: 1.0,
+                decay: 0.012 + Math.random() * 0.008
+            });
+        }
+    }
+
+    addMusicNotes(x, y, count = 8) {
+        const notes = ['♪', '♫', '♩', '♬'];
+        for (let i = 0; i < count; i++) {
+            this.floatingSymbolParticles.push({
+                type: 'music',
+                char: notes[Math.floor(Math.random() * notes.length)],
+                x: x + (Math.random() * 100 - 50),
+                y: y - 220 - Math.random() * 60,
+                vx: (Math.random() - 0.5) * 2.2,
+                vy: -(Math.random() * 2.2 + 1.0),
+                size: Math.random() * 10 + 20,
+                color: Math.random() < 0.5 ? '#f97316' : '#facc15',
+                alpha: 1.0,
+                life: 1.0,
+                decay: 0.015 + Math.random() * 0.008
+            });
+        }
+    }
+
+    addSparkles(x, y, count = 15) {
+        const stars = ['✦', '★', '✧', '♦'];
+        for (let i = 0; i < count; i++) {
+            this.floatingSymbolParticles.push({
+                type: 'sparkle',
+                char: stars[Math.floor(Math.random() * stars.length)],
+                x: x + (Math.random() * 160 - 80),
+                y: y - 140 - Math.random() * 120,
+                vx: (Math.random() - 0.5) * 3.0,
+                vy: -(Math.random() * 2.8 + 1.5),
+                size: Math.random() * 10 + 16,
+                color: Math.random() < 0.5 ? '#ffd700' : '#00ffff',
+                alpha: 1.0,
+                life: 1.0,
+                decay: 0.016 + Math.random() * 0.008
+            });
+        }
+    }
+
+    playSpecialPose(poseName, duration = 3500) {
+        if (this.isChangingCostume) return;
+        this.isSpecialPose = true;
+        this.state = 'SPECIAL_POSE';
+        this.specialPoseTimer = 0;
+        this.specialPoseDuration = duration;
+        this.setPose(poseName);
+
+        if (poseName === 'flex') {
+            this.addSparkles(this.x, this.groundY, 16);
+            this.sound.playWinSound(1.5);
+        } else if (poseName === 'flag') {
+            this.addSparkles(this.x, this.groundY, 20);
+            this.sound.playWinSound(2.0);
+        } else if (poseName === 'dance') {
+            this.triggerConfetti();
+            this.sound.playWinSound(2.5);
+        } else if (poseName === 'blush') {
+            this.addHearts(this.x, this.groundY, 14);
+        } else if (poseName === 'whistle') {
+            this.addMusicNotes(this.x, this.groundY, 10);
+        } else if (poseName === 'highroller' || poseName === 'boss') {
+            this.addSparkles(this.x, this.groundY, 15);
+        } else if (poseName === 'snack') {
+            this.addSparkles(this.x, this.groundY - 50, 10);
+        } else if (poseName === 'surfer') {
+            this.addWaterRipple(this.x, this.groundY, 130);
+            this.addSurfSpray(this.x, this.groundY);
+        }
+    }
+
     /**
      * Triggered automatically whenever Housebets switches to a new game
      * (e.g. Hilo -> Dragon Tower -> Mines -> Limbo -> Dice)
@@ -1076,13 +1250,14 @@ class HubieAvatar {
 
     /**
      * Autonomous VIP Dressing Room Door Routine
-     * Alternates between Classic Gent (top hat & waistcoat) and Spooky Halloween (wizard cape).
+     * Alternates between Classic Gent, High-Roller Boss, Spooky Halloween, and Wave 2 Surfer!
      */
     triggerCostumeChangeRoutine(targetCostume = null) {
         if (this.isChangingCostume) return;
         this.isChangingCostume = true;
         this.state = 'CHANGING_COSTUME';
 
+        // Rotate cleanly between the two 100% animated game costume sets: Classic OG & Halloween
         const sequence = ['classic', 'halloween'];
         let next = targetCostume;
         if (!next || !sequence.includes(next)) {
@@ -1162,13 +1337,17 @@ class HubieAvatar {
                 this.sound.playRevealSound();
                 this.sound.playWinSound(3.0);
                 this.triggerConfetti();
-                this.setPose('celebrate');
+                this.setPose(this.currentCostume === 'boss' ? 'boss' : (this.currentCostume === 'surfer' ? 'surfer' : 'celebrate'));
 
                 // Delivery line with game context
                 const gameCtx = this.currentGameName ? ` for ${this.currentGameName}` : '';
                 let line = `Back in the gentleman sloth top hat and waistcoat! Clean drip secured${gameCtx}!`;
                 if (this.currentCostume === 'halloween') {
                     line = `Spooky wizard cape equipped! Multiplying magic is unlocked${gameCtx} squad!`;
+                } else if (this.currentCostume === 'boss') {
+                    line = `High-roller boss suit with gold cufflinks locked in${gameCtx}! Big bets only squad!`;
+                } else if (this.currentCostume === 'surfer') {
+                    line = `Wave 2 surfer board ready${gameCtx}! Riding the multiplier tsunami squad!`;
                 }
                 this.setSpeaking(true, line);
             }
@@ -1233,9 +1412,9 @@ class HubieAvatar {
     }
 
     autonomousRoam() {
-        if (this.state === 'IDLE' && !this.isSpeaking && !this.isHopping && !this.isSurfing && !this.isChangingCostume) {
+        if (this.state === 'IDLE' && !this.isSpeaking && !this.isHopping && !this.isSurfing && !this.isChangingCostume && !this.isSpecialPose) {
             const rand = Math.random();
-            if (rand < 0.28) {
+            if (rand < 0.25) {
                 const nextWaypoint = this.waypoints[Math.floor(Math.random() * this.waypoints.length)];
                 this.acrobaticFlip(nextWaypoint.x);
             } else {
@@ -1346,15 +1525,16 @@ class HubieAvatar {
 
     reactToWin(multiplier = 2.0) {
         if (this.isChangingCostume) return;
-        this.state = 'CELEBRATING';
-        this.setPose('celebrate');
         this.isHopping = false;
         this.isSurfing = false;
         this.isFlipping = false;
+        this.isSpecialPose = false;
 
         this.sound.playWinSound(multiplier);
         this.triggerConfetti();
 
+        this.state = 'CELEBRATING';
+        this.setPose('celebrate');
         if (multiplier >= 2.5) {
             this.startHypeDance(3600);
         } else {
@@ -1374,6 +1554,7 @@ class HubieAvatar {
         this.isHopping = false;
         this.isSurfing = false;
         this.isFlipping = false;
+        this.isSpecialPose = false;
 
         setTimeout(() => {
             if (this.state === 'LOSS_REACTION') {
@@ -1409,9 +1590,25 @@ class HubieAvatar {
     }
 
     reactToChat(username) {
-        if (!this.isChangingCostume) {
-            this.moveTo(1200);
-        }
+        if (this.isChangingCostume) return;
+        // Physical locomotion towards the live stream chat overlay (right side: x=1050 to 1250)
+        const chatTargetX = 1050 + Math.random() * 150;
+        this.moveTo(chatTargetX);
+        this.direction = 1;
+
+        // Visual gratitude with floating neon hearts and audio chime
+        this.addHearts(this.x, this.groundY, 12);
+        this.sound.playWinSound(1.2);
+
+        // Responsive mascot greeting speech bubble
+        const greetings = [
+            `Hey @${username}! Sloth squad is live! 🌴`,
+            `Appreciate you chatting @${username}! Let's hunt these multipliers! 🚀`,
+            `Much love @${username}! Thanks for riding with Hubie today! 💕`,
+            `Yooo @${username}! Welcome to the 24/7 stream! 🔥`
+        ];
+        const line = greetings[Math.floor(Math.random() * greetings.length)];
+        this.setSpeaking(true, line);
     }
 
     triggerConfetti() {
@@ -1708,6 +1905,29 @@ class HubieAvatar {
                 this.splashFx.active = false;
             }
         }
+
+        // 11. Update Special Pose Timer
+        if (this.isSpecialPose) {
+            this.specialPoseTimer += dt;
+            if (this.specialPoseTimer >= this.specialPoseDuration) {
+                this.isSpecialPose = false;
+                if (this.state === 'SPECIAL_POSE') {
+                    this.state = 'IDLE';
+                    this.setPose('stand');
+                }
+            }
+        }
+
+        // 12. Update Floating Symbol Particles (Hearts, Music Notes, Sparkles)
+        for (let i = this.floatingSymbolParticles.length - 1; i >= 0; i--) {
+            const p = this.floatingSymbolParticles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.alpha -= p.decay;
+            if (p.alpha <= 0) {
+                this.floatingSymbolParticles.splice(i, 1);
+            }
+        }
     }
 
     render(time) {
@@ -1782,6 +2002,9 @@ class HubieAvatar {
 
         // 7. Draw Dressing Room Architectural Casing & 3D Swinging Door (Foreground layer in front of interior & Hubie)
         this.dressingRoom.drawFrameAndDoor(this.ctx);
+
+        // 7b. Draw Floating Symbols (Hearts, Music Notes, Sparkles) in front
+        this.drawFloatingSymbols();
 
         // 7. Flying Hat on Loss
         const hatImg = this.currentCostume === 'halloween'
@@ -1981,10 +2204,31 @@ class HubieAvatar {
         this.ctx.restore();
     }
 
+    drawFloatingSymbols() {
+        if (!this.floatingSymbolParticles || this.floatingSymbolParticles.length === 0) return;
+        this.ctx.save();
+        for (const p of this.floatingSymbolParticles) {
+            this.ctx.save();
+            this.ctx.globalAlpha = Math.max(0, Math.min(1.0, p.alpha));
+            this.ctx.font = `bold ${Math.round(p.size)}px "Segoe UI Emoji", "Inter", sans-serif`;
+            this.ctx.fillStyle = p.color;
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.shadowColor = p.color;
+            this.ctx.shadowBlur = 12;
+            this.ctx.fillText(p.char, p.x, p.y);
+            this.ctx.restore();
+        }
+        this.ctx.restore();
+    }
+
     drawBadge(x, y) {
         this.ctx.save();
         this.ctx.font = 'bold 15px "Inter", sans-serif';
-        const costumeTag = this.currentCostume === 'halloween' ? '🎃 SPOOKY HUBIE' : '⭐ HUBIE';
+        const costumeTag = this.currentCostume === 'halloween' ? '🎃 SPOOKY HUBIE'
+            : this.currentCostume === 'boss' ? '💼 HIGH-ROLLER HUBIE'
+            : this.currentCostume === 'surfer' ? '🏄 SURFER HUBIE'
+            : '⭐ HUBIE';
         this.ctx.fillStyle = this.state === 'CELEBRATING' ? '#ffd700' : '#00ffcc';
         this.ctx.textAlign = 'center';
         this.ctx.fillText(costumeTag, x, y);

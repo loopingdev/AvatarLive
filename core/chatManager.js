@@ -1,4 +1,6 @@
 import WebSocket from 'ws';
+import fs from 'fs';
+import path from 'path';
 import { CONFIG } from '../config.js';
 
 const BLOCKED_PATTERNS = [
@@ -18,7 +20,14 @@ const SIMULATED_CHAT_MESSAGES = [
   "HUBIE! What game are we hitting next?",
   "Can you hit a 100x on Plinko for the squad?",
   "Hubie's Road is the greatest house original hands down 🔥",
-  "Yooo love the sunglasses Hubie! Looking fresh today!",
+  "Yooo looking fresh today Hubie!",
+  "!flex",
+  "!dance",
+  "!surf",
+  "!flag",
+  "!snack",
+  "!blush",
+  "!commands",
   "Is it true that sloths never tilt?",
   "Drop another chip! W in the chat for Hubie!",
   "What multiplier are we chasing right now Hubie?",
@@ -47,6 +56,7 @@ export class ChatManager {
     this.twitchWs = null;
     this.kickReconnectTimer = null;
     this.twitchReconnectTimer = null;
+    this.twitchPingTimer = null;
     this.isKickConnected = false;
     this.isTwitchConnected = false;
   }
@@ -65,7 +75,43 @@ export class ChatManager {
     // 2. Connect to Twitch Live Chat if configured
     if (CONFIG.TWITCH_CHANNEL && CONFIG.TWITCH_CHANNEL.trim().length > 0) {
       this.connectTwitchChat(CONFIG.TWITCH_CHANNEL.trim());
+    } else if (CONFIG.STREAM_PLATFORM === 'twitch') {
+      console.warn('[HubieChat WARNING] STREAM_PLATFORM is set to "twitch", but TWITCH_CHANNEL is empty in .env! Set TWITCH_CHANNEL=your_channel_username in .env so Hubie connects to your Twitch chat.');
     }
+
+    // Dynamic .env file watcher: auto-reloads and reconnects if channel is edited live
+    try {
+      const envPath = path.join(CONFIG.BASE_DIR, '.env');
+      if (fs.existsSync(envPath)) {
+        fs.watch(envPath, (eventType) => {
+          if (eventType === 'change') {
+            try {
+              const content = fs.readFileSync(envPath, 'utf8');
+              const twitchMatch = content.match(/^TWITCH_CHANNEL\s*=\s*(.+)$/m);
+              const kickMatch = content.match(/^KICK_CHANNEL\s*=\s*(.+)$/m);
+              const newTwitch = twitchMatch ? twitchMatch[1].trim() : '';
+              const newKick = kickMatch ? kickMatch[1].trim() : '';
+              if (newTwitch && newTwitch !== CONFIG.TWITCH_CHANNEL) {
+                console.log(`[HubieChat] Detected updated TWITCH_CHANNEL in .env: ${newTwitch}. Reconnecting Twitch IRC...`);
+                CONFIG.TWITCH_CHANNEL = newTwitch;
+                if (this.twitchWs) {
+                  try { this.twitchWs.close(); } catch {}
+                }
+                this.connectTwitchChat(newTwitch);
+              }
+              if (newKick && newKick !== CONFIG.KICK_CHANNEL) {
+                console.log(`[HubieChat] Detected updated KICK_CHANNEL in .env: ${newKick}. Reconnecting Kick chat...`);
+                CONFIG.KICK_CHANNEL = newKick;
+                if (this.kickWs) {
+                  try { this.kickWs.close(); } catch {}
+                }
+                this.connectKickChat(newKick);
+              }
+            } catch {}
+          }
+        });
+      }
+    } catch {}
 
     // 3. Fallback simulated chat ONLY if explicitly enabled and no real channels
     if (CONFIG.ENABLE_SIMULATED_CHAT || (!CONFIG.KICK_CHANNEL && !CONFIG.TWITCH_CHANNEL)) {
@@ -79,6 +125,7 @@ export class ChatManager {
     this.running = false;
     if (this.kickReconnectTimer) clearTimeout(this.kickReconnectTimer);
     if (this.twitchReconnectTimer) clearTimeout(this.twitchReconnectTimer);
+    if (this.twitchPingTimer) clearInterval(this.twitchPingTimer);
 
     if (this.kickWs) {
       try { this.kickWs.close(); } catch {}
@@ -185,32 +232,66 @@ export class ChatManager {
       this.twitchWs = new WebSocket('wss://irc-ws.chat.twitch.tv:443');
 
       this.twitchWs.on('open', () => {
-        console.log(`[HubieChat Twitch] WebSocket open, authenticating anonymously...`);
+        console.log(`[HubieChat Twitch] WebSocket open, authenticating anonymously for #${cleanChan}...`);
         this.isTwitchConnected = true;
+        // Request Twitch IRC capabilities (tags, commands, membership)
+        this.twitchWs.send('CAP REQ :twitch.tv/tags twitch.tv/commands twitch.tv/membership\r\n');
         this.twitchWs.send('PASS SCHMOOPIIE\r\n');
         this.twitchWs.send(`NICK justinfan${Math.floor(Math.random() * 80000 + 10000)}\r\n`);
         this.twitchWs.send(`JOIN #${cleanChan}\r\n`);
+        console.log(`[HubieChat Twitch] Joined chatroom #${cleanChan}! Ready for live viewer comments.`);
+
+        // Keep connection alive with periodic PING
+        if (this.twitchPingTimer) clearInterval(this.twitchPingTimer);
+        this.twitchPingTimer = setInterval(() => {
+          if (this.twitchWs && this.twitchWs.readyState === 1) {
+            this.twitchWs.send('PING :tmi.twitch.tv\r\n');
+          }
+        }, 30000);
       });
 
       this.twitchWs.on('message', async (data) => {
-        const text = data.toString();
-        if (text.startsWith('PING')) {
-          this.twitchWs.send('PONG :tmi.twitch.tv\r\n');
-          return;
-        }
+        const raw = data.toString();
+        const lines = raw.split(/\r?\n/);
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed) continue;
+          if (trimmed.startsWith('PING')) {
+            this.twitchWs.send('PONG :tmi.twitch.tv\r\n');
+            continue;
+          }
 
-        // Parse IRC PRIVMSG
-        const match = text.match(/^:([a-zA-Z0-9_]+)!\S+\s+PRIVMSG\s+#\S+\s+:(.+)$/m);
-        if (match) {
-          const sender = match[1];
-          const content = match[2].trim();
-          console.log(`[HubieChat Twitch LIVE] @${sender}: "${content}"`);
-          await this.ingestMessage(sender, content, false, 'twitch');
+          // Robust PRIVMSG parsing: handles IRCv3 tags, display names, and standard messages
+          const privmsgIdx = trimmed.indexOf(' PRIVMSG ');
+          if (privmsgIdx !== -1) {
+            const afterPrivmsg = trimmed.substring(privmsgIdx + 9);
+            const colonIdx = afterPrivmsg.indexOf(' :');
+            if (colonIdx !== -1) {
+              const content = afterPrivmsg.substring(colonIdx + 2).trim();
+
+              // Extract username from prefix :user!user@ or from display-name tag
+              let sender = 'TwitchViewer';
+              const displayNameMatch = trimmed.match(/display-name=([a-zA-Z0-9_]+)/);
+              const userPrefixMatch = trimmed.match(/:([a-zA-Z0-9_]+)![a-zA-Z0-9_]+@/);
+
+              if (displayNameMatch && displayNameMatch[1]) {
+                sender = displayNameMatch[1];
+              } else if (userPrefixMatch && userPrefixMatch[1]) {
+                sender = userPrefixMatch[1];
+              }
+
+              if (content) {
+                console.log(`[HubieChat Twitch LIVE] @${sender}: "${content}"`);
+                await this.ingestMessage(sender, content, false, 'twitch');
+              }
+            }
+          }
         }
       });
 
       this.twitchWs.on('close', () => {
         this.isTwitchConnected = false;
+        if (this.twitchPingTimer) clearInterval(this.twitchPingTimer);
         console.warn(`[HubieChat Twitch] Disconnected. Reconnecting in 6s...`);
         if (this.running) {
           this.twitchReconnectTimer = setTimeout(() => this.connectTwitchChat(channel), 6000);

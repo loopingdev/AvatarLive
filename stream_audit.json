@@ -3515,5 +3515,238 @@
       "rounds_played": 76,
       "status": "LIVE_AND_HEALTHY"
     }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T14:47:51.126Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T14:47:51.126Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T14:48:43.947Z",
+    "uptime_seconds": 52,
+    "uptime": "00h 00m 52s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.waitForTimeout: Target page, context or browser has been closed",
+      "timestamp": "2026-11-06T14:48:43.947Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T14:48:46.964Z",
+    "uptime_seconds": 55,
+    "uptime": "00h 00m 55s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: Target page, context or browser has been closed",
+      "timestamp": "2026-11-06T14:48:46.964Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T14:48:49.985Z",
+    "uptime_seconds": 58,
+    "uptime": "00h 00m 58s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: Target page, context or browser has been closed",
+      "timestamp": "2026-11-06T14:48:49.985Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T14:48:53.001Z",
+    "uptime_seconds": 61,
+    "uptime": "00h 01m 01s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: Target page, context or browser has been closed",
+      "timestamp": "2026-11-06T14:48:53.001Z"
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T14:48:56.014Z",
+    "uptime_seconds": 64,
+    "uptime": "00h 01m 04s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: Target page, context or browser has been closed",
+      "timestamp": "2026-11-06T14:48:56.014Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_END",
+    "timestamp": "2026-11-06T14:48:58.489Z",
+    "uptime_seconds": 67,
+    "uptime": "00h 01m 07s",
+    "data": {
+      "uptime_seconds": 67,
+      "uptime_human": "00h 01m 07s",
+      "total_rounds": 1
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T14:49:17.247Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T14:49:17.247Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_END",
+    "timestamp": "2026-11-06T14:49:59.578Z",
+    "uptime_seconds": 42,
+    "uptime": "00h 00m 42s",
+    "data": {
+      "uptime_seconds": 42,
+      "uptime_human": "00h 00m 42s",
+      "total_rounds": 1
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T14:49:59.834Z",
+    "uptime_seconds": 42,
+    "uptime": "00h 00m 42s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.waitForTimeout: Target page, context or browser has been closed",
+      "timestamp": "2026-11-06T14:49:59.834Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T14:59:23.481Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T14:59:23.481Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T15:12:07.369Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T15:12:07.369Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T15:53:20.371Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T15:53:20.371Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_END",
+    "timestamp": "2026-11-06T15:54:06.427Z",
+    "uptime_seconds": 46,
+    "uptime": "00h 00m 46s",
+    "data": {
+      "uptime_seconds": 46,
+      "uptime_human": "00h 00m 46s",
+      "total_rounds": 1
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T15:54:06.651Z",
+    "uptime_seconds": 46,
+    "uptime": "00h 00m 46s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.waitForTimeout: Target page, context or browser has been closed",
+      "timestamp": "2026-11-06T15:54:06.651Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T15:54:18.147Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T15:54:18.146Z"
+    }
+  },
+  {
+    "event": "JUDGES_CHECKPOINT",
+    "timestamp": "2026-11-06T16:24:20.023Z",
+    "uptime_seconds": 1801,
+    "uptime": "00h 30m 01s",
+    "data": {
+      "uptime": "00h 30m 01s",
+      "rounds_played": 73,
+      "status": "LIVE_AND_HEALTHY"
+    }
+  },
+  {
+    "event": "JUDGES_CHECKPOINT",
+    "timestamp": "2026-11-06T16:54:21.954Z",
+    "uptime_seconds": 3603,
+    "uptime": "01h 00m 03s",
+    "data": {
+      "uptime": "01h 00m 03s",
+      "rounds_played": 148,
+      "status": "LIVE_AND_HEALTHY"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T17:13:21.522Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T17:13:21.518Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T17:13:45.449Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T17:13:45.448Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T17:24:06.202Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T17:24:06.202Z"
+    }
+  },
+  {
+    "event": "JUDGES_CHECKPOINT",
+    "timestamp": "2026-11-06T17:54:08.310Z",
+    "uptime_seconds": 1802,
+    "uptime": "00h 30m 02s",
+    "data": {
+      "uptime": "00h 30m 02s",
+      "rounds_played": 76,
+      "status": "LIVE_AND_HEALTHY"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T18:14:20.885Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T18:14:20.885Z"
+    }
   }
 ]
