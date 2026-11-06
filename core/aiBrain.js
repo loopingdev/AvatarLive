@@ -126,6 +126,55 @@ export class AIBrain {
     }
   }
 
+  /**
+   * AI Strategic Decision: Cash Out or Push Forward for higher multipliers!
+   */
+  async decideGameMove(gameName, currentMultiplier = 1.5, stepCount = 1) {
+    const prompt = `You are streaming ${gameName} live in demo mode. `
+      + `You have survived ${stepCount} steps and reached ${currentMultiplier.toFixed(2)}x. `
+      + `You must decide: 'CASHOUT' to take profit, or 'CONTINUE' to push for bigger multipliers! `
+      + `Respond in exact format: DECISION: [CASHOUT or CONTINUE] | REASON: [1 punchy sentence to chat explaining why]`;
+
+    const aiText = await this.callOpenRouter(prompt);
+    if (aiText) {
+      const isCashout = /CASHOUT/i.test(aiText);
+      const reasonMatch = aiText.match(/REASON:\s*(.+)/i);
+      const voiceLine = reasonMatch ? reasonMatch[1].trim() : (isCashout ? `We take the ${currentMultiplier.toFixed(2)}x profit squad, cash out!` : `Feeling lucky chat, we push for more!`);
+      return {
+        action: isCashout ? 'CASHOUT' : 'CONTINUE',
+        voiceLine
+      };
+    }
+
+    // Procedural Fallback Decision Engine
+    // Higher multipliers increase cashout chance
+    let shouldCashout = false;
+    if (currentMultiplier >= 3.5 || stepCount >= 4) {
+      shouldCashout = Math.random() < 0.75;
+    } else if (currentMultiplier >= 2.0 || stepCount >= 2) {
+      shouldCashout = Math.random() < 0.45;
+    } else {
+      shouldCashout = Math.random() < 0.15;
+    }
+
+    const cashoutLines = [
+      `A clean ${currentMultiplier.toFixed(2)}x is on the table, chat! We're locking it in and cashing out!`,
+      `Green in the bank squad! Cashing out at ${currentMultiplier.toFixed(2)}x, profit is profit!`,
+      `Smart money moves! Taking the ${currentMultiplier.toFixed(2)}x cashout before the traps hit!`
+    ];
+
+    const continueLines = [
+      `Sitting at ${currentMultiplier.toFixed(2)}x, but Hubie's feeling ambitious! One more step squad!`,
+      `We don't stop here chat! ${currentMultiplier.toFixed(2)}x is great, but let's hunt a monster multiplier!`,
+      `Sloth power activated! Pushing forward to the next level, lock in chat!`
+    ];
+
+    return {
+      action: shouldCashout ? 'CASHOUT' : 'CONTINUE',
+      voiceLine: shouldCashout ? sample(cashoutLines) : sample(continueLines)
+    };
+  }
+
   async commentateRound(gameName, bet, outcome) {
     const { won, multiplier, profit, detail } = outcome;
     const prompt = `You just finished a round of ${gameName} in demo mode with a bet of ${bet.toFixed(1)} pts. `
