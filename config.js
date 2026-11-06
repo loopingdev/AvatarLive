@@ -81,10 +81,10 @@ export const CONFIG = {
   VIDEO_BITRATE: process.env.VIDEO_BITRATE || '4500k',
   AUDIO_BITRATE: process.env.AUDIO_BITRATE || '160k',
 
-  // Voice (Edge-TTS) Configuration
-  VOICE_NAME: process.env.VOICE_NAME || 'en-US-GuyNeural',
-  VOICE_RATE: process.env.VOICE_RATE || '+8%',
-  VOICE_PITCH: process.env.VOICE_PITCH || '+4Hz',
+  // Voice (Edge-TTS) Configuration: EricNeural is the expressive animated mascot voice
+  VOICE_NAME: process.env.VOICE_NAME || 'en-US-EricNeural',
+  VOICE_RATE: process.env.VOICE_RATE || '+6%',
+  VOICE_PITCH: process.env.VOICE_PITCH || '+3Hz',
 
   // Safety & Moderation
   SAFETY_DISCLAIMER: '18+ ONLY | Gamble Responsibly | Demo / Entertainment Mode | begambleaware.org',

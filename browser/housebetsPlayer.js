@@ -96,7 +96,7 @@ export class HousebetsPlayer {
           else if (typeof round.payout === 'number' && typeof round.stake === 'number' && round.stake > 0) mult = round.payout / round.stake;
           else if (typeof json.payout === 'number' && typeof json.stake === 'number' && json.stake > 0) mult = json.payout / json.stake;
 
-          const isTrapOrBust = g.outcome === 'trap' || g.outcome === 'bust' || g.outcome === 'loss' || json.outcome === 'trap';
+          const isTrapOrBust = g.outcome === 'trap' || g.outcome === 'bust' || g.outcome === 'loss' || json.outcome === 'trap' || g.won === false || json.won === false || (g.active === false && !isCashoutOrWin);
           const isCashoutOrWin = g.outcome === 'cashout' || g.outcome === 'castle' || g.outcome === 'win' || json.outcome === 'cashout' || json.outcome === 'win';
 
           let won = false;
@@ -129,6 +129,7 @@ export class HousebetsPlayer {
             multiplier: mult,
             won: Boolean(won),
             active: Boolean(g.active),
+            outcome: isTrapOrBust ? 'trap' : (isCashoutOrWin ? 'cashout' : (g.outcome || json.outcome || 'step')),
             timestamp: Date.now()
           };
           console.log(`[HousebetsPlayer API Live] Game: ${this.lastLiveOutcome.displayName} | Won: ${this.lastLiveOutcome.won} | Multiplier: ${mult.toFixed(2)}x | Active: ${g.active} | Outcome: ${g.outcome || 'step'}`);
@@ -476,6 +477,10 @@ export class HousebetsPlayer {
     // =========================================================================
     // 3. PRIMARY ACTION BUTTON (BET / PLAY / SPIN / ROLL / DEAL / LAUNCH)
     // =========================================================================
+    this.lastLiveOutcome = null;
+    this.cashedOutOutcome = null;
+    this.currentActiveMultiplier = 1.0;
+
     const playResult = await this.page.evaluate((gameId) => {
       window.scrollTo(0, 0);
       const host = document.querySelector('[data-housegames-direct]');
@@ -534,6 +539,8 @@ export class HousebetsPlayer {
           const allBtns = Array.from(root.querySelectorAll('button'));
           const cashoutBtn = allBtns.find(b => /cash\s*out|take|retirar|bozdur|kiszáll/i.test(b.innerText || ''));
           const canCashout = Boolean(cashoutBtn && cashoutBtn.offsetWidth > 0 && !cashoutBtn.disabled);
+          const betBtn = allBtns.find(b => /^(bet|go|play)$/i.test((b.innerText || '').trim()));
+          const betActive = Boolean(betBtn && betBtn.offsetWidth > 0 && !betBtn.disabled);
 
           let mult = 1.0;
           if (cashoutBtn) {
@@ -550,7 +557,7 @@ export class HousebetsPlayer {
             }
           }
 
-          return { active: true, multiplier: mult, canCashout };
+          return { active: !betActive || canCashout, multiplier: mult, canCashout };
         });
 
         // Use authoritative live backend multiplier if present
@@ -572,8 +579,7 @@ export class HousebetsPlayer {
 
           if (availableTilesCount > 0) {
             const choice = await this.ai.decideChoice('mines', { step: step + 1, totalTiles: availableTilesCount });
-            console.log(`[HousebetsPlayer AI Choice] Mines: Tile Choice -> "${choice.voiceLine}"`);
-            this.tts.speak(choice.voiceLine);
+            console.log(`[HousebetsPlayer AI Choice] Mines: Picking tile #${choice.tileIndex + 1}...`);
 
             const clicked = await this.page.evaluate((pickIdx) => {
               const host = document.querySelector('[data-housegames-direct]');
@@ -591,7 +597,51 @@ export class HousebetsPlayer {
             }, choice.tileIndex);
 
             if (!clicked) break;
-            await this.page.waitForTimeout(1800);
+
+            // Outcome delay: wait for animation & server outcome before speaking
+            await this.page.waitForTimeout(1300);
+
+            const minesOutcome = await this.page.evaluate(() => {
+              const host = document.querySelector('[data-housegames-direct]');
+              if (!host?.shadowRoot) return { isTrap: false, canCashout: false, mult: 1.0 };
+              const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+              const root = gameEl.shadowRoot || gameEl;
+              const lossBadge = root.querySelector('.hl-rc-loss, .hl-loss, .hs-g-loss, .loss, [class*="trap" i], [class*="busted" i], [class*="bomb" i]');
+              const allBtns = Array.from(root.querySelectorAll('button'));
+              const cashoutBtn = allBtns.find(b => /cash\s*out|take/i.test(b.innerText || ''));
+              const canCashout = Boolean(cashoutBtn && cashoutBtn.offsetWidth > 0 && !cashoutBtn.disabled);
+              const betBtn = allBtns.find(b => /^(bet|go|play)$/i.test((b.innerText || '').trim()));
+              const betActive = Boolean(betBtn && betBtn.offsetWidth > 0 && !betBtn.disabled);
+
+              let mult = 1.0;
+              if (cashoutBtn) {
+                const m = (cashoutBtn.innerText || '').match(/(\d+(\.\d+)?)\s*[x×]/i);
+                if (m) mult = parseFloat(m[1]);
+              }
+              return { hasLossBadge: Boolean(lossBadge), canCashout, betActive, mult };
+            });
+
+            const isBomb = (this.lastLiveOutcome && (
+              this.lastLiveOutcome.outcome === 'trap' ||
+              this.lastLiveOutcome.outcome === 'bust' ||
+              this.lastLiveOutcome.outcome === 'loss' ||
+              this.lastLiveOutcome.won === false ||
+              (!this.lastLiveOutcome.active && !this.lastLiveOutcome.won)
+            )) || minesOutcome.hasLossBadge || (!minesOutcome.canCashout && minesOutcome.betActive);
+
+            if (isBomb) {
+              console.log(`[HousebetsPlayer] Mines: Bomb hit on tile #${choice.tileIndex + 1}!`);
+              this.tts.speak(`Boom! Hit a mine on tile #${choice.tileIndex + 1}! Sloth took the blast, unlucky squad!`);
+              await this.page.waitForTimeout(1500);
+              break;
+            }
+
+            const currentMult = (this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : minesOutcome.mult) || 1.20;
+            console.log(`[HousebetsPlayer AI Choice] Mines: Tile SAFE at ${currentMult.toFixed(2)}x!`);
+            this.tts.speak(`Diamond revealed on tile #${choice.tileIndex + 1}! Safe navigation squad!`);
+            state.canCashout = minesOutcome.canCashout;
+            state.multiplier = currentMult;
+            await this.page.waitForTimeout(800);
           }
         }
 
@@ -608,8 +658,7 @@ export class HousebetsPlayer {
 
           if (eggCount > 0) {
             const choice = await this.ai.decideChoice('dragon_tower', { floor: step + 1, eggCount });
-            console.log(`[HousebetsPlayer AI Choice] Dragon Tower: Egg #${choice.eggIndex + 1} -> "${choice.voiceLine}"`);
-            this.tts.speak(choice.voiceLine);
+            console.log(`[HousebetsPlayer AI Choice] Dragon Tower: Picking Egg #${choice.eggIndex + 1} on floor ${step + 1}`);
 
             const clicked = await this.page.evaluate((eggIdx) => {
               const host = document.querySelector('[data-housegames-direct]');
@@ -629,7 +678,51 @@ export class HousebetsPlayer {
             }, choice.eggIndex);
 
             if (!clicked) break;
-            await this.page.waitForTimeout(1800);
+
+            // Outcome delay: wait for animation & server outcome before speaking
+            await this.page.waitForTimeout(1300);
+
+            const towerOutcome = await this.page.evaluate(() => {
+              const host = document.querySelector('[data-housegames-direct]');
+              if (!host?.shadowRoot) return { isTrap: false, canCashout: false, mult: 1.0 };
+              const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+              const root = gameEl.shadowRoot || gameEl;
+              const lossBadge = root.querySelector('.hl-rc-loss, .hl-loss, .hs-g-loss, .loss, [class*="trap" i], [class*="busted" i]');
+              const allBtns = Array.from(root.querySelectorAll('button'));
+              const cashoutBtn = allBtns.find(b => /cash\s*out|take/i.test(b.innerText || ''));
+              const canCashout = Boolean(cashoutBtn && cashoutBtn.offsetWidth > 0 && !cashoutBtn.disabled);
+              const betBtn = allBtns.find(b => /^(bet|go|play)$/i.test((b.innerText || '').trim()));
+              const betActive = Boolean(betBtn && betBtn.offsetWidth > 0 && !betBtn.disabled);
+
+              let mult = 1.0;
+              if (cashoutBtn) {
+                const m = (cashoutBtn.innerText || '').match(/(\d+(\.\d+)?)\s*[x×]/i);
+                if (m) mult = parseFloat(m[1]);
+              }
+              return { hasLossBadge: Boolean(lossBadge), canCashout, betActive, mult };
+            });
+
+            const isDragonAwake = (this.lastLiveOutcome && (
+              this.lastLiveOutcome.outcome === 'trap' ||
+              this.lastLiveOutcome.outcome === 'bust' ||
+              this.lastLiveOutcome.outcome === 'loss' ||
+              this.lastLiveOutcome.won === false ||
+              (!this.lastLiveOutcome.active && !this.lastLiveOutcome.won)
+            )) || towerOutcome.hasLossBadge || (!towerOutcome.canCashout && towerOutcome.betActive);
+
+            if (isDragonAwake) {
+              console.log(`[HousebetsPlayer] Dragon Tower: Dragon woke up on floor ${step + 1}!`);
+              this.tts.speak(`Dragon woke up on floor ${step + 1}! Fire blast, unlucky squad!`);
+              await this.page.waitForTimeout(1500);
+              break;
+            }
+
+            const currentMult = (this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : towerOutcome.mult) || 1.35;
+            console.log(`[HousebetsPlayer AI Choice] Dragon Tower: Floor ${step + 1} SAFE at ${currentMult.toFixed(2)}x!`);
+            this.tts.speak(`Floor ${step + 1} egg is golden! Climbing safe at ${currentMult.toFixed(2)}x squad!`);
+            state.canCashout = towerOutcome.canCashout;
+            state.multiplier = currentMult;
+            await this.page.waitForTimeout(800);
           }
         }
 
@@ -679,15 +772,81 @@ export class HousebetsPlayer {
             return { success: true, pickIdx, total: candidates.length };
           });
 
-          // Only proceed and announce if Hubie actually hopped to the buoy!
+          // Only proceed if Hubie actually hopped to the buoy!
           if (!clickRes || !clickRes.success) {
             console.warn(`[HousebetsPlayer] Hubie's Road: No active buoy/lane found to hop at step ${step + 1}. Ending step sequence.`);
             break;
           }
 
-          console.log(`[HousebetsPlayer AI Choice] Hubie's Road: Hopped to Buoy #${clickRes.pickIdx + 1} of ${clickRes.total}`);
-          this.tts.speak(`Sloth hopping to buoy #${clickRes.pickIdx + 1}, clear navigation squad!`);
-          await this.page.waitForTimeout(1800);
+          console.log(`[HousebetsPlayer] Hubie's Road: Hopped to Buoy #${clickRes.pickIdx + 1} of ${clickRes.total}, awaiting outcome delay...`);
+
+          // CRITICAL FIX: Delay to let the hop land, server response arrive, and animations settle BEFORE speaking!
+          await this.page.waitForTimeout(1400);
+
+          // Verify live post-hop state from DOM and backend API
+          const hopOutcome = await this.page.evaluate(() => {
+            const host = document.querySelector('[data-housegames-direct]');
+            if (!host?.shadowRoot) return { hasLossBadge: false, canCashout: false, betActive: false, mult: 1.0 };
+            const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+            const root = gameEl.shadowRoot || gameEl;
+
+            const lossBadge = root.querySelector('.hl-rc-loss, .hl-loss, .hs-g-loss, .loss, [class*="trap" i], [class*="busted" i], [class*="payout--loss"]');
+            const allBtns = Array.from(root.querySelectorAll('button'));
+            const cashoutBtn = allBtns.find(b => /cash\s*out|take/i.test(b.innerText || ''));
+            const canCashout = Boolean(cashoutBtn && cashoutBtn.offsetWidth > 0 && !cashoutBtn.disabled);
+            const betBtn = allBtns.find(b => /^(bet|go|play)$/i.test((b.innerText || '').trim()));
+            const betActive = Boolean(betBtn && betBtn.offsetWidth > 0 && !betBtn.disabled);
+
+            let mult = 1.0;
+            if (cashoutBtn) {
+              const m = (cashoutBtn.innerText || '').match(/(\d+(\.\d+)?)\s*[x×]/i);
+              if (m) mult = parseFloat(m[1]);
+            }
+            if (mult === 1.0) {
+              const multBadge = root.querySelector('.hs-g-mult, .hl-mult, [class*="multiplier"], .current-mult');
+              if (multBadge) {
+                const m = (multBadge.innerText || '').match(/(\d+(\.\d+)?)\s*[x×]/i);
+                if (m) mult = parseFloat(m[1]);
+              }
+            }
+
+            return {
+              hasLossBadge: Boolean(lossBadge),
+              canCashout,
+              betActive,
+              mult
+            };
+          });
+
+          // Check both authoritative API outcome and DOM trap state
+          const isTrap = (this.lastLiveOutcome && (
+            this.lastLiveOutcome.outcome === 'trap' ||
+            this.lastLiveOutcome.outcome === 'bust' ||
+            this.lastLiveOutcome.outcome === 'loss' ||
+            this.lastLiveOutcome.won === false ||
+            (!this.lastLiveOutcome.active && !this.lastLiveOutcome.won)
+          )) || hopOutcome.hasLossBadge || (!hopOutcome.canCashout && hopOutcome.betActive);
+
+          if (isTrap) {
+            console.log(`[HousebetsPlayer] Hubie's Road: Shark ambush/trap triggered on buoy #${clickRes.pickIdx + 1}!`);
+            const lossLines = [
+              `Shark ambush on buoy #${clickRes.pickIdx + 1}! Sloth took a splash, unlucky squad!`,
+              `Oh no, that buoy had a shark! Sloth took a splash, unlucky squad!`,
+              `Splash! Trap on buoy #${clickRes.pickIdx + 1}! We will bounce back squad!`
+            ];
+            const chosenLossLine = lossLines[Math.floor(Math.random() * lossLines.length)];
+            this.tts.speak(chosenLossLine);
+            await this.page.waitForTimeout(1500);
+            break;
+          }
+
+          // Confirmed Safe Hop! Only announce navigation clear after verification
+          const currentMult = (this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : hopOutcome.mult) || 1.25;
+          console.log(`[HousebetsPlayer AI Choice] Hubie's Road: Buoy #${clickRes.pickIdx + 1} SAFE at ${currentMult.toFixed(2)}x!`);
+          this.tts.speak(`Buoy #${clickRes.pickIdx + 1} is clear! Navigation safe at ${currentMult.toFixed(2)}x squad!`);
+          state.canCashout = hopOutcome.canCashout;
+          state.multiplier = currentMult;
+          await this.page.waitForTimeout(800);
         }
 
         // --- HILO: VERIFIED HIGHER / LOWER CHOICE ---
@@ -740,9 +899,52 @@ export class HousebetsPlayer {
             break;
           }
 
-          console.log(`[HousebetsPlayer AI Choice] Hilo: ${clickRes.chosen} -> "${choice.voiceLine}"`);
-          this.tts.speak(choice.voiceLine);
-          await this.page.waitForTimeout(1800);
+          console.log(`[HousebetsPlayer AI Choice] Hilo: Picked ${clickRes.chosen}, awaiting card outcome delay...`);
+
+          // Outcome delay: wait for card flip animation & server response
+          await this.page.waitForTimeout(1400);
+
+          const hiloOutcome = await this.page.evaluate(() => {
+            const host = document.querySelector('[data-housegames-direct]');
+            if (!host?.shadowRoot) return { isTrap: false, canCashout: false, mult: 1.0 };
+            const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+            const root = gameEl.shadowRoot || gameEl;
+            const lossBadge = root.querySelector('.hl-rc-loss, .hl-loss, .hs-g-loss, .loss, [class*="trap" i], [class*="busted" i]');
+            const allBtns = Array.from(root.querySelectorAll('button'));
+            const cashoutBtn = allBtns.find(b => /cash\s*out|take/i.test(b.innerText || ''));
+            const canCashout = Boolean(cashoutBtn && cashoutBtn.offsetWidth > 0 && !cashoutBtn.disabled);
+            const betBtn = allBtns.find(b => /^(bet|go|play)$/i.test((b.innerText || '').trim()));
+            const betActive = Boolean(betBtn && betBtn.offsetWidth > 0 && !betBtn.disabled);
+
+            let mult = 1.0;
+            if (cashoutBtn) {
+              const m = (cashoutBtn.innerText || '').match(/(\d+(\.\d+)?)\s*[x×]/i);
+              if (m) mult = parseFloat(m[1]);
+            }
+            return { hasLossBadge: Boolean(lossBadge), canCashout, betActive, mult };
+          });
+
+          const isWrongGuess = (this.lastLiveOutcome && (
+            this.lastLiveOutcome.outcome === 'trap' ||
+            this.lastLiveOutcome.outcome === 'bust' ||
+            this.lastLiveOutcome.outcome === 'loss' ||
+            this.lastLiveOutcome.won === false ||
+            (!this.lastLiveOutcome.active && !this.lastLiveOutcome.won)
+          )) || hiloOutcome.hasLossBadge || (!hiloOutcome.canCashout && hiloOutcome.betActive);
+
+          if (isWrongGuess) {
+            console.log(`[HousebetsPlayer] Hilo: Wrong card guessed on ${clickRes.chosen}!`);
+            this.tts.speak(`Oof, wrong card! Read missed on ${clickRes.chosen}, unlucky squad!`);
+            await this.page.waitForTimeout(1500);
+            break;
+          }
+
+          const currentMult = (this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : hiloOutcome.mult) || 1.25;
+          console.log(`[HousebetsPlayer AI Choice] Hilo: Correct card at ${currentMult.toFixed(2)}x!`);
+          this.tts.speak(`Read was spot on! Card went ${clickRes.chosen}, navigation safe squad!`);
+          state.canCashout = hiloOutcome.canCashout;
+          state.multiplier = currentMult;
+          await this.page.waitForTimeout(800);
         }
 
         // --- AI STRATEGIC CASHOUT DECISION (ONLY IF CASHOUT IS ACTIVELY AVAILABLE) ---
