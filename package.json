@@ -1,0 +1,17 @@
+{
+  "name": "hubie-247-streamer",
+  "version": "1.0.0",
+  "description": "Autonomous 24/7 AI Streamer for Hubie (Housebets)",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "node-edge-tts": "^1.2.12",
+    "playwright": "^1.65.0",
+    "ws": "^8.18.0"
+  }
+}

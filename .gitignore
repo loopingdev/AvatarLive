@@ -1,0 +1,7 @@
+node_modules/
+.env
+web/assets/audio/
+__pycache__/
+*.log
+
+/chrome_data
