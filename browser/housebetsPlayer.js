@@ -73,31 +73,65 @@ export class HousebetsPlayer {
     await this.setupScreencast();
 
     // Attach Real-Time Housebets Game Engine API Interceptor
+    this.currentActiveMultiplier = 1.0;
     this.page.on('response', async (res) => {
       const url = res.url();
-      if (url.includes('games.housebets.com') && (url.includes('/bet') || url.includes('/cashout') || url.includes('/step') || url.includes('/play') || url.includes('/spin') || url.includes('/roll') || url.includes('/deal'))) {
+      if ((url.includes('games.housebets.com') || url.includes('housebets.com')) &&
+          (url.includes('/bet') || url.includes('/action') || url.includes('/cashout') ||
+           url.includes('/step') || url.includes('/play') || url.includes('/spin') ||
+           url.includes('/roll') || url.includes('/deal') || url.includes('/take') ||
+           url.includes('/claim') || url.includes('/game'))) {
         try {
           const text = await res.text();
           const json = JSON.parse(text);
           const g = json.game?.game || json.game || json.state?.game || json;
           const round = json.round || {};
 
-          let payoutMult = 0;
-          if (typeof g.payoutMultiplier === 'number') payoutMult = g.payoutMultiplier;
-          else if (typeof json.payoutMultiplier === 'number') payoutMult = json.payoutMultiplier;
-          else if (round.payout && round.stake) payoutMult = round.payout / round.stake;
+          let mult = 0;
+          if (typeof g.multiplier === 'number') mult = g.multiplier;
+          else if (typeof json.multiplier === 'number') mult = json.multiplier;
+          else if (typeof g.payoutMultiplier === 'number') mult = g.payoutMultiplier;
+          else if (typeof json.payoutMultiplier === 'number') mult = json.payoutMultiplier;
+          else if (typeof g.payout === 'number' && typeof g.stake === 'number' && g.stake > 0) mult = g.payout / g.stake;
+          else if (typeof round.payout === 'number' && typeof round.stake === 'number' && round.stake > 0) mult = round.payout / round.stake;
+          else if (typeof json.payout === 'number' && typeof json.stake === 'number' && json.stake > 0) mult = json.payout / json.stake;
 
-          const won = payoutMult > 0 || Number(round.delta || 0) > 0 || Number(round.payout || 0) > 0;
+          const isTrapOrBust = g.outcome === 'trap' || g.outcome === 'bust' || g.outcome === 'loss' || json.outcome === 'trap';
+          const isCashoutOrWin = g.outcome === 'cashout' || g.outcome === 'castle' || g.outcome === 'win' || json.outcome === 'cashout' || json.outcome === 'win';
+
+          let won = false;
+          if (isTrapOrBust) {
+            won = false;
+            mult = 0.0;
+          } else if (isCashoutOrWin) {
+            won = true;
+            if (mult <= 0 && g.payout && g.stake) mult = g.payout / g.stake;
+          } else if (mult > 0 || Number(round.delta || 0) > 0 || Number(round.payout || 0) > 0) {
+            won = true;
+          }
+
+          if (g.active) {
+            this.currentActiveMultiplier = mult > 0 ? mult : this.currentActiveMultiplier;
+          } else {
+            this.currentActiveMultiplier = 1.0;
+          }
+
+          if (isCashoutOrWin && mult > 0) {
+            this.cashedOutOutcome = {
+              won: true,
+              multiplier: mult
+            };
+          }
 
           this.lastLiveOutcome = {
             game: g.name || this.currentGame.id,
             displayName: this.currentGame.name,
-            multiplier: payoutMult,
+            multiplier: mult,
             won: Boolean(won),
             active: Boolean(g.active),
             timestamp: Date.now()
           };
-          console.log(`[HousebetsPlayer API Live] Game: ${this.lastLiveOutcome.displayName} | Won: ${this.lastLiveOutcome.won} | Multiplier: ${payoutMult.toFixed(2)}x | Active: ${g.active}`);
+          console.log(`[HousebetsPlayer API Live] Game: ${this.lastLiveOutcome.displayName} | Won: ${this.lastLiveOutcome.won} | Multiplier: ${mult.toFixed(2)}x | Active: ${g.active} | Outcome: ${g.outcome || 'step'}`);
         } catch {}
       }
     });
@@ -433,7 +467,14 @@ export class HousebetsPlayer {
     }
 
     // =========================================================================
-    // 2. PRIMARY ACTION BUTTON (BET / PLAY / SPIN / ROLL / DEAL / LAUNCH)
+    // 2. PACING DELAY (3 to 6 SECONDS RANDOM INTERVAL BEFORE BETTING)
+    // =========================================================================
+    const betDelay = Math.floor(3000 + Math.random() * 3000);
+    console.log(`[HousebetsPlayer] Pacing delay: waiting ${(betDelay / 1000).toFixed(1)}s before betting on ${game.name}...`);
+    await this.page.waitForTimeout(betDelay);
+
+    // =========================================================================
+    // 3. PRIMARY ACTION BUTTON (BET / PLAY / SPIN / ROLL / DEAL / LAUNCH)
     // =========================================================================
     const playResult = await this.page.evaluate((gameId) => {
       window.scrollTo(0, 0);
@@ -490,16 +531,32 @@ export class HousebetsPlayer {
           const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
           const root = gameEl.shadowRoot || gameEl;
 
-          const text = root.innerText || '';
-          const multMatch = text.match(/(\d+(\.\d+)?)x/i);
-          const mult = multMatch ? parseFloat(multMatch[1]) : 1.25;
-
           const allBtns = Array.from(root.querySelectorAll('button'));
-          const cashoutBtn = allBtns.find(b => /cash\s*out|take/i.test(b.innerText || ''));
+          const cashoutBtn = allBtns.find(b => /cash\s*out|take|retirar|bozdur|kiszáll/i.test(b.innerText || ''));
           const canCashout = Boolean(cashoutBtn && cashoutBtn.offsetWidth > 0 && !cashoutBtn.disabled);
+
+          let mult = 1.0;
+          if (cashoutBtn) {
+            const btnText = cashoutBtn.innerText || '';
+            const m = btnText.match(/(\d+(\.\d+)?)\s*[x×]/i);
+            if (m) mult = parseFloat(m[1]);
+          }
+
+          if (mult === 1.0) {
+            const multBadge = root.querySelector('.hs-g-mult, .hl-mult, [class*="multiplier"], .current-mult, .hl-rc-head b');
+            if (multBadge) {
+              const m = (multBadge.innerText || '').match(/(\d+(\.\d+)?)\s*[x×]/i);
+              if (m) mult = parseFloat(m[1]);
+            }
+          }
 
           return { active: true, multiplier: mult, canCashout };
         });
+
+        // Use authoritative live backend multiplier if present
+        if (this.currentActiveMultiplier > 1.0) {
+          state.multiplier = this.currentActiveMultiplier;
+        }
 
         if (!state.active) break;
 
@@ -630,9 +687,10 @@ export class HousebetsPlayer {
         console.log(`[HousebetsPlayer AI Decision] Step ${step + 1} (${state.multiplier}x): ${decision.action} -> "${decision.voiceLine}"`);
 
         if (decision.action === 'CASHOUT' && state.canCashout) {
+          const actualCashoutMult = this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : (state.multiplier || 1.25);
           this.cashedOutOutcome = {
             won: true,
-            multiplier: state.multiplier || 1.25
+            multiplier: actualCashoutMult
           };
           this.tts.speak(decision.voiceLine, true);
 
@@ -645,7 +703,11 @@ export class HousebetsPlayer {
             const cashoutBtn = allBtns.find(b => /cash\s*out|take/i.test(b.innerText || ''));
             if (cashoutBtn) cashoutBtn.click();
           });
-          console.log(`[HousebetsPlayer] Successfully CASHOUT at ${state.multiplier}x!`);
+          console.log(`[HousebetsPlayer] Successfully CASHOUT at ${actualCashoutMult}x!`);
+          await this.page.waitForTimeout(800);
+          if (this.lastLiveOutcome?.won && this.lastLiveOutcome.multiplier > 0) {
+            this.cashedOutOutcome.multiplier = this.lastLiveOutcome.multiplier;
+          }
           break;
         }
 
@@ -737,11 +799,16 @@ export class HousebetsPlayer {
         const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
         const root = gameEl.shadowRoot || gameEl;
 
-        const hasWin = Boolean(root.querySelector('.hl-win, .hs-g-win, .win, [class*="won"], [class*="payout--win"]'));
-        const hasLoss = Boolean(root.querySelector('.hl-loss, .hs-g-loss, .loss, [class*="payout--loss"]'));
+        const winBadge = root.querySelector('.hl-rc-win, .hl-win, .hs-g-win, .win, [class*="won"], [class*="payout--win"]');
+        const lossBadge = root.querySelector('.hl-rc-loss, .hl-loss, .hs-g-loss, .loss, [class*="payout--loss"]');
 
-        if (hasWin) return { won: true, mult: 2.0 };
-        if (hasLoss) return { won: false, mult: 0.0 };
+        if (winBadge) {
+          const m = (winBadge.innerText || '').match(/(\d+(\.\d+)?)\s*[x×]/i) ||
+                    (root.innerText || '').match(/(\d+(\.\d+)?)\s*[x×]/i);
+          const mult = m ? parseFloat(m[1]) : 1.25;
+          return { won: true, mult };
+        }
+        if (lossBadge) return { won: false, mult: 0.0 };
 
         return null;
       });

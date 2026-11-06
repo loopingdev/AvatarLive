@@ -3339,5 +3339,105 @@
     "data": {
       "time": "2026-11-06T05:26:16.030Z"
     }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T07:31:11.007Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T07:31:11.007Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_END",
+    "timestamp": "2026-11-06T07:31:32.794Z",
+    "uptime_seconds": 21,
+    "uptime": "00h 00m 21s",
+    "data": {
+      "uptime_seconds": 21,
+      "uptime_human": "00h 00m 21s",
+      "total_rounds": 0
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T07:49:07.848Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T07:49:07.847Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T09:03:02.498Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T09:03:02.498Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_END",
+    "timestamp": "2026-11-06T09:17:24.162Z",
+    "uptime_seconds": 861,
+    "uptime": "00h 14m 21s",
+    "data": {
+      "uptime_seconds": 861,
+      "uptime_human": "00h 14m 21s",
+      "total_rounds": 28
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T09:17:24.453Z",
+    "uptime_seconds": 861,
+    "uptime": "00h 14m 21s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.evaluate: Target page, context or browser has been closed",
+      "timestamp": "2026-11-06T09:17:24.453Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T09:22:26.824Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T09:22:26.824Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T09:35:26.635Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T09:35:26.635Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_END",
+    "timestamp": "2026-11-06T09:36:54.713Z",
+    "uptime_seconds": 88,
+    "uptime": "00h 01m 28s",
+    "data": {
+      "uptime_seconds": 88,
+      "uptime_human": "00h 01m 28s",
+      "total_rounds": 3
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-06T09:36:54.983Z",
+    "uptime_seconds": 88,
+    "uptime": "00h 01m 28s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.waitForTimeout: Target page, context or browser has been closed",
+      "timestamp": "2026-11-06T09:36:54.983Z"
+    }
   }
 ]

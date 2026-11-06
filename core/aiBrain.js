@@ -195,6 +195,45 @@ function sample(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+/**
+ * Robust sanitizer to prevent LLM special tokens (<|start|>assistant<|channel|>, <think>, etc.)
+ * from leaking into stream voice lines or commentary.
+ */
+export function sanitizeAIResponse(rawText) {
+  if (!rawText || typeof rawText !== 'string') return null;
+
+  let text = rawText;
+
+  // 1. Strip reasoning / thinking tokens: <think>...</think>
+  text = text.replace(/<think>[\s\S]*?<\/think>/gi, '');
+
+  // 2. Strip all control / special tokens: <|...|> (e.g. <|start|>assistant<|channel|>final, <|im_start|>, <|im_end|>, etc.)
+  text = text.replace(/<\|[\s\S]*?\|>/g, '');
+
+  // 3. Strip raw HTML/XML-style tags
+  text = text.replace(/<\/?[a-zA-Z0-9_\-]+(?:\s+[^>]*)?>/g, '');
+
+  // 4. Strip markdown code blocks and backticks
+  text = text.replace(/```[\s\S]*?```/g, '');
+  text = text.replace(/`([^`]+)`/g, '$1');
+
+  // 5. Strip role headers e.g. "Hubie:", "Assistant:", "AI:", "Streamer:"
+  text = text.replace(/^(?:hubie|assistant|model|streamer|ai|system)[:\s\-]+/i, '');
+
+  // 6. Strip stray quotes, asterisks, brackets at boundaries
+  text = text.replace(/["*#_~]/g, '');
+
+  // 7. Normalize whitespace
+  text = text.replace(/\s+/g, ' ').trim();
+
+  // 8. Sanity check: must be meaningful text with at least 8 characters
+  if (text.length < 8) return null;
+  if (/^([a-zA-Z0-9_-]+)$/.test(text)) return null; // Single token like "final" or "assistant"
+  if (/<\||\|>|channel|start_header_id/i.test(text)) return null;
+
+  return text;
+}
+
 export class AIBrain {
   constructor() {
     this.apiKey = CONFIG.OPENROUTER_API_KEY;
@@ -241,9 +280,13 @@ export class AIBrain {
 
       if (response.ok) {
         const data = await response.json();
-        let text = data.choices?.[0]?.message?.content?.trim() || '';
-        text = text.replace(/["*]/g, '').trim();
-        return text || null;
+        const rawContent = data.choices?.[0]?.message?.content || '';
+        const clean = sanitizeAIResponse(rawContent);
+        if (!clean) {
+          console.log(`[HubieBrain] Model output contained special tokens or invalid length (${JSON.stringify(rawContent)}). Using authentic fallback.`);
+          return null;
+        }
+        return clean;
       } else {
         console.warn(`[HubieBrain] OpenRouter returned ${response.status}: ${await response.text()}`);
         return null;
@@ -371,10 +414,16 @@ export class AIBrain {
     if (aiText) {
       const isCashout = /CASHOUT/i.test(aiText);
       const reasonMatch = aiText.match(/REASON:\s*(.+)/i);
-      const voiceLine = reasonMatch ? reasonMatch[1].trim() : (isCashout ? `We take the ${currentMultiplier.toFixed(2)}x profit squad, cash out!` : `Feeling lucky chat, we push for more on ${gameName}!`);
+      let rawReason = reasonMatch ? reasonMatch[1].trim() : '';
+      let cleanVoiceLine = sanitizeAIResponse(rawReason);
+      
+      const fallbackLine = isCashout
+        ? `We take the ${currentMultiplier.toFixed(2)}x profit squad, cash out!`
+        : `Feeling lucky chat, pushing for more multipliers on ${gameName}!`;
+
       return {
         action: isCashout ? 'CASHOUT' : 'CONTINUE',
-        voiceLine
+        voiceLine: cleanVoiceLine || fallbackLine
       };
     }
 

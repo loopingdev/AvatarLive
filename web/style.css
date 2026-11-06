@@ -19,7 +19,7 @@ body {
   margin: 0 auto;
   background: radial-gradient(circle at 50% 30%, #151c2e 0%, #0b0e14 100%);
   display: grid;
-  grid-template-rows: 70px 1fr 240px;
+  grid-template-rows: 70px 1fr;
   border: 1px solid #1e293b;
   overflow: hidden;
 }
@@ -346,42 +346,43 @@ body {
   cursor: pointer;
 }
 
-/* BOTTOM AVATAR STAGE */
+/* FULL-SCREEN AVATAR OVERLAY */
 #avatar-stage {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-top: 1px solid #1e293b;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(11, 14, 20, 0.95) 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  pointer-events: none;
   overflow: visible;
+  z-index: 50;
 }
 
 #avatar-canvas {
-  width: 100%;
-  height: 100%;
+  width: 1920px;
+  height: 1080px;
   position: absolute;
   top: 0;
   left: 0;
   pointer-events: none;
 }
 
-/* SPEECH BUBBLE */
+/* SPEECH BUBBLE (Streamer Scale) */
 #speech-bubble {
   position: absolute;
-  bottom: 170px;
-  left: 700px;
-  max-width: 450px;
+  max-width: 540px;
   background: rgba(15, 23, 42, 0.96);
-  border: 2px solid #00ffcc;
-  border-radius: 14px;
-  padding: 12px 18px;
+  border: 3px solid #00ffcc;
+  border-radius: 18px;
+  padding: 16px 24px;
   color: #ffffff;
-  font-size: 15px;
-  font-weight: 600;
-  box-shadow: 0 0 25px rgba(0, 255, 204, 0.35);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  box-shadow: 0 0 35px rgba(0, 255, 204, 0.45);
   opacity: 0;
   transform: translateY(10px) scale(0.95);
-  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   pointer-events: none;
   z-index: 100;
 }
@@ -394,9 +395,9 @@ body {
 #speech-bubble::after {
   content: '';
   position: absolute;
-  bottom: -10px;
-  left: 30px;
-  border-width: 10px 10px 0;
+  bottom: -14px;
+  left: 45px;
+  border-width: 14px 14px 0;
   border-style: solid;
   border-color: #00ffcc transparent;
   display: block;

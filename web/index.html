@@ -74,11 +74,11 @@
       </section>
     </main>
 
-    <!-- BOTTOM AVATAR STAGE (Hubie Roams & Speaks Here) -->
-    <footer id="avatar-stage">
+    <!-- FULL-SCREEN AVATAR OVERLAY (Hubie Roams & Speaks Over Stream) -->
+    <div id="avatar-stage">
       <div id="speech-bubble"></div>
-      <canvas id="avatar-canvas" width="1920" height="240"></canvas>
-    </footer>
+      <canvas id="avatar-canvas" width="1920" height="1080"></canvas>
+    </div>
   </div>
 
   <!-- Hidden Audio Player for Live Neural TTS -->
@@ -89,6 +89,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const avatar = new HubieAvatar('avatar-canvas', 'speech-bubble');
+      window.avatar = avatar;
       const audioElement = document.getElementById('tts-audio');
 
       const screencastImg = document.getElementById('live-screencast');
@@ -146,8 +147,15 @@
           avatar.setSpeaking(false);
         } else if (msg.type === 'chat_message') {
           appendChatMessage(msg.message.user, msg.message.text, msg.message.platform);
-          if (msg.message.text.toLowerCase().includes('hubie')) {
+          const lower = msg.message.text.toLowerCase();
+          if (lower.includes('hubie')) {
             avatar.reactToChat(msg.message.user);
+          }
+          if (lower.includes('!costume') || lower.includes('!outfit') || lower.includes('change clothes')) {
+            if (lower.includes('astro') || lower.includes('space')) avatar.triggerCostumeChangeRoutine('astronaut');
+            else if (lower.includes('spooky') || lower.includes('halloween') || lower.includes('witch')) avatar.triggerCostumeChangeRoutine('halloween');
+            else if (lower.includes('classic') || lower.includes('gent') || lower.includes('suit')) avatar.triggerCostumeChangeRoutine('classic');
+            else avatar.triggerCostumeChangeRoutine();
           }
         } else if (msg.type === 'chat_moderated') {
           appendModeratedNotice(msg.message.user);
