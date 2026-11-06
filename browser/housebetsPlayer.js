@@ -172,7 +172,6 @@ export class HousebetsPlayer {
 
   async dismissModals() {
     await this.acceptCookieBanner();
-    // Keep page firmly scrolled to the top where game lives
     await this.page.evaluate(() => window.scrollTo(0, 0));
 
     try {
@@ -197,7 +196,7 @@ export class HousebetsPlayer {
       try {
         this.supervisor.heartbeat('game_engine');
 
-        // 1. Check Game Rotation
+        // 1. Check Game Rotation across all 14 House Games
         if (this.roundsInCurrentGame >= CONFIG.ROUNDS_PER_GAME) {
           const oldName = this.currentGame.name;
           this.currentGameIndex = (this.currentGameIndex + 1) % CONFIG.HOUSE_GAMES.length;
@@ -227,7 +226,7 @@ export class HousebetsPlayer {
           await new Promise(r => setTimeout(r, 3500));
         }
 
-        // 4. Play Round on the live game page (without scrolling down!)
+        // 4. Play Round with game-specific button handling
         await this.dismissModals();
         await this.executeRoundOnPage();
 
@@ -280,59 +279,122 @@ export class HousebetsPlayer {
       });
     }
 
-    // Lock page firmly at (0, 0) so the screen NEVER scrolls down!
+    // Keep viewport locked at top
     await this.page.evaluate(() => window.scrollTo(0, 0));
 
-    // Click the REAL Bet action button inside the Game Shadow Root!
-    const betResult = await this.page.evaluate(() => {
+    // Handle Game-Specific Pre-Actions & Bet Placement
+    const playResult = await this.page.evaluate((gameId) => {
       window.scrollTo(0, 0);
       const host = document.querySelector('[data-housegames-direct]');
       if (!host?.shadowRoot) return { success: false, reason: 'no host shadow' };
 
-      // Search nested game element (road-game, dice-game, mines-game, etc.)
-      const gameEl = host.shadowRoot.querySelector('road-game, dice-game, mines-game, limbo-game, wheel-game, dragon-tower-game, [data-housegames-direct]') || host.shadowRoot;
+      const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
       const root = gameEl.shadowRoot || gameEl;
 
-      // Primary game bet button class in House Games is .hl-p-betbtn or .hs-p-mainbtn
-      const betBtn = root.querySelector('.hl-p-betbtn, .hs-p-mainbtn, button.hl-btn-primary');
-      if (betBtn) {
-        const text = betBtn.innerText?.trim();
-        betBtn.click();
-        return { success: true, text };
+      // 1. GAME-SPECIFIC PRE-BET ACTIONS
+      if (gameId === 'coinflip') {
+        // Pick Heads or Tails
+        const sideBtns = root.querySelectorAll('.hl-p-sidebtn--heads, .hl-p-sidebtn--tails, button[class*="sidebtn"]');
+        if (sideBtns.length > 0) {
+          const choice = sideBtns[Math.floor(Math.random() * sideBtns.length)];
+          choice.click();
+        }
+      } else if (gameId === 'keno') {
+        // Auto pick numbers if none selected
+        const autoPick = root.querySelector('button.hl-p-auto, button:has-text("Auto"), button:has-text("Pick")');
+        if (autoPick) autoPick.click();
+      } else if (gameId === 'roulette') {
+        // Select Red or Black or chip
+        const chip = root.querySelector('button:has-text("Red"), button:has-text("Black"), .hl-r-betbtn');
+        if (chip) chip.click();
+      } else if (gameId === 'baccarat') {
+        // Pick Player or Banker
+        const side = root.querySelector('button:has-text("Player"), button:has-text("Banker"), .hl-b-side');
+        if (side) side.click();
       }
 
-      return { success: false, reason: 'no bet button inside game shadowRoot' };
-    });
+      // 2. PRIMARY ACTION BUTTON
+      // Targets .hl-p-betbtn, .hp-p-betbtn, .hs-p-mainbtn, or button with Bet / Play / Roll / Spin / Drop / Deal
+      const selectors = [
+        '.hl-p-betbtn',
+        '.hp-p-betbtn',
+        '.hs-p-mainbtn',
+        'button.hl-btn-primary',
+        'button[class*="betbtn"]',
+        'button[class*="mainbtn"]'
+      ];
 
-    if (betResult.success) {
-      console.log(`[HousebetsPlayer] Real game bet clicked successfully (${betResult.text}) without scrolling!`);
+      for (const sel of selectors) {
+        const btn = root.querySelector(sel);
+        if (btn && btn.offsetWidth > 0 && !btn.disabled) {
+          const text = btn.innerText?.trim();
+          btn.click();
+          return { success: true, text, gameId };
+        }
+      }
+
+      // Fallback: search by text inside the game root only
+      const allButtons = Array.from(root.querySelectorAll('button')).filter(b => b.offsetWidth > 0 && !b.disabled);
+      for (const btn of allButtons) {
+        const t = btn.innerText?.trim();
+        if (/^(Bet|Go|Play|Roll|Drop|Spin|Deal|Flip|Draw|Launch)$/i.test(t)) {
+          btn.click();
+          return { success: true, text: t, gameId };
+        }
+      }
+
+      return { success: false, reason: 'no primary action button found inside game shadowRoot' };
+    }, game.id);
+
+    if (playResult.success) {
+      console.log(`[HousebetsPlayer] ${game.name}: Clicked action button "${playResult.text}" without scrolling.`);
     } else {
-      console.log(`[HousebetsPlayer] Bet action note: ${betResult.reason}`);
+      console.log(`[HousebetsPlayer] ${game.name}: Action note: ${playResult.reason}`);
     }
 
-    // Ensure screen remains locked at top
+    // Wait for in-round game phase
+    await this.page.waitForTimeout(2200);
     await this.page.evaluate(() => window.scrollTo(0, 0));
-    await this.page.waitForTimeout(2000);
 
-    // If game has lane/step choices (Hubie's Road) or tiles (Mines), click inside shadowRoot
-    await this.page.evaluate(() => {
+    // 3. GAME-SPECIFIC IN-ROUND INTERACTIONS & CASHOUT
+    await this.page.evaluate((gameId) => {
+      window.scrollTo(0, 0);
       const host = document.querySelector('[data-housegames-direct]');
       if (!host?.shadowRoot) return;
-      const gameEl = host.shadowRoot.querySelector('road-game, [data-housegames-direct]') || host.shadowRoot;
+      const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
       const root = gameEl.shadowRoot || gameEl;
 
-      // Click next lane/buoy if visible
-      const lanes = Array.from(root.querySelectorAll('.hs-g-buoy, button[aria-label*="Lane" i]')).filter(b => b.offsetWidth > 0);
-      if (lanes.length > 0) {
-        lanes[0].click();
+      if (gameId === 'hubies_road') {
+        // Step onto lane buoys
+        const lanes = Array.from(root.querySelectorAll('.hs-g-buoy, button[aria-label*="Lane" i]')).filter(b => b.offsetWidth > 0);
+        if (lanes.length > 0) lanes[0].click();
+      } else if (gameId === 'mines') {
+        // Click 1-2 diamond tiles
+        const tiles = Array.from(root.querySelectorAll('.hl-g-tile, button[aria-label*="Tile" i]')).filter(t => t.offsetWidth > 0 && !t.disabled);
+        if (tiles.length > 0) {
+          const pick1 = tiles[Math.floor(Math.random() * Math.min(tiles.length, 6))];
+          if (pick1) pick1.click();
+        }
+      } else if (gameId === 'hilo') {
+        // Choose Higher or Lower
+        const hiloBtn = root.querySelector('button:has-text("Higher"), button:has-text("Lower"), .hl-hilo-opt');
+        if (hiloBtn) hiloBtn.click();
+      } else if (gameId === 'blackjack') {
+        // Choose Stand
+        const standBtn = root.querySelector('button:has-text("Stand"), .hl-bj-stand');
+        if (standBtn) standBtn.click();
+      } else if (gameId === 'dragon_tower') {
+        // Click egg tile
+        const eggs = Array.from(root.querySelectorAll('button[class*="egg"], button[class*="tile"]')).filter(b => b.offsetWidth > 0);
+        if (eggs.length > 0) eggs[0].click();
       }
 
-      // Cashout if available
-      const cashout = root.querySelector('.hl-p-betbtn');
-      if (cashout && /cash\s*out/i.test(cashout.innerText)) {
-        setTimeout(() => cashout.click(), 1200);
+      // Check for Cashout button across all interactive games
+      const mainBtn = root.querySelector('.hl-p-betbtn, .hs-p-mainbtn, button.hl-btn-primary');
+      if (mainBtn && /cash\s*out|take/i.test(mainBtn.innerText)) {
+        setTimeout(() => mainBtn.click(), 1200);
       }
-    });
+    }, game.id);
 
     await this.page.waitForTimeout(2000);
     await this.page.evaluate(() => window.scrollTo(0, 0));
@@ -364,7 +426,7 @@ export class HousebetsPlayer {
       });
     }
 
-    // AI live commentary on the live game outcome
+    // AI live commentary
     const commentary = await this.ai.commentateRound(game.name, 10.0, outcome);
     this.tts.speak(commentary);
   }
@@ -374,7 +436,7 @@ export class HousebetsPlayer {
       const outcomeText = await this.page.evaluate(() => {
         const host = document.querySelector('[data-housegames-direct]');
         if (host?.shadowRoot) {
-          const gameEl = host.shadowRoot.querySelector('road-game, [data-housegames-direct]') || host.shadowRoot;
+          const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
           const root = gameEl.shadowRoot || gameEl;
           return root.innerText || '';
         }
