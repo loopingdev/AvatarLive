@@ -7,74 +7,19 @@
 </head>
 <body>
   <div id="stream-container">
-    <!-- TOP BAR -->
-    <header id="top-bar">
-      <div class="brand-section">
-        <span class="live-badge">🔴 LIVE 24/7</span>
-        <h1 class="brand-title">HOUSEBETS ORIGINALS</h1>
-        <span class="active-game-pill" id="active-game-name">🌴 Hubie's Road</span>
+    <!-- 1. FULLSCREEN EDGE-TO-EDGE LIVE HOUSEBETS SCREEN -->
+    <div class="live-screen-wrapper">
+      <img id="live-screencast" alt="Live Housebets Gameplay" />
+      <div class="screen-loading" id="screen-loading">
+        <div class="spinner"></div>
+        <span>Connecting to Housebets Live Game...</span>
       </div>
+    </div>
 
-      <!-- 18+ & GAMBLE RESPONSIBLY DISCLAIMER -->
-      <div class="safety-badge" id="safety-badge">
-        🔞 18+ ONLY | PLAY RESPONSIBLY | BEGAMBLEAWARE.ORG
-      </div>
+    <!-- 2. FLOATING AUTO-FADING STREAM CHAT (Zero static boxes, only appears when a message arrives) -->
+    <div id="chat-messages" class="floating-chat-stream"></div>
 
-      <!-- TELEMETRY & UPTIME -->
-      <div class="telemetry-section">
-        <div class="stat-pill">
-          <span class="stat-label">Stream Uptime</span>
-          <span class="stat-val" id="uptime-val">00h 00m 00s</span>
-        </div>
-        <div class="stat-pill">
-          <span class="stat-label">Rounds Played</span>
-          <span class="stat-val" id="rounds-val">0</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- MAIN GAME & CHAT STAGE -->
-    <main id="main-stage">
-      <!-- ACTUAL LIVE HOUSEBETS BROWSER SCREEN -->
-      <section class="live-browser-panel">
-        <div class="browser-header-bar">
-          <div class="browser-dots">
-            <span class="browser-dot dot-red"></span>
-            <span class="browser-dot dot-yellow"></span>
-            <span class="browser-dot dot-green"></span>
-          </div>
-          <div class="browser-url-pill" id="browser-url">
-            https://www.housebets.com/games/housegames-hubie-s-road
-          </div>
-          <div style="font-size: 11px; color: #10b981; font-weight: 700;">
-            ● LIVE SESSION
-          </div>
-        </div>
-
-        <div class="live-screen-wrapper">
-          <img id="live-screencast" alt="Live Housebets Gameplay" />
-          <div class="screen-loading" id="screen-loading">
-            <div class="spinner"></div>
-            <span>Connecting to Housebets Live Game...</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- LIVE CHAT -->
-      <section class="chat-panel">
-        <div class="chat-header">
-          <span class="chat-title">STREAM CHAT</span>
-          <span class="mod-tag">🛡️ AUTO-MODERATED</span>
-        </div>
-        <div id="chat-messages"></div>
-        <div class="chat-input-box">
-          <input type="text" id="chat-input" placeholder="Say hi to Hubie..." maxlength="120" />
-          <button id="chat-send-btn">Send</button>
-        </div>
-      </section>
-    </main>
-
-    <!-- FULL-SCREEN AVATAR OVERLAY (Hubie Roams & Speaks Over Stream) -->
+    <!-- 3. FULL-SCREEN AVATAR OVERLAY (Hubie Roams & Speaks Over Stream) -->
     <div id="avatar-stage">
       <div id="speech-bubble"></div>
       <canvas id="avatar-canvas" width="1920" height="1080"></canvas>
@@ -94,14 +39,7 @@
 
       const screencastImg = document.getElementById('live-screencast');
       const screenLoading = document.getElementById('screen-loading');
-      const activeGameEl = document.getElementById('active-game-name');
-      const browserUrlEl = document.getElementById('browser-url');
-      const uptimeEl = document.getElementById('uptime-val');
-      const roundsEl = document.getElementById('rounds-val');
-
       const chatMessagesEl = document.getElementById('chat-messages');
-      const chatInput = document.getElementById('chat-input');
-      const chatSendBtn = document.getElementById('chat-send-btn');
 
       // WebSocket Connection
       const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -119,17 +57,16 @@
       function handleServerMessage(msg) {
         if (msg.type === 'screencast_frame') {
           screencastImg.src = msg.data;
-          if (screenLoading.style.display !== 'none') {
+          if (screenLoading && screenLoading.style.display !== 'none') {
             screenLoading.style.display = 'none';
           }
-        } else if (msg.type === 'init') {
-          updateGameState(msg.game_state);
-          updateTelemetry(msg.telemetry);
         } else if (msg.type === 'game_update') {
           const payload = msg.data;
-          updateGameState(payload.game_state);
-
-          if (payload.type === 'round_result') {
+          if (payload.type === 'game_switched') {
+            const gameTitle = payload.game_state?.display_name || payload.game_state?.game_name;
+            console.log('[Hubie Stream] Game switched to:', gameTitle);
+            avatar.onGameChanged(gameTitle);
+          } else if (payload.type === 'round_result') {
             const res = payload.event_data;
             if (res.won) {
               avatar.reactToWin(res.multiplier || 2.0);
@@ -152,8 +89,7 @@
             avatar.reactToChat(msg.message.user);
           }
           if (lower.includes('!costume') || lower.includes('!outfit') || lower.includes('change clothes')) {
-            if (lower.includes('astro') || lower.includes('space')) avatar.triggerCostumeChangeRoutine('astronaut');
-            else if (lower.includes('spooky') || lower.includes('halloween') || lower.includes('witch')) avatar.triggerCostumeChangeRoutine('halloween');
+            if (lower.includes('spooky') || lower.includes('halloween') || lower.includes('witch')) avatar.triggerCostumeChangeRoutine('halloween');
             else if (lower.includes('classic') || lower.includes('gent') || lower.includes('suit')) avatar.triggerCostumeChangeRoutine('classic');
             else avatar.triggerCostumeChangeRoutine();
           }
@@ -162,32 +98,30 @@
         }
       }
 
-      function updateGameState(state) {
-        if (!state) return;
-        if (state.display_name) {
-          activeGameEl.textContent = `🎮 ${state.display_name}`;
+      // 16 Vibrant Streamer Username Colors (Persistent by username hash)
+      const USER_COLORS = [
+        '#00ffcc', '#ff007f', '#ffd700', '#00e5ff', 
+        '#a855f7', '#ff6b00', '#38bdf8', '#4ade80', 
+        '#f43f5e', '#ec4899', '#818cf8', '#2dd4bf',
+        '#fbbf24', '#34d399', '#f87171', '#c084fc'
+      ];
+
+      function getUserColor(username) {
+        let hash = 0;
+        const str = String(username || 'viewer');
+        for (let i = 0; i < str.length; i++) {
+          hash = (hash << 5) - hash + str.charCodeAt(i);
+          hash |= 0;
         }
-        if (state.game_url) {
-          browserUrlEl.textContent = state.game_url;
-        }
-        if (state.total_rounds !== undefined) {
-          roundsEl.textContent = state.total_rounds;
-        }
+        return USER_COLORS[Math.abs(hash) % USER_COLORS.length];
       }
 
-      function updateTelemetry(telem) {
-        if (!telem) return;
-        if (telem.uptime) {
-          uptimeEl.textContent = telem.uptime;
-        }
-        if (telem.rounds_played !== undefined) {
-          roundsEl.textContent = telem.rounds_played;
-        }
-      }
-
+      // Streamer Floating Chat Messages (Auto-fades after 8 seconds, zero persistent box)
       function appendChatMessage(user, text, platform) {
         const item = document.createElement('div');
         item.className = 'chat-item';
+        const color = getUserColor(user);
+        item.style.setProperty('--user-color', color);
 
         let badge = '<span class="chat-badge live">LIVE</span>';
         if (platform === 'kick') {
@@ -196,12 +130,21 @@
           badge = '<span class="chat-badge twitch">TWITCH</span>';
         }
 
-        item.innerHTML = `${badge}<span class="chat-user">@${user}:</span><span class="chat-text">${escapeHtml(text)}</span>`;
+        item.innerHTML = `${badge}<span class="chat-user" style="color: ${color}; text-shadow: 0 0 10px ${color}88;">@${escapeHtml(user)}:</span><span class="chat-text">${escapeHtml(text)}</span>`;
         chatMessagesEl.appendChild(item);
-        chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
-        if (chatMessagesEl.children.length > 50) {
+
+        // Limit visible stack to at most 6 messages
+        if (chatMessagesEl.children.length > 6) {
           chatMessagesEl.removeChild(chatMessagesEl.firstChild);
         }
+
+        // Auto-fade after 8 seconds, remove after 9 seconds (just like Twitch/Kick stream overlays!)
+        setTimeout(() => {
+          item.classList.add('fade-out');
+          setTimeout(() => {
+            if (item.parentNode) item.parentNode.removeChild(item);
+          }, 800);
+        }, 8000);
       }
 
       function appendModeratedNotice(user) {
@@ -209,7 +152,12 @@
         item.className = 'chat-item moderated';
         item.innerHTML = `<span class="chat-mod-notice">🛡️ [Auto-Mod] Removed toxic message from @${escapeHtml(user)}</span>`;
         chatMessagesEl.appendChild(item);
-        chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+        setTimeout(() => {
+          item.classList.add('fade-out');
+          setTimeout(() => {
+            if (item.parentNode) item.parentNode.removeChild(item);
+          }, 800);
+        }, 6000);
       }
 
       function escapeHtml(str) {
@@ -218,18 +166,18 @@
         return div.innerHTML;
       }
 
-      function sendChat() {
-        const text = chatInput.value.trim();
-        if (text) {
-          ws.send(JSON.stringify({ action: 'manual_chat', user: 'Viewer', text }));
-          chatInput.value = '';
+      // Auto-scale full-screen borderless overlay to fit any resolution or OBS canvas
+      const container = document.getElementById('stream-container');
+      function resizeOverlay() {
+        const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+        if (container) {
+          container.style.transform = `scale(${scale})`;
+          container.style.left = `${(window.innerWidth - 1920 * scale) / 2}px`;
+          container.style.top = `${(window.innerHeight - 1080 * scale) / 2}px`;
         }
       }
-
-      chatSendBtn.addEventListener('click', sendChat);
-      chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendChat();
-      });
+      window.addEventListener('resize', resizeOverlay);
+      resizeOverlay();
 
       // Poll telemetry every second
       setInterval(async () => {

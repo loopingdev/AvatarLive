@@ -203,227 +203,585 @@ class HubieSoundEffects {
 }
 
 /**
- * Dressing Room Wardrobe Door on Stream Canvas
+ * Realistic VIP Dressing Room Wardrobe Door on Stream Canvas
+ * Architecturally authentic solid wood door, realistic casing, 3D perspective swing,
+ * brass hardware, illuminated vanity interior, and 60fps locked rendering.
  */
 class DressingRoomDoor {
     constructor(groundY = 1030) {
         this.active = false;
         this.groundY = groundY;
-        this.x = 380;
+        this.x = 420;
         this.y = groundY;
-        this.width = 180;
-        this.height = 490;
-        this.doorAngle = 0; // 0 = closed, Math.PI * 0.48 = wide open
+        this.width = 350;
+        this.height = 560;
+        this.apertureW = 286;
+        this.apertureH = 512;
+        this.casingW = 32;
+        this.casingTop = 32;
+
+        this.doorAngle = 0; // 0 = closed, 1.36 = wide open (~78 deg)
         this.targetDoorAngle = 0;
-        this.slideProgress = 0; // 0 = offscreen, 1 = fully on stage
-        this.targetSlide = 0;
+        this.fadeAlpha = 0;
+        this.targetFadeAlpha = 0;
         this.shakeX = 0;
         this.shakeTimer = 0;
         this.interiorGlow = 0;
-        this.stars = [];
     }
 
-    triggerAppearance(x = 380) {
+    triggerAppearance(x = 420) {
         this.x = x;
         this.active = true;
-        this.targetSlide = 1.0;
+        this.fadeAlpha = 0;
+        this.targetFadeAlpha = 1.0;
         this.doorAngle = 0;
         this.targetDoorAngle = 0;
         this.shakeX = 0;
         this.shakeTimer = 0;
         this.interiorGlow = 0;
-        this.stars = [];
     }
 
     openDoor() {
-        this.targetDoorAngle = Math.PI * 0.46; // ~83 degrees open
+        this.targetDoorAngle = 1.36;
     }
 
     closeDoor() {
         this.targetDoorAngle = 0;
     }
 
-    startShaking(duration = 1400) {
+    startChanging(duration = 1200) {
         this.shakeTimer = duration;
-        // Spawn changing particles from door seams
-        for (let i = 0; i < 25; i++) {
-            this.stars.push({
-                x: this.x + (Math.random() * this.width - this.width / 2),
-                y: this.y - Math.random() * (this.height * 0.8),
-                vx: (Math.random() - 0.5) * 8,
-                vy: -(Math.random() * 6 + 2),
-                size: Math.random() * 6 + 4,
-                color: ['#00ffcc', '#ffd700', '#ff007f', '#00e5ff'][Math.floor(Math.random() * 4)],
-                life: 1.0
-            });
-        }
+    }
+
+    startShaking(duration = 1200) {
+        this.startChanging(duration);
     }
 
     triggerDismiss() {
         this.targetDoorAngle = 0;
-        this.targetSlide = 0;
+        this.targetFadeAlpha = 0;
     }
 
     update(dt) {
         if (!this.active) return;
 
-        // Slide transition
-        this.slideProgress += (this.targetSlide - this.slideProgress) * Math.min(1.0, dt * 0.008);
-        if (this.targetSlide === 0 && this.slideProgress < 0.02) {
-            this.active = false;
-            return;
+        // Smooth alpha fade in / out
+        const fadeSpeed = dt * 0.0035;
+        if (this.fadeAlpha < this.targetFadeAlpha) {
+            this.fadeAlpha = Math.min(this.targetFadeAlpha, this.fadeAlpha + fadeSpeed);
+        } else if (this.fadeAlpha > this.targetFadeAlpha) {
+            this.fadeAlpha = Math.max(0, this.fadeAlpha - fadeSpeed);
+            if (this.fadeAlpha <= 0.01 && this.targetFadeAlpha === 0) {
+                this.active = false;
+                return;
+            }
         }
 
-        // Door angle smooth swing
-        this.doorAngle += (this.targetDoorAngle - this.doorAngle) * Math.min(1.0, dt * 0.012);
+        // Smooth physical spring kinematics for door swing
+        const diff = this.targetDoorAngle - this.doorAngle;
+        const springK = 0.00032;
+        const damping = 0.86;
+        this.doorVelocity = (this.doorVelocity || 0) + diff * springK * dt;
+        this.doorVelocity *= Math.pow(damping, dt / 16);
+        this.doorAngle += this.doorVelocity * dt;
+        this.doorAngle = Math.max(0, Math.min(1.42, this.doorAngle));
 
-        // Interior glow matches door aperture
-        this.interiorGlow = Math.sin(this.doorAngle);
+        // Light spill matches door aperture opening
+        this.interiorGlow = Math.sin(Math.min(Math.PI * 0.5, this.doorAngle));
 
-        // Shake wobble while Hubie changes inside
+        // Subtle realistic wardrobe wobble while changing inside
         if (this.shakeTimer > 0) {
             this.shakeTimer -= dt;
-            this.shakeX = Math.sin(performance.now() * 0.035) * 6.5;
-            if (Math.random() < 0.25) {
-                this.stars.push({
-                    x: this.x + (Math.random() * this.width - this.width / 2),
-                    y: this.y - Math.random() * this.height,
-                    vx: (Math.random() - 0.5) * 6,
-                    vy: -(Math.random() * 5 + 2),
-                    size: Math.random() * 5 + 3,
-                    color: '#ffd700',
-                    life: 1.0
-                });
-            }
+            this.shakeX = Math.sin(performance.now() * 0.038) * 3.5;
         } else {
             this.shakeX = 0;
         }
-
-        // Update stars
-        for (let i = this.stars.length - 1; i >= 0; i--) {
-            const s = this.stars[i];
-            s.x += s.vx;
-            s.y += s.vy;
-            s.life -= dt * 0.0018;
-            if (s.life <= 0) this.stars.splice(i, 1);
-        }
     }
 
-    draw(ctx) {
-        if (!this.active || this.slideProgress <= 0.01) return;
+    /**
+     * Draw Interior Dressing Room (Drawn BEHIND Hubie)
+     */
+    drawInterior(ctx) {
+        if (!this.active || this.fadeAlpha <= 0.01) return;
 
         ctx.save();
-        const curY = this.y - (1.0 - this.slideProgress) * 550;
-        ctx.translate(this.x + this.shakeX, curY);
+        ctx.translate(this.x + this.shakeX, this.y);
+        ctx.globalAlpha = this.fadeAlpha;
 
         const halfW = this.width / 2;
-        const h = this.height;
+        const apHalfW = this.apertureW / 2;
+        const apH = this.apertureH;
 
-        // 1. Drop shadow beneath booth
+        // 1. Soft Floor Shadow beneath wardrobe
         ctx.beginPath();
-        ctx.ellipse(0, 0, halfW * 1.15, 24, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 4, halfW * 1.08, 18, 0, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
         ctx.fill();
 
-        // 2. Booth Outer Frame (Dark Mahogany with Gold Edging)
-        ctx.fillStyle = '#1e1112';
-        ctx.fillRect(-halfW, -h, this.width, h);
-        ctx.lineWidth = 4;
-        ctx.strokeStyle = '#c68a4c';
-        ctx.strokeRect(-halfW, -h, this.width, h);
-
-        // 3. Interior Glow & Dressing Mirror (visible when door is open)
-        if (this.doorAngle > 0.02) {
+        // 2. Light Spill Beam on stage floor (visible when door is swinging open)
+        if (this.doorAngle > 0.04) {
             ctx.save();
+            const beamSpread = 160 * this.interiorGlow;
+            const beamDist = 120 * this.interiorGlow;
+            const beamGrad = ctx.createLinearGradient(0, 0, 0, beamDist);
+            beamGrad.addColorStop(0, `rgba(254, 240, 138, ${0.45 * this.interiorGlow})`);
+            beamGrad.addColorStop(0.5, `rgba(253, 224, 71, ${0.22 * this.interiorGlow})`);
+            beamGrad.addColorStop(1, 'rgba(253, 224, 71, 0)');
+
             ctx.beginPath();
-            ctx.rect(-halfW + 8, -h + 8, this.width - 16, h - 16);
-            ctx.clip();
-
-            // Warm golden dressing room interior
-            const interiorGrad = ctx.createLinearGradient(0, -h, 0, 0);
-            interiorGrad.addColorStop(0, '#fef3c7');
-            interiorGrad.addColorStop(0.5, '#fde68a');
-            interiorGrad.addColorStop(1, '#b45309');
-            ctx.fillStyle = interiorGrad;
-            ctx.fillRect(-halfW + 8, -h + 8, this.width - 16, h - 16);
-
-            // Illuminated dressing mirror with bulb glow
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(-halfW + 28, -h + 60, this.width - 56, h - 120);
-
-            // Light spill beam onto stage floor
-            ctx.beginPath();
-            ctx.moveTo(-halfW + 8, 0);
-            ctx.lineTo(-halfW - 80 * this.interiorGlow, 50 * this.interiorGlow);
-            ctx.lineTo(halfW + 120 * this.interiorGlow, 50 * this.interiorGlow);
-            ctx.lineTo(halfW - 8, 0);
+            ctx.moveTo(-apHalfW + 20, 0);
+            ctx.lineTo(-apHalfW - beamSpread, beamDist);
+            ctx.lineTo(apHalfW + beamSpread, beamDist);
+            ctx.lineTo(apHalfW - 20, 0);
             ctx.closePath();
-            ctx.fillStyle = `rgba(254, 240, 138, ${0.35 * this.interiorGlow})`;
+            ctx.fillStyle = beamGrad;
             ctx.fill();
-
             ctx.restore();
         }
 
-        // 4. 3D Swing Door Panel
+        // 3. Room Interior (Clipped within door aperture)
         ctx.save();
-        const hingeX = -halfW + 6;
-        ctx.translate(hingeX, 0);
-        // Perspective scale along X creates 3D swing
-        const doorProj = Math.cos(this.doorAngle);
-        ctx.scale(doorProj, 1.0);
-
-        // Door surface
-        ctx.fillStyle = '#2d1810';
-        ctx.fillRect(0, -h + 6, this.width - 12, h - 12);
-        ctx.strokeStyle = '#df9b54';
-        ctx.lineWidth = 3;
-        ctx.strokeRect(0, -h + 6, this.width - 12, h - 12);
-
-        // Inner wood bevel panels
-        ctx.strokeStyle = '#854d0e';
-        ctx.strokeRect(12, -h + 30, this.width - 36, h * 0.4);
-        ctx.strokeRect(12, -h * 0.52, this.width - 36, h * 0.44);
-
-        // Polished Brass Door Handle
-        ctx.fillStyle = '#ffd700';
         ctx.beginPath();
-        ctx.arc(this.width - 32, -h * 0.5, 9, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
+        ctx.rect(-apHalfW, -apH, this.apertureW, apH);
+        ctx.clip();
 
-        // 5. Glowing Neon Header Sign
-        ctx.save();
-        ctx.translate(0, -h - 24);
-        ctx.fillStyle = '#0f172a';
+        // Deep Back Wall Tone (Warm dark cherry / mahogany room)
+        const wallGrad = ctx.createLinearGradient(0, -apH, 0, 0);
+        wallGrad.addColorStop(0, '#1c1012');
+        wallGrad.addColorStop(0.7, '#2a171a');
+        wallGrad.addColorStop(1, '#3b1d22');
+        ctx.fillStyle = wallGrad;
+        ctx.fillRect(-apHalfW, -apH, this.apertureW, apH);
+
+        // Perspective Floor Planks inside room
+        ctx.fillStyle = '#1a0f0d';
         ctx.beginPath();
-        ctx.roundRect(-halfW - 14, -18, this.width + 28, 36, 10);
+        ctx.moveTo(-apHalfW, -60);
+        ctx.lineTo(apHalfW, -60);
+        ctx.lineTo(apHalfW, 0);
+        ctx.lineTo(-apHalfW, 0);
+        ctx.closePath();
         ctx.fill();
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = '#00ffcc';
-        ctx.shadowColor = '#00ffcc';
-        ctx.shadowBlur = 15;
+
+        ctx.strokeStyle = '#2d1810';
+        ctx.lineWidth = 1.5;
+        [-60, -20, 20, 60].forEach(px => {
+            ctx.beginPath();
+            ctx.moveTo(px * 0.7, -60);
+            ctx.lineTo(px * 1.3, 0);
+            ctx.stroke();
+        });
+
+        // Hollywood Vanity Mirror on back wall
+        const mirrorW = 140;
+        const mirrorH = 260;
+        const mirrorX = -mirrorW / 2;
+        const mirrorY = -apH + 70;
+
+        // Mirror Frame
+        ctx.fillStyle = '#b45309';
+        ctx.beginPath();
+        ctx.roundRect(mirrorX - 6, mirrorY - 6, mirrorW + 12, mirrorH + 12, [mirrorW / 2, mirrorW / 2, 8, 8]);
+        ctx.fill();
+
+        // Mirror Glass Surface with warm reflection
+        const mirrorGrad = ctx.createLinearGradient(mirrorX, mirrorY, mirrorX + mirrorW, mirrorY + mirrorH);
+        mirrorGrad.addColorStop(0, '#fef08a');
+        mirrorGrad.addColorStop(0.35, '#fde047');
+        mirrorGrad.addColorStop(0.75, '#eab308');
+        mirrorGrad.addColorStop(1, '#ca8a04');
+        ctx.fillStyle = mirrorGrad;
+        ctx.beginPath();
+        ctx.roundRect(mirrorX, mirrorY, mirrorW, mirrorH, [mirrorW / 2 - 4, mirrorW / 2 - 4, 6, 6]);
+        ctx.fill();
+
+        // Mirror Specular Glare Diagonal
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.beginPath();
+        ctx.moveTo(mirrorX + 20, mirrorY + 10);
+        ctx.lineTo(mirrorX + 50, mirrorY + 10);
+        ctx.lineTo(mirrorX + 25, mirrorY + mirrorH - 20);
+        ctx.lineTo(mirrorX - 5, mirrorY + mirrorH - 20);
+        ctx.closePath();
+        ctx.fill();
+
+        // Vanity Light Bulbs along mirror perimeter
+        const bulbCount = 8;
+        for (let i = 0; i < bulbCount; i++) {
+            const angle = Math.PI + (i / (bulbCount - 1)) * Math.PI;
+            const bx = Math.cos(angle) * (mirrorW / 2 + 1);
+            const by = mirrorY + mirrorW / 2 + Math.sin(angle) * (mirrorW / 2 + 1);
+
+            // Glow aura
+            const aura = ctx.createRadialGradient(bx, by, 1, bx, by, 12);
+            aura.addColorStop(0, 'rgba(254, 240, 138, 0.9)');
+            aura.addColorStop(0.5, 'rgba(253, 224, 71, 0.35)');
+            aura.addColorStop(1, 'rgba(253, 224, 71, 0)');
+            ctx.fillStyle = aura;
+            ctx.beginPath();
+            ctx.arc(bx, by, 12, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Bulb glass
+            ctx.fillStyle = '#fffbeb';
+            ctx.beginPath();
+            ctx.arc(bx, by, 4.5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Wardrobe Hanging Rail with Costumes
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(-apHalfW + 15, -apH + 45);
+        ctx.lineTo(apHalfW - 15, -apH + 45);
         ctx.stroke();
 
-        ctx.font = 'bold 13px "Inter", sans-serif';
-        ctx.fillStyle = '#00ffcc';
-        ctx.textAlign = 'center';
-        ctx.fillText('🚪 DRESSING ROOM', 0, 6);
-        ctx.restore();
+        // Hangers
+        [-90, 85].forEach(hx => {
+            ctx.strokeStyle = '#92400e';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(hx, -apH + 47);
+            ctx.lineTo(hx - 24, -apH + 72);
+            ctx.lineTo(hx + 24, -apH + 72);
+            ctx.closePath();
+            ctx.stroke();
+        });
 
-        // 6. Changing Dust Stars & Sparks
-        for (const s of this.stars) {
+        // Interior Ambient Glow Wash
+        const glowGrad = ctx.createRadialGradient(0, -apH * 0.5, 30, 0, -apH * 0.5, apH * 0.7);
+        glowGrad.addColorStop(0, 'rgba(254, 240, 138, 0.32)');
+        glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0.35)');
+        ctx.fillStyle = glowGrad;
+        ctx.fillRect(-apHalfW, -apH, this.apertureW, apH);
+
+        ctx.restore(); // end aperture clip
+        ctx.restore();
+    }
+
+    /**
+     * Draw Outer Frame & Swinging Door Panel (Drawn IN FRONT OF Hubie)
+     */
+    drawFrameAndDoor(ctx) {
+        if (!this.active || this.fadeAlpha <= 0.01) return;
+
+        ctx.save();
+        ctx.translate(this.x + this.shakeX, this.y);
+        ctx.globalAlpha = this.fadeAlpha;
+
+        const halfW = this.width / 2;
+        const h = this.height;
+        const apHalfW = this.apertureW / 2;
+        const apH = this.apertureH;
+
+        // 1. Solid Brass Floor Sill / Threshold Kickplate
+        const sillGrad = ctx.createLinearGradient(-halfW, 0, halfW, 0);
+        sillGrad.addColorStop(0, '#78350f');
+        sillGrad.addColorStop(0.2, '#d97706');
+        sillGrad.addColorStop(0.5, '#fef08a');
+        sillGrad.addColorStop(0.8, '#d97706');
+        sillGrad.addColorStop(1, '#78350f');
+        ctx.fillStyle = sillGrad;
+        ctx.fillRect(-halfW - 6, -8, this.width + 12, 10);
+        ctx.strokeStyle = '#451a03';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(-halfW - 6, -8, this.width + 12, 10);
+
+        // 2. Inner Door Jamb Depth (Wall Thickness Reveal)
+        ctx.fillStyle = '#22110c';
+        ctx.fillRect(-apHalfW, -apH, 16, apH); // Left jamb reveal
+        ctx.fillRect(apHalfW - 16, -apH, 16, apH); // Right jamb reveal
+        ctx.fillRect(-apHalfW, -apH, this.apertureW, 14); // Top jamb header
+
+        // Brass Strike Plate on Right Jamb
+        ctx.fillStyle = '#d97706';
+        ctx.fillRect(apHalfW - 14, -apH * 0.52, 6, 38);
+        ctx.fillStyle = '#1c1917';
+        ctx.fillRect(apHalfW - 12, -apH * 0.52 + 10, 3, 18); // latch hole
+
+        // 3. Architectural Wood Casing / Architrave (Left, Right, and Top Lintel)
+        const drawCasing = (x, y, w, h) => {
+            // Base wood tone
+            const woodGrad = ctx.createLinearGradient(x, y, x + w, y);
+            woodGrad.addColorStop(0, '#2e140d');
+            woodGrad.addColorStop(0.3, '#542618');
+            woodGrad.addColorStop(0.7, '#421d12');
+            woodGrad.addColorStop(1, '#230e09');
+            ctx.fillStyle = woodGrad;
+            ctx.fillRect(x, y, w, h);
+
+            // 3D Beveled Molding Lines
+            ctx.strokeStyle = '#7c3f25';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x + 3, y + 2, w - 6, h - 4);
+            ctx.strokeStyle = '#1b0b07';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(x + 8, y + 4, w - 16, h - 8);
+        };
+
+        // Left Casing
+        drawCasing(-halfW, -h, this.casingW, h);
+        // Right Casing
+        drawCasing(apHalfW, -h, this.casingW, h);
+        // Top Header Casing
+        drawCasing(-halfW, -h, this.width, this.casingTop);
+
+        // Base Plinth Blocks (Bottom of each casing)
+        ctx.fillStyle = '#251009';
+        ctx.fillRect(-halfW - 2, -46, this.casingW + 4, 42);
+        ctx.fillRect(apHalfW - 2, -46, this.casingW + 4, 42);
+        ctx.strokeStyle = '#632c18';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(-halfW - 2, -46, this.casingW + 4, 42);
+        ctx.strokeRect(apHalfW - 2, -46, this.casingW + 4, 42);
+
+        // 4. Elegant Brass Nameplate above Door: "VIP WARDROBE"
+        const plaqueW = 160;
+        const plaqueH = 26;
+        const plaqueX = -plaqueW / 2;
+        const plaqueY = -h - 18;
+
+        const plaqueGrad = ctx.createLinearGradient(plaqueX, plaqueY, plaqueX + plaqueW, plaqueY + plaqueH);
+        plaqueGrad.addColorStop(0, '#92400e');
+        plaqueGrad.addColorStop(0.25, '#d97706');
+        plaqueGrad.addColorStop(0.5, '#fef08a');
+        plaqueGrad.addColorStop(0.75, '#d97706');
+        plaqueGrad.addColorStop(1, '#78350f');
+        ctx.fillStyle = plaqueGrad;
+        ctx.beginPath();
+        ctx.roundRect(plaqueX, plaqueY, plaqueW, plaqueH, 4);
+        ctx.fill();
+
+        ctx.strokeStyle = '#451a03';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Plaque Screws
+        [-plaqueW / 2 + 7, plaqueW / 2 - 7].forEach(sx => {
+            ctx.fillStyle = '#451a03';
+            ctx.beginPath();
+            ctx.arc(sx, plaqueY + plaqueH / 2, 2, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // Plaque Text
+        ctx.font = 'bold 11px "Georgia", "Times New Roman", serif';
+        ctx.fillStyle = '#2a1205';
+        ctx.textAlign = 'center';
+        ctx.fillText('✦ VIP WARDROBE ✦', 0, plaqueY + 17);
+
+        // 5. 3D Swinging Door Panel with Physical Slab Thickness & Floor Shadow
+        ctx.save();
+        const hingeX = -apHalfW + 4;
+        ctx.translate(hingeX, 0);
+
+        const doorH = apH - 4;
+        const doorW = this.apertureW - 8;
+        const theta = this.doorAngle; // 0 (closed) to 1.36 rad (open)
+        const cosT = Math.cos(theta);
+        const sinT = Math.sin(theta);
+
+        // 3D Perspective Projection Coordinates:
+        // As door swings open toward camera, the free edge sweeps forward:
+        const freeX = doorW * cosT;
+        const deltaY = (doorW * sinT) * 0.055; // vertical perspective expansion on free edge
+        const doorThickness = 16;
+        const thickX = doorThickness * sinT;
+        const thickY = doorThickness * cosT * 0.04;
+
+        // A. Dynamic Floor Cast Shadow under the swinging door
+        if (theta > 0.03) {
             ctx.save();
             ctx.beginPath();
-            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-            ctx.fillStyle = s.color;
-            ctx.globalAlpha = Math.max(0, s.life);
-            ctx.shadowColor = s.color;
-            ctx.shadowBlur = 8;
+            ctx.moveTo(0, 0);
+            ctx.lineTo(freeX, deltaY);
+            ctx.lineTo(freeX + thickX, deltaY + 12 * sinT);
+            ctx.lineTo(0, 8 * sinT);
+            ctx.closePath();
+            const shadowGrad = ctx.createLinearGradient(0, 0, freeX, deltaY);
+            shadowGrad.addColorStop(0, 'rgba(0, 0, 0, 0.48)');
+            shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0.12)');
+            ctx.fillStyle = shadowGrad;
             ctx.fill();
             ctx.restore();
         }
 
+        // B. Brass Hinges on Casing Side (stationary hinge pins)
+        const drawHinge = (hy) => {
+            ctx.fillStyle = '#d97706';
+            ctx.fillRect(-6, hy - 16, 7, 32);
+            ctx.fillStyle = '#fef08a';
+            ctx.fillRect(-5, hy - 14, 2, 28);
+            ctx.fillStyle = '#451a03';
+            ctx.beginPath();
+            ctx.arc(-2.5, hy, 3.5, 0, Math.PI * 2);
+            ctx.fill();
+        };
+        drawHinge(-doorH + 60);
+        drawHinge(-doorH * 0.5);
+        drawHinge(-60);
+
+        // C. Physical Door Thickness Face (Wood Slab Edge, visible when swinging open!)
+        if (theta > 0.04) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(freeX, -doorH - deltaY);
+            ctx.lineTo(freeX, deltaY);
+            ctx.lineTo(freeX + thickX, deltaY - thickY);
+            ctx.lineTo(freeX + thickX, -doorH - deltaY - thickY);
+            ctx.closePath();
+
+            const edgeGrad = ctx.createLinearGradient(freeX, 0, freeX + thickX, 0);
+            edgeGrad.addColorStop(0, '#1c0a06');
+            edgeGrad.addColorStop(0.5, '#36160d');
+            edgeGrad.addColorStop(1, '#1b0804');
+            ctx.fillStyle = edgeGrad;
+            ctx.fill();
+            ctx.strokeStyle = '#4e2316';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Spring-Loaded Solid Brass Latch Tongue
+            const latchY = -doorH * 0.5 + deltaY * 0.5;
+            ctx.fillStyle = '#d97706';
+            ctx.beginPath();
+            ctx.moveTo(freeX + thickX * 0.25, latchY - 12);
+            ctx.lineTo(freeX + thickX * 0.75 + 5 * sinT, latchY - 6);
+            ctx.lineTo(freeX + thickX * 0.75 + 5 * sinT, latchY + 6);
+            ctx.lineTo(freeX + thickX * 0.25, latchY + 12);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = '#fef08a';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // D. 3D Door Main Panel (True perspective quad with bevel panels & hardware)
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(0, -doorH);
+        ctx.lineTo(freeX, -doorH - deltaY);
+        ctx.lineTo(freeX, deltaY);
+        ctx.lineTo(0, 0);
+        ctx.closePath();
+        ctx.clip(); // clip door surface graphics inside 3D quad
+
+        // 3D Perspective affine transform for panel surface
+        const slopeY = deltaY / doorW;
+        const scaleH = (doorH + deltaY * 2) / doorH;
+        ctx.transform(cosT, slopeY, 0, scaleH, 0, 0);
+
+        // Rich wood surface with ambient angle illumination
+        const woodShade = 0.68 + 0.32 * cosT;
+        const doorWood = ctx.createLinearGradient(0, -doorH, doorW, 0);
+        doorWood.addColorStop(0, `rgba(54, 24, 15, ${woodShade})`);
+        doorWood.addColorStop(0.4, `rgba(84, 40, 26, ${woodShade})`);
+        doorWood.addColorStop(0.8, `rgba(67, 31, 20, ${woodShade})`);
+        doorWood.addColorStop(1, `rgba(44, 18, 10, ${woodShade})`);
+        ctx.fillStyle = doorWood;
+        ctx.fillRect(0, -doorH, doorW, doorH);
+
+        // Door Edge Outline
+        ctx.strokeStyle = '#6e3621';
+        ctx.lineWidth = 2.5;
+        ctx.strokeRect(0, -doorH, doorW, doorH);
+
+        // 4 Raised Wood Panels
+        const panelMarginX = 22;
+        const panelW = (doorW - panelMarginX * 3) / 2;
+        const topPanelH = doorH * 0.44;
+        const btmPanelH = doorH * 0.36;
+
+        const drawDoorPanel = (px, py, pw, ph) => {
+            ctx.fillStyle = '#200c07';
+            ctx.fillRect(px, py, pw, ph);
+
+            const innerGrad = ctx.createLinearGradient(px, py, px + pw, py + ph);
+            innerGrad.addColorStop(0, '#4f2417');
+            innerGrad.addColorStop(1, '#34150d');
+            ctx.fillStyle = innerGrad;
+            ctx.fillRect(px + 6, py + 6, pw - 12, ph - 12);
+
+            ctx.strokeStyle = '#7c3f25';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(px, py + ph);
+            ctx.lineTo(px, py);
+            ctx.lineTo(px + pw, py);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#180704';
+            ctx.beginPath();
+            ctx.moveTo(px + pw, py);
+            ctx.lineTo(px + pw, py + ph);
+            ctx.lineTo(px, py + ph);
+            ctx.stroke();
+        };
+
+        const topY = -doorH + 28;
+        const btmY = -doorH * 0.44;
+        drawDoorPanel(panelMarginX, topY, panelW, topPanelH);
+        drawDoorPanel(panelMarginX * 2 + panelW, topY, panelW, topPanelH);
+        drawDoorPanel(panelMarginX, btmY, panelW, btmPanelH);
+        drawDoorPanel(panelMarginX * 2 + panelW, btmY, panelW, btmPanelH);
+
+        // Brass Mortise Backplate & Lever Handle with cast shadow
+        const handleX = doorW - 28;
+        const handleY = -doorH * 0.5;
+
+        // Cast Shadow beneath brass handle
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.42)';
+        ctx.beginPath();
+        ctx.roundRect(handleX - 5, handleY - 33, 14, 70, 4);
+        ctx.fill();
+
+        // Backplate
+        const plateGrad = ctx.createLinearGradient(handleX - 8, handleY - 35, handleX + 8, handleY + 35);
+        plateGrad.addColorStop(0, '#92400e');
+        plateGrad.addColorStop(0.5, '#fef08a');
+        plateGrad.addColorStop(1, '#78350f');
+        ctx.fillStyle = plateGrad;
+        ctx.beginPath();
+        ctx.roundRect(handleX - 7, handleY - 35, 14, 70, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#451a03';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Keyhole
+        ctx.fillStyle = '#1c1917';
+        ctx.beginPath();
+        ctx.arc(handleX, handleY + 16, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillRect(handleX - 1.5, handleY + 16, 3, 7);
+
+        // Lever Handle Shaft & Grip
+        ctx.fillStyle = '#fef08a';
+        ctx.beginPath();
+        ctx.arc(handleX, handleY - 10, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = plateGrad;
+        ctx.beginPath();
+        ctx.roundRect(handleX - 28, handleY - 14, 30, 8, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#451a03';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.restore(); // end door main face clip
+        ctx.restore(); // end door transform group
         ctx.restore();
+    }
+
+    /**
+     * Fallback single draw method
+     */
+    draw(ctx) {
+        this.drawInterior(ctx);
+        this.drawFrameAndDoor(ctx);
     }
 }
 
@@ -448,6 +806,12 @@ class HubieAvatar {
         // In-World Wardrobe Booth
         this.dressingRoom = new DressingRoomDoor(this.groundY);
         this.isChangingCostume = false;
+        this.costumeRoutinePhase = null;
+        this.routineTimer = 0;
+        this.doorTargetX = 420;
+        this.dressingScale = 1.0;
+        this.inDressingRoom = false;
+        this.pendingCostume = 'classic';
 
         // Costume System ('classic' | 'halloween' | 'astronaut')
         this.currentCostume = 'classic';
@@ -517,73 +881,6 @@ class HubieAvatar {
             },
             smileWidths: {
                 stand: 52, crouch: 56, jump: 54, land: 52, celebrate: 50, scared: 36, fall: 48
-            }
-        };
-
-        // Precision Anatomical Tracking for Astronaut Suit
-        this.astronautPoseAnchors = {
-            stand: {
-                head: [217, 142],
-                headRadius: 74,
-                neck: [217, 215],
-                backpack: [155, 230],
-                backpackAngle: -0.05,
-                chest: [217, 260],
-                thrusters: [155, 290]
-            },
-            crouch: {
-                head: [288, 150],
-                headRadius: 72,
-                neck: [288, 225],
-                backpack: [205, 250],
-                backpackAngle: -0.35,
-                chest: [290, 275],
-                thrusters: [195, 310]
-            },
-            jump: {
-                head: [313, 138],
-                headRadius: 76,
-                neck: [313, 210],
-                backpack: [225, 240],
-                backpackAngle: -0.28,
-                chest: [315, 260],
-                thrusters: [215, 310]
-            },
-            land: {
-                head: [266, 145],
-                headRadius: 73,
-                neck: [266, 218],
-                backpack: [195, 245],
-                backpackAngle: -0.20,
-                chest: [268, 265],
-                thrusters: [185, 305]
-            },
-            celebrate: {
-                head: [222, 150],
-                headRadius: 74,
-                neck: [222, 225],
-                backpack: [155, 235],
-                backpackAngle: 0.05,
-                chest: [222, 270],
-                thrusters: [155, 295]
-            },
-            scared: {
-                head: [136, 85],
-                headRadius: 58,
-                neck: [136, 130],
-                backpack: [90, 140],
-                backpackAngle: -0.15,
-                chest: [136, 160],
-                thrusters: [90, 180]
-            },
-            fall: {
-                head: [232, 150],
-                headRadius: 72,
-                neck: [232, 220],
-                backpack: [160, 240],
-                backpackAngle: -0.40,
-                chest: [235, 265],
-                thrusters: [150, 295]
             }
         };
 
@@ -667,12 +964,9 @@ class HubieAvatar {
         ];
         this.roamInterval = setInterval(() => this.autonomousRoam(), 11000);
 
-        // Autonomous Costume Change Interval (Every 5 to 7 minutes)
-        this.costumeInterval = setInterval(() => {
-            if (this.state === 'IDLE' && !this.isChangingCostume) {
-                this.triggerCostumeChangeRoutine();
-            }
-        }, 300000 + Math.random() * 120000);
+        // Style changes dynamically whenever the game changes
+        this.currentGameName = 'House Games';
+        this.pendingCostumeChangeOnGameSwitch = false;
 
         // Start 60fps render loop
         this.lastTime = performance.now();
@@ -762,103 +1056,154 @@ class HubieAvatar {
     }
 
     /**
-     * Autonomous Dressing Room Door Routine
-     * Hubie walks to the changing room door, enters, changes style inside the wobbling booth,
-     * and bursts out with golden light and celebratory sound effects!
+     * Triggered automatically whenever Housebets switches to a new game
+     * (e.g. Hilo -> Dragon Tower -> Mines -> Limbo -> Dice)
+     * Hubie immediately steps into the VIP Wardrobe to switch his outfit for the new game!
+     */
+    onGameChanged(newGameName) {
+        this.currentGameName = newGameName || 'House Games';
+        console.log(`[Hubie Avatar] Game switched to ${this.currentGameName}. Triggering wardrobe style change!`);
+
+        if (this.state === 'CELEBRATING' || this.state === 'LOSS_REACTION') {
+            this.pendingCostumeChangeOnGameSwitch = true;
+            return;
+        }
+
+        if (!this.isChangingCostume) {
+            this.triggerCostumeChangeRoutine();
+        }
+    }
+
+    /**
+     * Autonomous VIP Dressing Room Door Routine
+     * Alternates between Classic Gent (top hat & waistcoat) and Spooky Halloween (wizard cape).
      */
     triggerCostumeChangeRoutine(targetCostume = null) {
         if (this.isChangingCostume) return;
         this.isChangingCostume = true;
         this.state = 'CHANGING_COSTUME';
 
-        const sequence = ['classic', 'halloween', 'astronaut'];
+        const sequence = ['classic', 'halloween'];
         let next = targetCostume;
         if (!next || !sequence.includes(next)) {
             const nextIdx = (sequence.indexOf(this.currentCostume) + 1) % sequence.length;
             next = sequence[nextIdx];
         }
+        this.pendingCostume = next;
 
-        // Place dressing room on stage away from Hubie's current position
-        const doorX = this.x > 700 ? 380 : 1080;
+        // Position dressing room away from Hubie on the stream stage
+        const doorX = this.x > 750 ? 440 : 1040;
+        this.doorTargetX = doorX;
         this.dressingRoom.triggerAppearance(doorX);
-        this.sound.playDoorOpenSound();
 
-        // 1. Move to Dressing Room Door
-        setTimeout(() => {
-            this.setSpeaking(true, "Hold up chat, heading to the dressing room for fresh drip!");
-            this.moveTo(doorX + (doorX > this.x ? -60 : 60));
-        }, 500);
+        // Initialize state machine
+        this.costumeRoutinePhase = 'WALKING_TO_DOOR';
+        this.routineTimer = 0;
+        this.dressingScale = 1.0;
+        this.inDressingRoom = false;
 
-        // 2. Door Opens as Hubie approaches
-        setTimeout(() => {
-            this.dressingRoom.openDoor();
-            this.sound.playDoorOpenSound();
-        }, 1800);
+        const gameCtx = this.currentGameName ? ` for ${this.currentGameName}` : '';
+        this.setSpeaking(true, `New game incoming! Heading into the VIP wardrobe for fresh drip${gameCtx}!`);
+        this.moveTo(doorX);
+    }
 
-        // 3. Hubie Steps Inside Door
-        setTimeout(() => {
-            this.setPose('crouch');
-            this.targetX = doorX;
-            // Fade Hubie into the doorway
-            const fadeInterval = setInterval(() => {
-                this.characterAlpha = Math.max(0, this.characterAlpha - 0.1);
-                if (this.characterAlpha <= 0) clearInterval(fadeInterval);
-            }, 30);
-        }, 2400);
+    updateCostumeRoutine(dt) {
+        if (!this.isChangingCostume) return;
 
-        // 4. Door Closes Firmly
-        setTimeout(() => {
-            this.dressingRoom.closeDoor();
-            this.sound.playDoorCloseSound();
-            this.setSpeaking(false);
-        }, 3000);
+        const door = this.dressingRoom;
+        const doorX = this.doorTargetX;
+        const dist = Math.abs(this.x - doorX);
 
-        // 5. Wardrobe Wobbles Comically While Changing
-        setTimeout(() => {
-            this.dressingRoom.startShaking(1400);
-            this.sound.playWardrobeShuffleSound();
-            // Switch costume under the hood
-            this.currentCostume = next;
-        }, 3200);
-
-        // 6. Door Bursts Open & Golden Reveal Fanfare
-        setTimeout(() => {
-            this.dressingRoom.openDoor();
-            this.sound.playRevealSound();
-            this.sound.playWinSound(3.0);
-            this.triggerConfetti();
-
-            // Hubie leaps out into the spotlight
-            this.characterAlpha = 1.0;
-            this.direction = doorX > 600 ? -1 : 1;
-            this.x = doorX + (this.direction * 70);
-            this.targetX = this.x + (this.direction * 90);
-            this.setPose('celebrate');
-
-            // Hype shoutout for the new style
-            let line = "Back in the gentleman sloth top hat and waistcoat! Clean drip secured!";
-            if (next === 'halloween') {
-                line = "Spooky wizard cape equipped! Multiplying magic is unlocked squad!";
-            } else if (next === 'astronaut') {
-                line = "Houston, Hubie is suited up for the cosmos! Zero-gravity mode active!";
-                setTimeout(() => this.startZeroGFloat(3500), 800);
+        if (this.costumeRoutinePhase === 'WALKING_TO_DOOR') {
+            // As Hubie gets within 220px of the door, the door swings open smoothly
+            if (dist < 220 && door.targetDoorAngle < 0.1) {
+                door.openDoor();
+                this.sound.playDoorOpenSound();
             }
-            this.setSpeaking(true, line);
-        }, 4700);
 
-        // 7. Dressing Room Dismissal
-        setTimeout(() => {
-            this.dressingRoom.triggerDismiss();
-            this.sound.playDoorCloseSound();
-        }, 7000);
+            // Hubie arrives at the door threshold and hop has completed
+            if (dist <= 35 && !this.isHopping) {
+                this.costumeRoutinePhase = 'STEPPING_IN';
+                this.routineTimer = 0;
+                this.setSpeaking(false);
+                this.setPose('stand');
+            }
+        } else if (this.costumeRoutinePhase === 'STEPPING_IN') {
+            this.routineTimer += dt;
+            const progress = Math.min(1.0, this.routineTimer / 650);
 
-        // 8. Restore Normal State
-        setTimeout(() => {
-            this.isChangingCostume = false;
-            this.state = 'IDLE';
-            this.setPose('stand');
-            this.setSpeaking(false);
-        }, 8200);
+            // Smoothly glide into center of doorway and scale down slightly for 3D perspective depth
+            this.inDressingRoom = true;
+            this.x += (doorX - this.x) * 0.18;
+            this.dressingScale = 1.0 - progress * 0.15; // 1.0 down to 0.85
+
+            if (progress >= 1.0) {
+                this.costumeRoutinePhase = 'DOOR_CLOSING';
+                this.routineTimer = 0;
+                door.closeDoor();
+                this.sound.playDoorCloseSound();
+            }
+        } else if (this.costumeRoutinePhase === 'DOOR_CLOSING') {
+            // Wait for door to shut
+            if (door.doorAngle < 0.08) {
+                this.costumeRoutinePhase = 'CHANGING_INSIDE';
+                this.routineTimer = 0;
+                door.startChanging(1100);
+                this.sound.playWardrobeShuffleSound();
+                this.currentCostume = this.pendingCostume;
+            }
+        } else if (this.costumeRoutinePhase === 'CHANGING_INSIDE') {
+            this.routineTimer += dt;
+            if (this.routineTimer >= 1300) {
+                this.costumeRoutinePhase = 'STEPPING_OUT';
+                this.routineTimer = 0;
+                door.openDoor();
+                this.sound.playDoorOpenSound();
+                this.sound.playRevealSound();
+                this.sound.playWinSound(3.0);
+                this.triggerConfetti();
+                this.setPose('celebrate');
+
+                // Delivery line with game context
+                const gameCtx = this.currentGameName ? ` for ${this.currentGameName}` : '';
+                let line = `Back in the gentleman sloth top hat and waistcoat! Clean drip secured${gameCtx}!`;
+                if (this.currentCostume === 'halloween') {
+                    line = `Spooky wizard cape equipped! Multiplying magic is unlocked${gameCtx} squad!`;
+                }
+                this.setSpeaking(true, line);
+            }
+        } else if (this.costumeRoutinePhase === 'STEPPING_OUT') {
+            this.routineTimer += dt;
+            const progress = Math.min(1.0, this.routineTimer / 750);
+
+            // Step out of the door onto the stream stage
+            this.dressingScale = 0.85 + progress * 0.15; // scale back to 1.0
+            const stepDir = doorX > 600 ? -1 : 1;
+            this.x = doorX + (stepDir * progress * 90);
+
+            if (progress >= 0.6) {
+                this.inDressingRoom = false; // Step onto the main stage in front of the door frame
+            }
+
+            if (progress >= 1.0) {
+                this.costumeRoutinePhase = 'DISMISSING';
+                this.routineTimer = 0;
+                door.closeDoor();
+                this.sound.playDoorCloseSound();
+                setTimeout(() => {
+                    door.triggerDismiss();
+                }, 1000);
+            }
+        } else if (this.costumeRoutinePhase === 'DISMISSING') {
+            this.routineTimer += dt;
+            if (this.routineTimer >= 2000) {
+                this.isChangingCostume = false;
+                this.state = 'IDLE';
+                this.setPose('stand');
+                this.setSpeaking(false);
+                this.costumeRoutinePhase = null;
+            }
+        }
     }
 
     initMouthCoords() {
@@ -890,9 +1235,7 @@ class HubieAvatar {
     autonomousRoam() {
         if (this.state === 'IDLE' && !this.isSpeaking && !this.isHopping && !this.isSurfing && !this.isChangingCostume) {
             const rand = Math.random();
-            if (rand < 0.20 && this.currentCostume === 'astronaut') {
-                this.startZeroGFloat(4000);
-            } else if (rand < 0.35) {
+            if (rand < 0.28) {
                 const nextWaypoint = this.waypoints[Math.floor(Math.random() * this.waypoints.length)];
                 this.acrobaticFlip(nextWaypoint.x);
             } else {
@@ -911,9 +1254,7 @@ class HubieAvatar {
             this.targetX = clamped;
             this.direction = dist > 0 ? 1 : -1;
 
-            if (this.currentCostume === 'astronaut' && Math.random() < 0.5 && !this.isChangingCostume) {
-                this.startZeroGFloat(3500);
-            } else if (Math.abs(dist) >= 340 && !this.isSurfing && !this.isHopping && !this.isChangingCostume) {
+            if (Math.abs(dist) >= 340 && !this.isSurfing && !this.isHopping && !this.isChangingCostume) {
                 this.startSurfCruise();
             } else if (!this.isHopping && !this.isSurfing) {
                 this.startNextHop();
@@ -1137,6 +1478,7 @@ class HubieAvatar {
     update(dt) {
         // Update Dressing Room Door
         this.dressingRoom.update(dt);
+        this.updateCostumeRoutine(dt);
 
         // 1. Update Pose Crossfade Progress
         if (this.poseBlend < 1.0) {
@@ -1177,10 +1519,6 @@ class HubieAvatar {
                     targetRotation = this.direction * 0.10;
                     targetScaleX = 0.96;
                     targetScaleY = 1.04;
-
-                    if (this.currentCostume === 'astronaut') {
-                        this.addSpaceThruster(this.x - this.direction * 20, this.groundY - targetHopOffset + 30);
-                    }
                 } else {
                     this.hopStage = 'land';
                     this.setPose('land');
@@ -1206,9 +1544,6 @@ class HubieAvatar {
                 this.x = this.hopStartX + (this.hopTargetX - this.hopStartX) * p;
                 targetHopOffset = Math.sin(p * Math.PI) * 190;
                 targetRotation = this.direction * p * Math.PI * 2;
-                if (this.currentCostume === 'astronaut') {
-                    this.addSpaceThruster(this.x, this.groundY - targetHopOffset + 20);
-                }
             }
         } else if (this.isZeroG) {
             this.zeroGTimer += dt;
@@ -1415,8 +1750,8 @@ class HubieAvatar {
             this.ctx.restore();
         }
 
-        // 4. Draw Dressing Room Door behind/alongside character
-        this.dressingRoom.draw(this.ctx);
+        // 4. Draw Dressing Room Interior (Back layer behind character)
+        this.dressingRoom.drawInterior(this.ctx);
 
         // 5. Draw Confetti behind Hubie
         this.drawConfetti();
@@ -1426,45 +1761,27 @@ class HubieAvatar {
         // Keep speech bubble anchored smoothly above Hubie
         this.updateSpeechBubblePosition(curY);
 
-        // 6. Draw Hubie Mascot (only if characterAlpha > 0)
+        // 6. Draw Hubie Mascot
         if (this.characterAlpha > 0.01) {
-            // Ground Shadow
-            this.ctx.save();
-            this.ctx.translate(this.x, this.groundY);
-            this.ctx.globalAlpha = this.characterAlpha;
-            this.drawGroundShadow(curY);
-            this.ctx.restore();
-
-            // Hubie Mascot with Smooth Blended Pose Crossfading
-            this.ctx.save();
-            this.ctx.translate(this.x, curY);
-            this.ctx.globalAlpha = this.characterAlpha;
-
-            if (this.direction === -1) {
-                this.ctx.scale(-1, 1);
+            if (this.inDressingRoom) {
+                // When Hubie is stepping inside the wardrobe room, clip inside door aperture
+                // and scale slightly for 3D perspective depth, rendered BEHIND the door frame & swinging door!
+                this.ctx.save();
+                const door = this.dressingRoom;
+                const apHalfW = door.apertureW / 2;
+                this.ctx.beginPath();
+                this.ctx.rect(door.x + door.shakeX - apHalfW, door.y - door.apertureH, door.apertureW, door.apertureH);
+                this.ctx.clip();
+                this.drawCharacterMascot(curY, this.dressingScale);
+                this.ctx.restore();
+            } else {
+                // Normal stage drawing outside wardrobe
+                this.drawCharacterMascot(curY, 1.0);
             }
-
-            this.ctx.rotate(this.curRotation);
-            this.ctx.scale(this.curScaleX, this.curScaleY);
-
-            // Draw Base Character Pose Sprites
-            this.drawSmoothHubieSprite();
-
-            // Draw Precision-Tracked Astronaut Space Suit & Crystal Glass Bubble Helmet
-            if (this.currentCostume === 'astronaut') {
-                this.drawPrecisionAstronautSuit();
-            }
-
-            // Draw Lip-Sync Overlay
-            if (this.mouthAlpha > 0.02 && this.mouthOpenness > 0.03) {
-                this.drawPrecisionLipSync();
-            }
-
-            this.ctx.restore();
-
-            // Name Tag Badge
-            this.drawBadge(this.x, this.groundY + 24);
         }
+
+        // 7. Draw Dressing Room Architectural Casing & 3D Swinging Door (Foreground layer in front of interior & Hubie)
+        this.dressingRoom.drawFrameAndDoor(this.ctx);
 
         // 7. Flying Hat on Loss
         const hatImg = this.currentCostume === 'halloween'
@@ -1492,6 +1809,42 @@ class HubieAvatar {
         requestAnimationFrame((t) => this.render(t));
     }
 
+    drawCharacterMascot(curY, extraScale = 1.0) {
+        // Ground Shadow
+        this.ctx.save();
+        this.ctx.translate(this.x, this.groundY);
+        this.ctx.globalAlpha = this.characterAlpha;
+        this.drawGroundShadow(curY);
+        this.ctx.restore();
+
+        // Hubie Mascot with Smooth Blended Pose Crossfading
+        this.ctx.save();
+        this.ctx.translate(this.x, curY);
+        this.ctx.globalAlpha = this.characterAlpha;
+
+        if (this.direction === -1) {
+            this.ctx.scale(-1, 1);
+        }
+
+        this.ctx.rotate(this.curRotation);
+        this.ctx.scale(this.curScaleX * extraScale, this.curScaleY * extraScale);
+
+        // Draw Base Character Pose Sprites
+        this.drawSmoothHubieSprite();
+
+        // Draw Lip-Sync Overlay
+        if (this.mouthAlpha > 0.02 && this.mouthOpenness > 0.03) {
+            this.drawPrecisionLipSync();
+        }
+
+        this.ctx.restore();
+
+        // Name Tag Badge (only when on stage outside wardrobe)
+        if (!this.inDressingRoom) {
+            this.drawBadge(this.x, this.groundY + 24);
+        }
+    }
+
     drawConfetti() {
         for (const p of this.confettiParticles) {
             this.ctx.save();
@@ -1505,8 +1858,6 @@ class HubieAvatar {
                 this.ctx.beginPath();
                 this.ctx.arc(0, 0, p.size * 0.7, 0, Math.PI * 2);
                 this.ctx.fillStyle = '#ffd700';
-                this.ctx.shadowColor = '#ffe600';
-                this.ctx.shadowBlur = 8;
                 this.ctx.fill();
 
                 this.ctx.lineWidth = 1.5;
@@ -1585,183 +1936,6 @@ class HubieAvatar {
         }
     }
 
-    /**
-     * Precision-Tracked Astronaut Space Suit & Crystal Glass Bubble Helmet
-     * Rigidly locked to Hubie's actual anatomical head and torso across every pose!
-     */
-    drawPrecisionAstronautSuit() {
-        const s = this.baseHeight / 562;
-        const blendFactor = this.easeInOutQuad(this.poseBlend);
-
-        const curAnchor = this.astronautPoseAnchors[this.currentPose] || this.astronautPoseAnchors.stand;
-        const prevAnchor = this.astronautPoseAnchors[this.prevPose] || this.astronautPoseAnchors.stand;
-
-        const curMetrics = this.classicMetrics;
-        const curSize = curMetrics.spriteSizes[this.currentPose] || [458, 562];
-        const curAnchorRatio = curMetrics.anchors[this.currentPose] || 0.45;
-        const prevSize = curMetrics.spriteSizes[this.prevPose] || [458, 562];
-        const prevAnchorRatio = curMetrics.anchors[this.prevPose] || 0.45;
-
-        // Current pose local coordinates
-        const curDX = -(curSize[0] * s) * curAnchorRatio;
-        const curDY = -(curSize[1] * s);
-        const curHeadX = curDX + curAnchor.head[0] * s;
-        const curHeadY = curDY + curAnchor.head[1] * s;
-        const curNeckX = curDX + curAnchor.neck[0] * s;
-        const curNeckY = curDY + curAnchor.neck[1] * s;
-        const curBackpackX = curDX + curAnchor.backpack[0] * s;
-        const curBackpackY = curDY + curAnchor.backpack[1] * s;
-        const curChestX = curDX + curAnchor.chest[0] * s;
-        const curChestY = curDY + curAnchor.chest[1] * s;
-
-        // Previous pose local coordinates
-        const prevDX = -(prevSize[0] * s) * prevAnchorRatio;
-        const prevDY = -(prevSize[1] * s);
-        const prevHeadX = prevDX + prevAnchor.head[0] * s;
-        const prevHeadY = prevDY + prevAnchor.head[1] * s;
-        const prevNeckX = prevDX + prevAnchor.neck[0] * s;
-        const prevNeckY = prevDY + prevAnchor.neck[1] * s;
-        const prevBackpackX = prevDX + prevAnchor.backpack[0] * s;
-        const prevBackpackY = prevDY + prevAnchor.backpack[1] * s;
-        const prevChestX = prevDX + prevAnchor.chest[0] * s;
-        const prevChestY = prevDY + prevAnchor.chest[1] * s;
-
-        // Smoothly interpolate all coordinates across pose transitions
-        const headX = prevHeadX + (curHeadX - prevHeadX) * blendFactor;
-        const headY = prevHeadY + (curHeadY - prevHeadY) * blendFactor;
-        const headRadius = (prevAnchor.headRadius + (curAnchor.headRadius - prevAnchor.headRadius) * blendFactor) * s;
-        const neckX = prevNeckX + (curNeckX - prevNeckX) * blendFactor;
-        const neckY = prevNeckY + (curNeckY - prevNeckY) * blendFactor;
-        const backpackX = prevBackpackX + (curBackpackX - prevBackpackX) * blendFactor;
-        const backpackY = prevBackpackY + (curBackpackY - prevBackpackY) * blendFactor;
-        const backpackAngle = prevAnchor.backpackAngle + (curAnchor.backpackAngle - prevAnchor.backpackAngle) * blendFactor;
-        const chestX = prevChestX + (curChestX - prevChestX) * blendFactor;
-        const chestY = prevChestY + (curChestY - prevChestY) * blendFactor;
-
-        this.ctx.save();
-
-        // 1. Dual Oxygen Life-Support Backpack (behind torso)
-        this.ctx.save();
-        this.ctx.translate(backpackX, backpackY);
-        this.ctx.rotate(backpackAngle);
-
-        // Oxygen tank casing
-        this.ctx.fillStyle = '#f8fafc';
-        this.ctx.strokeStyle = '#475569';
-        this.ctx.lineWidth = 2.5 * s;
-        this.ctx.beginPath();
-        this.ctx.roundRect(-22 * s, -45 * s, 44 * s, 90 * s, 10 * s);
-        this.ctx.fill();
-        this.ctx.stroke();
-
-        // Cyan safety valves
-        this.ctx.fillStyle = '#00e5ff';
-        this.ctx.beginPath();
-        this.ctx.arc(0, -50 * s, 7 * s, 0, Math.PI * 2);
-        this.ctx.fill();
-
-        // Rocket thruster nozzles at bottom
-        this.ctx.fillStyle = '#334155';
-        this.ctx.fillRect(-14 * s, 45 * s, 28 * s, 12 * s);
-        this.ctx.restore();
-
-        // 2. White Pressurized EVA Chest Mission Pack
-        this.ctx.save();
-        this.ctx.translate(chestX, chestY);
-        this.ctx.fillStyle = 'rgba(248, 250, 252, 0.95)';
-        this.ctx.strokeStyle = '#0284c7';
-        this.ctx.lineWidth = 2 * s;
-        this.ctx.beginPath();
-        this.ctx.roundRect(-34 * s, -20 * s, 68 * s, 40 * s, 8 * s);
-        this.ctx.fill();
-        this.ctx.stroke();
-
-        // High-tech digital mission readout
-        this.ctx.font = `bold ${Math.round(8 * s)}px "Courier New", monospace`;
-        this.ctx.fillStyle = '#0369a1';
-        this.ctx.textAlign = 'center';
-        this.ctx.fillText('HB-24/7', 0, -4 * s);
-
-        // Blinking telemetry status LEDs
-        const t = performance.now() * 0.005;
-        const led1 = Math.sin(t) > 0 ? '#10b981' : '#064e3b';
-        const led2 = Math.sin(t + 2) > 0 ? '#38bdf8' : '#0369a1';
-        const led3 = Math.sin(t + 4) > 0 ? '#f59e0b' : '#78350f';
-
-        this.ctx.fillStyle = led1;
-        this.ctx.beginPath();
-        this.ctx.arc(-18 * s, 10 * s, 3.5 * s, 0, Math.PI * 2);
-        this.ctx.fill();
-
-        this.ctx.fillStyle = led2;
-        this.ctx.beginPath();
-        this.ctx.arc(0, 10 * s, 3.5 * s, 0, Math.PI * 2);
-        this.ctx.fill();
-
-        this.ctx.fillStyle = led3;
-        this.ctx.beginPath();
-        this.ctx.arc(18 * s, 10 * s, 3.5 * s, 0, Math.PI * 2);
-        this.ctx.fill();
-        this.ctx.restore();
-
-        // 3. Metallic Neck Collar Ring Seal
-        this.ctx.save();
-        this.ctx.translate(neckX, neckY);
-        this.ctx.beginPath();
-        this.ctx.ellipse(0, 0, headRadius * 0.88, 14 * s, 0, 0, Math.PI * 2);
-        this.ctx.fillStyle = '#cbd5e1';
-        this.ctx.fill();
-        this.ctx.lineWidth = 3 * s;
-        this.ctx.strokeStyle = '#ffd700';
-        this.ctx.stroke();
-        this.ctx.restore();
-
-        // 4. Crystal-Clear Transparent Glass Space Bubble Helmet
-        // (Hubie's cute sloth face, sunglasses, and smile are 100% visible inside!)
-        this.ctx.save();
-        this.ctx.translate(headX, headY);
-
-        // Outer Glass Sphere
-        this.ctx.beginPath();
-        this.ctx.arc(0, 0, headRadius, 0, Math.PI * 2);
-        // Soft crystal glass tint
-        this.ctx.fillStyle = 'rgba(224, 242, 254, 0.12)';
-        this.ctx.fill();
-        this.ctx.lineWidth = 3.5 * s;
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
-        this.ctx.stroke();
-
-        // Curved Glass Glare Specular Highlights (Upper Left)
-        this.ctx.beginPath();
-        this.ctx.ellipse(-headRadius * 0.38, -headRadius * 0.38, headRadius * 0.32, headRadius * 0.14, -0.42, 0, Math.PI * 2);
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
-        this.ctx.fill();
-
-        // Secondary small glass glare dot
-        this.ctx.beginPath();
-        this.ctx.arc(-headRadius * 0.52, -headRadius * 0.18, 4 * s, 0, Math.PI * 2);
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-        this.ctx.fill();
-
-        // Antenna on Top of Helmet with Pulsing Cyan Beacon
-        this.ctx.strokeStyle = '#e2e8f0';
-        this.ctx.lineWidth = 2.5 * s;
-        this.ctx.beginPath();
-        this.ctx.moveTo(0, -headRadius);
-        this.ctx.lineTo(0, -headRadius - 22 * s);
-        this.ctx.stroke();
-
-        this.ctx.fillStyle = '#00ffcc';
-        this.ctx.shadowColor = '#00ffcc';
-        this.ctx.shadowBlur = 10;
-        this.ctx.beginPath();
-        this.ctx.arc(0, -headRadius - 24 * s, 4.5 * s, 0, Math.PI * 2);
-        this.ctx.fill();
-
-        this.ctx.restore();
-        this.ctx.restore();
-    }
-
     drawPrecisionLipSync() {
         const m = this.getActiveMetrics();
         const scale = this.baseHeight / 562;
@@ -1810,7 +1984,7 @@ class HubieAvatar {
     drawBadge(x, y) {
         this.ctx.save();
         this.ctx.font = 'bold 15px "Inter", sans-serif';
-        const costumeTag = this.currentCostume === 'astronaut' ? '🚀 ASTRO-HUBIE' : this.currentCostume === 'halloween' ? '🎃 SPOOKY HUBIE' : '⭐ HUBIE';
+        const costumeTag = this.currentCostume === 'halloween' ? '🎃 SPOOKY HUBIE' : '⭐ HUBIE';
         this.ctx.fillStyle = this.state === 'CELEBRATING' ? '#ffd700' : '#00ffcc';
         this.ctx.textAlign = 'center';
         this.ctx.fillText(costumeTag, x, y);

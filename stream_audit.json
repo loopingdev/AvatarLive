@@ -3439,5 +3439,43 @@
       "error": "page.waitForTimeout: Target page, context or browser has been closed",
       "timestamp": "2026-11-06T09:36:54.983Z"
     }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T09:48:59.282Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T09:48:59.282Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_END",
+    "timestamp": "2026-11-06T09:58:14.695Z",
+    "uptime_seconds": 555,
+    "uptime": "00h 09m 15s",
+    "data": {
+      "uptime_seconds": 555,
+      "uptime_human": "00h 09m 15s",
+      "total_rounds": 18
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T10:04:28.967Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T10:04:28.967Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-06T10:29:33.678Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-06T10:29:33.678Z"
+    }
   }
 ]

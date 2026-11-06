@@ -59,7 +59,7 @@ export class HousebetsPlayer {
     this.browserContext = await chromium.launchPersistentContext(userDataDir, {
       channel: 'chrome',
       headless: CONFIG.HEADLESS_BROWSER,
-      viewport: { width: 1280, height: 760 },
+      viewport: { width: 1280, height: 720 },
       args: [
         '--disable-blink-features=AutomationControlled',
         '--start-maximized'
@@ -155,7 +155,7 @@ export class HousebetsPlayer {
         format: 'jpeg',
         quality: 75,
         maxWidth: 1280,
-        maxHeight: 760,
+        maxHeight: 720,
         everyNthFrame: 1
       });
 
@@ -633,82 +633,147 @@ export class HousebetsPlayer {
           }
         }
 
-        // --- HUBIE'S ROAD: AI CHOOSES BUOY ---
+        // --- HUBIE'S ROAD: VERIFIED HOP TO NEXT BUOY / LANE ---
         else if (game.id === 'hubies_road') {
-          const buoyCount = await this.page.evaluate(() => {
+          const clickRes = await this.page.evaluate(() => {
             const host = document.querySelector('[data-housegames-direct]');
-            if (!host?.shadowRoot) return 0;
+            if (!host?.shadowRoot) return { success: false, reason: 'no host shadow' };
             const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
             const root = gameEl.shadowRoot || gameEl;
-            return Array.from(root.querySelectorAll('.hs-g-buoy, button[aria-label*="Lane" i]')).filter(b => b.offsetWidth > 0).length;
+
+            // Search multi-tier selectors for Hubie's Road interactive stepping buoys/lanes
+            const buoySelectors = [
+              '.hs-g-buoy', '.hr-g-buoy', '.hl-g-buoy',
+              'button[class*="buoy" i]', 'button[class*="lane" i]', 'button[class*="step" i]', 'button[class*="tile" i]',
+              'button[aria-label*="Lane" i]', 'button[aria-label*="Buoy" i]', 'button[aria-label*="Step" i]',
+              '.hs-lane button', '.hr-lane button', '.buoy', '.lane'
+            ];
+
+            let candidates = [];
+            for (const sel of buoySelectors) {
+              const els = Array.from(root.querySelectorAll(sel)).filter(b => b.offsetWidth > 0 && !b.disabled);
+              if (els.length > 0) {
+                candidates = els;
+                break;
+              }
+            }
+
+            // Universal fallback: any interactive button in game arena that is not a control button
+            if (candidates.length === 0) {
+              const all = Array.from(root.querySelectorAll('button, [role="button"]')).filter(b => {
+                if (b.offsetWidth <= 0 || b.disabled) return false;
+                const txt = (b.innerText || '').trim().toLowerCase();
+                const aria = (b.getAttribute('aria-label') || '').toLowerCase();
+                if (/^(manual|auto|advanced|bet|play|cash\s*out|take|½|1\/2|2x|2×|max|min)$/i.test(txt)) return false;
+                if (/cashout|difficulty|settings|help|mute|volume/i.test(aria)) return false;
+                return true;
+              });
+              if (all.length > 0) candidates = all;
+            }
+
+            if (candidates.length === 0) return { success: false, reason: 'no buoys/lanes found' };
+
+            const pickIdx = Math.floor(Math.random() * candidates.length);
+            const chosen = candidates[pickIdx];
+            chosen.click();
+            return { success: true, pickIdx, total: candidates.length };
           });
 
-          if (buoyCount > 0) {
-            const buoyPick = Math.floor(Math.random() * buoyCount);
-            console.log(`[HousebetsPlayer AI Choice] Hubie's Road: Buoy #${buoyPick + 1}`);
-            this.tts.speak(`Sloth hopping to buoy #${buoyPick + 1}, clear navigation squad!`);
+          // Only proceed and announce if Hubie actually hopped to the buoy!
+          if (!clickRes || !clickRes.success) {
+            console.warn(`[HousebetsPlayer] Hubie's Road: No active buoy/lane found to hop at step ${step + 1}. Ending step sequence.`);
+            break;
+          }
 
-            await this.page.evaluate((idx) => {
+          console.log(`[HousebetsPlayer AI Choice] Hubie's Road: Hopped to Buoy #${clickRes.pickIdx + 1} of ${clickRes.total}`);
+          this.tts.speak(`Sloth hopping to buoy #${clickRes.pickIdx + 1}, clear navigation squad!`);
+          await this.page.waitForTimeout(1800);
+        }
+
+        // --- HILO: VERIFIED HIGHER / LOWER CHOICE ---
+        else if (game.id === 'hilo') {
+          const choice = await this.ai.decideChoice('hilo');
+
+          const clickRes = await this.page.evaluate((hiloChoice) => {
+            const host = document.querySelector('[data-housegames-direct]');
+            if (!host?.shadowRoot) return { success: false, reason: 'no host shadow' };
+            const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
+            const root = gameEl.shadowRoot || gameEl;
+
+            const isHigher = /high|above|\bhi\b|▲|↑/i.test(hiloChoice);
+            const allBtns = Array.from(root.querySelectorAll('button, [role="button"]')).filter(b => b.offsetWidth > 0 && !b.disabled);
+
+            // Filter out non-play buttons
+            const playBtns = allBtns.filter(b => {
+              const txt = (b.innerText || '').trim().toLowerCase();
+              return !/^(manual|auto|cash\s*out|take|½|1\/2|2x|2×|max|min)$/i.test(txt);
+            });
+
+            let targetBtn = null;
+            if (isHigher) {
+              targetBtn = playBtns.find(b => {
+                const t = (b.innerText || '') + ' ' + (b.getAttribute('aria-label') || '') + ' ' + (b.className || '');
+                return /high|above|\bhi\b|▲|↑/i.test(t);
+              }) || root.querySelector('.hl-hilo-opt:first-child, [class*="higher" i], button[aria-label*="High" i]');
+            } else {
+              targetBtn = playBtns.find(b => {
+                const t = (b.innerText || '') + ' ' + (b.getAttribute('aria-label') || '') + ' ' + (b.className || '');
+                return /low|below|\blo\b|▼|↓/i.test(t);
+              }) || root.querySelector('.hl-hilo-opt:last-child, [class*="lower" i], button[aria-label*="Low" i]');
+            }
+
+            // Fallback: If 2 option buttons exist in game arena, first is Higher, second is Lower
+            if (!targetBtn && playBtns.length >= 2) {
+              targetBtn = isHigher ? playBtns[0] : playBtns[1];
+            }
+
+            if (targetBtn) {
+              targetBtn.click();
+              return { success: true, chosen: isHigher ? 'HIGHER' : 'LOWER', text: targetBtn.innerText };
+            }
+            return { success: false, reason: 'higher/lower button not found' };
+          }, choice.choice);
+
+          // Only proceed and announce if Higher/Lower was physically clicked!
+          if (!clickRes || !clickRes.success) {
+            console.warn(`[HousebetsPlayer] Hilo: Could not find ${choice.choice} button at step ${step + 1}. Ending step sequence.`);
+            break;
+          }
+
+          console.log(`[HousebetsPlayer AI Choice] Hilo: ${clickRes.chosen} -> "${choice.voiceLine}"`);
+          this.tts.speak(choice.voiceLine);
+          await this.page.waitForTimeout(1800);
+        }
+
+        // --- AI STRATEGIC CASHOUT DECISION (ONLY IF CASHOUT IS ACTIVELY AVAILABLE) ---
+        if (state.canCashout) {
+          const decision = await this.ai.decideGameMove(game.name, state.multiplier, step + 1);
+          console.log(`[HousebetsPlayer AI Decision] Step ${step + 1} (${state.multiplier}x): ${decision.action} -> "${decision.voiceLine}"`);
+
+          if (decision.action === 'CASHOUT') {
+            const actualCashoutMult = this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : (state.multiplier || 1.25);
+            this.cashedOutOutcome = {
+              won: true,
+              multiplier: actualCashoutMult
+            };
+            this.tts.speak(decision.voiceLine, true);
+
+            await this.page.evaluate(() => {
               const host = document.querySelector('[data-housegames-direct]');
               if (!host?.shadowRoot) return;
               const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
               const root = gameEl.shadowRoot || gameEl;
-              const lanes = Array.from(root.querySelectorAll('.hs-g-buoy, button[aria-label*="Lane" i]')).filter(b => b.offsetWidth > 0);
-              if (lanes.length > 0) {
-                lanes[idx % lanes.length].click();
-              }
-            }, buoyPick);
-
-            await this.page.waitForTimeout(1800);
+              const allBtns = Array.from(root.querySelectorAll('button'));
+              const cashoutBtn = allBtns.find(b => /cash\s*out|take/i.test(b.innerText || ''));
+              if (cashoutBtn) cashoutBtn.click();
+            });
+            console.log(`[HousebetsPlayer] Successfully CASHOUT at ${actualCashoutMult}x!`);
+            await this.page.waitForTimeout(800);
+            if (this.lastLiveOutcome?.won && this.lastLiveOutcome.multiplier > 0) {
+              this.cashedOutOutcome.multiplier = this.lastLiveOutcome.multiplier;
+            }
+            break;
           }
-        }
-
-        // --- HILO: AI CHOOSES HIGHER / LOWER ---
-        else if (game.id === 'hilo') {
-          const choice = await this.ai.decideChoice('hilo');
-          console.log(`[HousebetsPlayer AI Choice] Hilo: ${choice.choice} -> "${choice.voiceLine}"`);
-          this.tts.speak(choice.voiceLine);
-
-          await this.page.evaluate((hiloChoice) => {
-            const host = document.querySelector('[data-housegames-direct]');
-            if (!host?.shadowRoot) return;
-            const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
-            const root = gameEl.shadowRoot || gameEl;
-            const allBtns = Array.from(root.querySelectorAll('button'));
-            const btn = allBtns.find(b => new RegExp(hiloChoice, 'i').test(b.innerText || '')) || root.querySelector('.hl-hilo-opt');
-            if (btn) btn.click();
-          }, choice.choice);
-
-          await this.page.waitForTimeout(1800);
-        }
-
-        // --- AI STRATEGIC CASHOUT DECISION (CASHOUT OR PUSH TO NEXT STEP) ---
-        const decision = await this.ai.decideGameMove(game.name, state.multiplier, step + 1);
-        console.log(`[HousebetsPlayer AI Decision] Step ${step + 1} (${state.multiplier}x): ${decision.action} -> "${decision.voiceLine}"`);
-
-        if (decision.action === 'CASHOUT' && state.canCashout) {
-          const actualCashoutMult = this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : (state.multiplier || 1.25);
-          this.cashedOutOutcome = {
-            won: true,
-            multiplier: actualCashoutMult
-          };
-          this.tts.speak(decision.voiceLine, true);
-
-          await this.page.evaluate(() => {
-            const host = document.querySelector('[data-housegames-direct]');
-            if (!host?.shadowRoot) return;
-            const gameEl = host.shadowRoot.querySelector('*[data-game-slug], *[class*="game"]') || host.shadowRoot;
-            const root = gameEl.shadowRoot || gameEl;
-            const allBtns = Array.from(root.querySelectorAll('button'));
-            const cashoutBtn = allBtns.find(b => /cash\s*out|take/i.test(b.innerText || ''));
-            if (cashoutBtn) cashoutBtn.click();
-          });
-          console.log(`[HousebetsPlayer] Successfully CASHOUT at ${actualCashoutMult}x!`);
-          await this.page.waitForTimeout(800);
-          if (this.lastLiveOutcome?.won && this.lastLiveOutcome.multiplier > 0) {
-            this.cashedOutOutcome.multiplier = this.lastLiveOutcome.multiplier;
-          }
-          break;
         }
 
         step++;
