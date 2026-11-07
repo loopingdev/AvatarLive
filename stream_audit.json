@@ -3819,5 +3819,27 @@
     "data": {
       "time": "2026-11-07T05:21:15.073Z"
     }
+  },
+  {
+    "event": "JUDGES_CHECKPOINT",
+    "timestamp": "2026-11-07T05:51:17.178Z",
+    "uptime_seconds": 1802,
+    "uptime": "00h 30m 02s",
+    "data": {
+      "uptime": "00h 30m 02s",
+      "rounds_played": 81,
+      "status": "LIVE_AND_HEALTHY"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_END",
+    "timestamp": "2026-11-07T05:54:35.844Z",
+    "uptime_seconds": 2000,
+    "uptime": "00h 33m 20s",
+    "data": {
+      "uptime_seconds": 2000,
+      "uptime_human": "00h 33m 20s",
+      "total_rounds": 90
+    }
   }
 ]

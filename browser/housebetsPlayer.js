@@ -635,7 +635,7 @@ export class HousebetsPlayer {
 
             if (isBomb) {
               console.log(`[HousebetsPlayer] Mines: Bomb hit on tile #${choice.tileIndex + 1}!`);
-              this.tts.speak(`Boom! Hit a mine on tile #${choice.tileIndex + 1}! Sloth took the blast, unlucky squad!`);
+              this.tts.speak(`Boom! Hit a mine on tile #${choice.tileIndex + 1}! Hubie took the blast, unlucky squad!`);
               await this.page.waitForTimeout(1500);
               break;
             }
@@ -832,8 +832,8 @@ export class HousebetsPlayer {
           if (isTrap) {
             console.log(`[HousebetsPlayer] Hubie's Road: Shark ambush/trap triggered on buoy #${clickRes.pickIdx + 1}!`);
             const lossLines = [
-              `Shark ambush on buoy #${clickRes.pickIdx + 1}! Sloth took a splash, unlucky squad!`,
-              `Oh no, that buoy had a shark! Sloth took a splash, unlucky squad!`,
+              `Shark ambush on buoy #${clickRes.pickIdx + 1}! Hubie took a splash, unlucky squad!`,
+              `Oh no, that buoy had a shark! Hubie took a splash, unlucky squad!`,
               `Splash! Trap on buoy #${clickRes.pickIdx + 1}! We will bounce back squad!`
             ];
             const chosenLossLine = lossLines[Math.floor(Math.random() * lossLines.length)];

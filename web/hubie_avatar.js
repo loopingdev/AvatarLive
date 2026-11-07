@@ -1342,7 +1342,7 @@ class HubieAvatar {
 
                 // Delivery line with game context
                 const gameCtx = this.currentGameName ? ` for ${this.currentGameName}` : '';
-                let line = `Back in the gentleman sloth top hat and waistcoat! Clean drip secured${gameCtx}!`;
+                let line = `Back in the gentleman top hat and waistcoat! Clean Hubie drip secured${gameCtx}!`;
                 if (this.currentCostume === 'halloween') {
                     line = `Spooky wizard cape equipped! Multiplying magic is unlocked${gameCtx} squad!`;
                 } else if (this.currentCostume === 'boss') {
@@ -1618,7 +1618,7 @@ class HubieAvatar {
 
         // Responsive mascot greeting speech bubble
         const greetings = [
-            `Hey @${username}! Sloth squad is live! 🌴`,
+            `Hey @${username}! Hubie squad is live! 🌴`,
             `Appreciate you chatting @${username}! Let's hunt these multipliers! 🚀`,
             `Much love @${username}! Thanks for riding with Hubie today! 💕`,
             `Yooo @${username}! Welcome to the 24/7 stream! 🔥`

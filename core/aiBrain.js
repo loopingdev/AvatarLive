@@ -5,7 +5,8 @@ You are HUBIE, the official AI mascot and live streamer of Housebets! You are a 
 You are streaming 24/7 to Kick/Twitch, playing all 14 House Originals (Hubie's Road, Roulette, Plinko, Mines, Dice, Limbo, Dragon Tower, Hilo, Coinflip, Wheel, Keno, Blackjack, Baccarat, Max Win) strictly in DEMO / FUN mode.
 
 CORE PERSONALITY & TONE:
-- You are a crazy hype live casino slot streamer sloth (like Trainwreckstv, Roshtein, or Adin Ross) streaming 24/7 in DEMO mode.
+- You are HUBIE, a crazy hype live casino slot streamer (like Trainwreckstv, Roshtein, or Adin Ross) streaming 24/7 in DEMO mode.
+- NAME RULE: Always call yourself HUBIE. NEVER call yourself "the sloth" or "a sloth". Always say "Hubie" or "I" or "Hubie Squad".
 - Talk like a real casino slot streamer: use slot & streaming terms naturally ("chat", "squad", "W in the chat", "lock in", "sheeeesh", "juicer", "connect", "big hit", "ripped", "run it back", "demo stack").
 - When winning over 1.6x, SCREAM LIKE CRAZY with unhinged hype and ALL CAPS excitement!
 - When losing (<= 1.0x), react with funny dramatic disbelief or a comedic scream ("NOOOOO! ARE YOU SERIOUS?! IT RIPPED!"), then reload the bet with bounce-back energy.
@@ -26,17 +27,17 @@ const GAME_FALLBACK_COMMENTARY = {
   hubies_road: {
     win: [
       "Hubie navigated the buoys like a legend! Clean {multiplier}x secured across the river squad!",
-      "Sloth agility on the water! Locked in {multiplier}x on Hubie's Road, let's keep hopping!",
+      "Hubie agility on the water! Locked in {multiplier}x on Hubie's Road, let's keep hopping!",
       "Safe on the dock! That's a crisp {multiplier}x in demo mode, W's in the chat!"
     ],
     loss: [
       "Splash! Hubie slipped off the buoy! No sweat squad, we dry off and hop right back!",
-      "Caught a ripple that round! The road was treacherous, but a sloth never gives up. Next round!"
+      "Caught a ripple that round! The road was treacherous, but Hubie never gives up. Next round!"
     ]
   },
   mines: {
     win: [
-      "BOOM! Cleared the minefield and cashed out at {multiplier}x! Pure sloth instincts, no bombs touched!",
+      "BOOM! Cleared the minefield and cashed out at {multiplier}x! Pure Hubie instincts, no bombs touched!",
       "Diamonds all over the board! Locked in {multiplier}x before the traps hit, that's high IQ demo play!",
       "Clean exit squad! Taking the {multiplier}x profit off the minefield, we love to see it!"
     ],
@@ -80,7 +81,7 @@ const GAME_FALLBACK_COMMENTARY = {
   },
   dice: {
     win: [
-      "Green on the slider! Rolled a clean {multiplier}x hit! The RNG gods are blessing the sloth today!",
+      "Green on the slider! Rolled a clean {multiplier}x hit! The RNG gods are blessing Hubie today!",
       "Right in the target zone! {multiplier}x locked in on Dice, smooth and steady squad!",
       "Dice roll delivered! That's {multiplier}x in the demo stack, let's keep the roll hot!"
     ],
@@ -92,7 +93,7 @@ const GAME_FALLBACK_COMMENTARY = {
   coinflip: {
     win: [
       "GOLDEN FLIP! Coin landed right side up for a sweet {multiplier}x! 50/50 in our favor squad!",
-      "Heads on the table! Nailed the {multiplier}x flip, sloth luck is undefeated today!",
+      "Heads on the table! Nailed the {multiplier}x flip, Hubie luck is undefeated today!",
       "Pure gold on the bounce! {multiplier}x flip secured, W's in the chat!"
     ],
     loss: [
@@ -114,7 +115,7 @@ const GAME_FALLBACK_COMMENTARY = {
   wheel: {
     win: [
       "The wheel stopped right on the golden segment! That's a juicy {multiplier}x in the bank!",
-      "Clean spin! Wheel locked onto {multiplier}x, sloth spin power is real squad!"
+      "Clean spin! Wheel locked onto {multiplier}x, Hubie spin power is real squad!"
     ],
     loss: [
       "Wheel ticked one notch past our slice! Spinning the demo wheel right back chat!",
@@ -192,7 +193,7 @@ const GENERIC_LOSS = [
   "NOOOOO! ARE YOU SERIOUS?! IT RIPPED! BROOOO! We dust it off and run it right back!",
   "ARE YOU KIDDING ME?! Bro that was so dirty! Reload the bet chat, we bounce right back!",
   "NO SHOT! The greed got me haha! Chat drop a W for the comeback round right now!",
-  "BRUH! Ripped below 1x! That's gambling squad, but a sloth never quits! Next spin!",
+  "BRUH! Ripped below 1x! That's gambling squad, but Hubie never quits! Next spin!",
   "UGH! Caught the trap that round! No sweat chat, we stay locked in and double down on the vibes!"
 ];
 
@@ -313,7 +314,7 @@ export class AIBrain {
       const picked = shuffled.slice(0, count).sort((a, b) => a - b);
 
       const prompt = `You are Hubie streaming Keno live in demo mode. You picked lucky numbers: ${picked.join(', ')}. `
-        + `Announce these numbers to chat in 1 short punchy sentence (under 20 words) with hype sloth energy.`;
+        + `Announce these numbers to chat in 1 short punchy sentence (under 20 words) with hype Hubie energy.`;
       const aiText = await this.callOpenRouter(prompt);
 
       return {
@@ -329,7 +330,7 @@ export class AIBrain {
       const aiText = await this.callOpenRouter(prompt);
 
       const tileLines = [
-        `Sloth instincts locked in on row 2, let's find that diamond squad!`,
+        `Hubie instincts locked in on row 2, let's find that diamond squad!`,
         `Picking this tile right in the center, dodging all the bombs chat!`,
         `Feeling lucky on this corner tile, reveal the diamond!`,
         `Navigating the minefield squad, tapping this safe spot right now!`
@@ -355,7 +356,7 @@ export class AIBrain {
       const eggLines = [
         `Floor ${floor}! Hubie's cracking the ${chosenEgg} egg, let's climb squad!`,
         `Scaling floor ${floor}, trusting the ${chosenEgg} egg! Dragon stay asleep!`,
-        `Sloth ascension time! Going with the ${chosenEgg} egg on floor ${floor}!`
+        `Hubie ascension time! Going with the ${chosenEgg} egg on floor ${floor}!`
       ];
 
       return {
@@ -445,13 +446,13 @@ export class AIBrain {
     const cashoutLines = [
       `A clean ${currentMultiplier.toFixed(2)}x is on the table, chat! Cashing out and securing demo profit on ${gameName}!`,
       `Green in the bank squad! Cashing out at ${currentMultiplier.toFixed(2)}x, profit is profit!`,
-      `Smart sloth moves! Taking the ${currentMultiplier.toFixed(2)}x cashout before the traps hit!`
+      `Smart Hubie moves! Taking the ${currentMultiplier.toFixed(2)}x cashout before the traps hit!`
     ];
 
     const continueLines = [
       `Sitting at ${currentMultiplier.toFixed(2)}x on ${gameName}, but Hubie's feeling ambitious! One more step squad!`,
       `We don't stop here chat! ${currentMultiplier.toFixed(2)}x is great, but let's hunt that monster multiplier!`,
-      `Sloth courage activated! Pushing forward to step ${stepCount + 1}, lock in chat!`
+      `Hubie courage activated! Pushing forward to step ${stepCount + 1}, lock in chat!`
     ];
 
     return {
@@ -482,7 +483,7 @@ export class AIBrain {
       tierInstruction = `LOSS (${multiplier.toFixed(2)}x <= 1.0x): Casino streamer loss reaction! Scream or groan in funny dramatic disbelief ("NOOOOO!", "ARE YOU SERIOUS?!", "RIPPED! BROOO!"), then shake it off with slot streamer bounce-back energy ("We dust it off and run it right back!").`;
     }
 
-    const prompt = `You are Hubie commentating live on stream as a crazy hype casino slot streamer sloth in DEMO mode.
+    const prompt = `You are Hubie commentating live on stream as a crazy hype casino slot streamer in DEMO mode.
 CRITICAL CONTEXT:
 - Game currently on screen: ${gameName}
 - Exact Round Outcome: ${won ? `WIN with ${multiplier.toFixed(2)}x` : `LOSS with ${multiplier.toFixed(2)}x`}
@@ -494,7 +495,8 @@ TONE & BEHAVIOR:
 ${tierInstruction}
 1. React ONLY to ${gameName}. NEVER mention other games!
 2. Strict multiplier rule: Multipliers > 1.0x are wins, multipliers <= 1.0x are losses. Multipliers > 1.6x MUST SCREAM LIKE CRAZY!
-3. Length: 1 to 2 short punchy sentences (max 22 words) so it can be shouted cleanly over TTS.`;
+3. Name rule: Always refer to yourself as Hubie, never "the sloth".
+4. Length: 1 to 2 short punchy sentences (max 22 words) so it can be shouted cleanly over TTS.`;
 
     const aiText = await this.callOpenRouter(prompt);
     if (aiText) return aiText;
@@ -532,7 +534,7 @@ ${tierInstruction}
     const totalLosses = context.totalLosses || 0;
     const totalRounds = context.totalRounds || 0;
 
-    const prompt = `You are Hubie, the official sloth mascot of Housebets, streaming live 24/7 on Kick/Twitch in DEMO / FUN mode.
+    const prompt = `You are Hubie, the official mascot of Housebets, streaming live 24/7 on Kick/Twitch in DEMO / FUN mode.
 Current live stream screen context:
 - Game currently playing on screen: ${gameName}
 - Last round result: ${wonState}
@@ -544,8 +546,9 @@ Viewer @${username} just said in the live stream chat: "${message}"
 Give a charismatic, genuine live streamer response directly to @${username} (1-2 sentences, max 20 words).
 Crucial instructions:
 1. Talk like an authentic streamer talking back to chat (use natural spoken phrases, contractions, and direct shoutouts to @${username}).
-2. Naturally mention the game you are playing right now (${gameName}). NEVER mention a different game!
-3. If they ask about bets or winning, remind them this is demo mode for fun, math favors the house, and to gamble responsibly (18+).`;
+2. Always refer to yourself as Hubie, never "the sloth".
+3. Naturally mention the game you are playing right now (${gameName}). NEVER mention a different game!
+4. If they ask about bets or winning, remind them this is demo mode for fun, math favors the house, and to gamble responsibly (18+).`;
 
     const aiText = await this.callOpenRouter(prompt);
     if (aiText) return aiText;
@@ -555,7 +558,7 @@ Crucial instructions:
       `Yo @{user}! Big love for tuning in! We're live on {game} right now sitting on that {multiplier} hit, let's keep the demo vibes rolling!`,
       `Ayy @{user}! We're cooking up heat on {game}! Keep your eyes on the board, chasing those juicy multipliers squad!`,
       `Welcome to the 24/7 party @{user}! Grinding {game} in demo mode today. Remember to always gamble responsibly and keep it 100% fun!`,
-      `Shoutout to @{user}! Sloth squad rolling deep while we play {game}! Drop a W in the chat for the next round!`
+      `Shoutout to @{user}! Hubie squad rolling deep while we play {game}! Drop a W in the chat for the next round!`
     ];
 
     return sample(contextualTemplates)
