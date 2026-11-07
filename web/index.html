@@ -175,8 +175,14 @@
             avatar.onGameChanged(gameTitle);
           } else if (payload.type === 'round_result') {
             const res = payload.event_data;
-            if (res.won) {
-              avatar.reactToWin(res.multiplier || 2.0);
+            const mult = Number(res.multiplier || 0);
+            if (mult > 1.6) {
+              // Crazy Win (> 1.6x): Scream like crazy, confetti explosion, hype dance!
+              avatar.reactToWin(mult);
+              avatar.triggerConfetti();
+              avatar.startHypeDance(4800);
+            } else if (res.won && mult > 1.0) {
+              avatar.reactToWin(mult);
             } else {
               avatar.reactToLoss();
             }

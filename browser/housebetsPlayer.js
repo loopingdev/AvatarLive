@@ -111,10 +111,10 @@ export class HousebetsPlayer {
             won = false;
             mult = 0.0;
           } else if (isCashoutOrWin) {
-            won = true;
             if (mult <= 0 && g.payout && g.stake) mult = g.payout / g.stake;
-          } else if (mult > 0 || Number(round.delta || 0) > 0 || Number(round.payout || 0) > 0) {
-            won = true;
+            won = mult > 1.0;
+          } else {
+            won = mult > 1.0;
           }
 
           if (g.active) {
@@ -994,6 +994,13 @@ export class HousebetsPlayer {
 
     this.totalRounds++;
     this.roundsInCurrentGame++;
+
+    // Strict win/loss multiplier rule: Win is ONLY when multiplier > 1.0x, Lose is <= 1.0x
+    const rawMult = typeof outcome.multiplier === 'number' ? outcome.multiplier : (outcome.won ? 1.5 : 0.0);
+    outcome.multiplier = rawMult;
+    outcome.won = rawMult > 1.0;
+    const isSuperWin = rawMult > 1.6;
+
     this.lastOutcome = outcome;
     this.lastMultiplier = outcome.multiplier;
     this.supervisor.recordRoundCompletion();
@@ -1022,14 +1029,15 @@ export class HousebetsPlayer {
       });
     }
 
-    // Prioritizing chat interaction: suppress routine game commentary if viewers are chatting or using commands
+    // Prioritizing chat interaction:
+    // If multiplier > 1.6, it's a SUPER CRAZY WIN — scream like crazy and celebrate with top priority!
     const hasRecentChat = this.chat.hasRecentViewerActivity(14000);
-    const isNotable = (outcome.won && outcome.multiplier >= 2.0) || this.streak >= 3 || (this.totalRounds % 4 === 0);
+    const isNotable = isSuperWin || (!hasRecentChat && (outcome.won || this.streak <= -3 || (this.totalRounds % 3 === 0)));
 
-    if (!hasRecentChat && isNotable) {
+    if (isNotable) {
       const commentary = await this.ai.commentateRound(game.name, 10.0, outcome, { streak: this.streak });
-      this.tts.speak(commentary, { priority: false, isChat: false });
-      await this.tts.waitForSpeech(3500);
+      this.tts.speak(commentary, { priority: isSuperWin, isChat: false });
+      await this.tts.waitForSpeech(isSuperWin ? 5000 : 3500);
     } else if (hasRecentChat) {
       console.log(`[HousebetsPlayer] Prioritizing viewer interaction: routine round commentary silenced.`);
     }

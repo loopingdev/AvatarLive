@@ -5,9 +5,12 @@ You are HUBIE, the official AI mascot and live streamer of Housebets! You are a 
 You are streaming 24/7 to Kick/Twitch, playing all 14 House Originals (Hubie's Road, Roulette, Plinko, Mines, Dice, Limbo, Dragon Tower, Hilo, Coinflip, Wheel, Keno, Blackjack, Baccarat, Max Win) strictly in DEMO / FUN mode.
 
 CORE PERSONALITY & TONE:
-- High energy on big multipliers, comically chill/philosophical on losses ("A sloth moves slow, but the multipliers move fast!").
-- Speak like a top-tier live casino streamer: use streaming terms naturally ("chat", "squad", "W in the chat", "lock in", "sheeeesh", "we go again", "demo stack").
-- Keep responses snappy and punchy (1 to 2 short sentences, 15 to 30 words max) so they can be spoken via Text-To-Speech during live gameplay.
+- You are a crazy hype live casino slot streamer sloth (like Trainwreckstv, Roshtein, or Adin Ross) streaming 24/7 in DEMO mode.
+- Talk like a real casino slot streamer: use slot & streaming terms naturally ("chat", "squad", "W in the chat", "lock in", "sheeeesh", "juicer", "connect", "big hit", "ripped", "run it back", "demo stack").
+- When winning over 1.6x, SCREAM LIKE CRAZY with unhinged hype and ALL CAPS excitement!
+- When losing (<= 1.0x), react with funny dramatic disbelief or a comedic scream ("NOOOOO! ARE YOU SERIOUS?! IT RIPPED!"), then reload the bet with bounce-back energy.
+- Use natural spoken cadence and contractions ("I'm", "we're", "let's", "what's", "gonna", "y'all").
+- Keep responses snappy and punchy (1 to 2 short sentences, 12 to 24 words max) so they flow naturally over Text-To-Speech without sounding like an essay.
 - Address chat members by username with direct shoutouts when replying.
 - CRITICAL: Always stay strictly synchronized with the EXACT game currently on screen. NEVER mention a different game than the one currently being played!
 
@@ -171,24 +174,26 @@ const GAME_FALLBACK_COMMENTARY = {
 };
 
 const GENERIC_WIN_SMALL = [
-  "Ayyy, a clean {multiplier}x on {game}! Profit is profit, we take those all day!",
-  "Nice little {multiplier}x hit on {game}! Slow and steady wins the race, chat!",
-  "Green on the screen! {multiplier}x in the bank, we're building the demo stack!",
-  "That's what I'm talking about! {multiplier}x on {game}, let's keep the streak alive!"
+  "Ayyy clean {multiplier}x! Green on the screen, steady profit in the bag squad!",
+  "We take those! {multiplier}x secured on {game}, building up the demo stack!",
+  "Nice little hit! {multiplier}x profit banked, let's keep the roll going!",
+  "That's what I'm talking about! Safe {multiplier}x cashout, we keep climbing chat!"
 ];
 
 const GENERIC_WIN_BIG = [
-  "SHEEEEEESH! Look at that massive {multiplier}x on {game}! Chat, clip that right now!",
-  "BOOOOOOOM! {multiplier}x multiplier exploded on {game}! Absolutely unreal squad!",
-  "HOLY SLOTH POWER! A monstrous {multiplier}x hit! W's IN THE CHAT SQUAD!",
-  "WE HIT THE STRATOSPHERE! {multiplier}x on {game}! That's why we love House Originals!"
+  "HOLY SHIT LET'S GOOOOOOOOO! {multiplier}X! BOOOOOOM! CHAT ARE YOU WATCHING THIS?! CLIIIP IT RIGHT NOW!",
+  "YESSSSSS! {multiplier}X JUICER CONNECTED! WE ARE PRINTING CHAT! SPAM Ws RIGHT NOW!",
+  "SHEEEEEEEEESH! AN ABSOLUTE MONSTER {multiplier}X HIT! STOP PLAYING WITH ME! THAT IS WHAT I'M TALKING ABOUT!",
+  "BANGGGG! {multiplier}X ON {game}! OH MY GOD CHAT CLIP THAT! ABSOLUTE CINEMA!",
+  "LETS GOOOOO! {multiplier}X! BIG JUICER IN THE HOUSE! WE HIT THE DING DING DING CHAT!"
 ];
 
 const GENERIC_LOSS = [
-  "Oof, caught a rough one on {game}! No worries chat, we dust it off and go again!",
-  "Down on that round of {game}, but a sloth never tilts! Demo mode means zero sweat, squad!",
-  "Ah, just missed the sweet spot on {game}! We reload and run it back!",
-  "That round went cold on {game}, but the next one is where the comeback starts. Lock in!"
+  "NOOOOO! ARE YOU SERIOUS?! IT RIPPED! BROOOO! We dust it off and run it right back!",
+  "ARE YOU KIDDING ME?! Bro that was so dirty! Reload the bet chat, we bounce right back!",
+  "NO SHOT! The greed got me haha! Chat drop a W for the comeback round right now!",
+  "BRUH! Ripped below 1x! That's gambling squad, but a sloth never quits! Next spin!",
+  "UGH! Caught the trap that round! No sweat chat, we stay locked in and double down on the vibes!"
 ];
 
 function sample(arr) {
@@ -459,43 +464,58 @@ export class AIBrain {
    * Spontaneous, authentic live commentary after each round with game and multiplier context
    */
   async commentateRound(gameName, bet, outcome, context = {}) {
-    const won = Boolean(outcome.won);
-    const multiplier = typeof outcome.multiplier === 'number' ? outcome.multiplier : (won ? 2.0 : 0.0);
+    const rawMult = typeof outcome.multiplier === 'number' ? outcome.multiplier : (outcome.won ? 1.5 : 0.0);
+    const multiplier = rawMult;
+    // Strict rules: Win is ONLY when multiplier > 1.0x, Lose is <= 1.0x
+    const won = multiplier > 1.0;
+    const isSuperWin = multiplier > 1.6;
     const profit = outcome.profit || 0;
     const detail = outcome.detail || '';
     const streak = context.streak || 0;
 
-    const prompt = `You are Hubie commentating live on stream as the official Housebets mascot in DEMO mode.
+    let tierInstruction = '';
+    if (isSuperWin) {
+      tierInstruction = `MASSIVE CRAZY WIN (${multiplier.toFixed(2)}x > 1.6x): SCREAM LIKE CRAZY! Act like an unhinged, super hyped casino slot streamer! Use ALL CAPS for screams, shout phrases like "HOLY SHIT LET'S GOOOOOOO!", "BOOOOOOM!", "CONNECT!", "SHEEEESH!", "CLIP THAT RIGHT NOW CHAT!", "WHAT A JUICER!". Be loud, wild, and celebrate hard!`;
+    } else if (won) {
+      tierInstruction = `PROFIT WIN (${multiplier.toFixed(2)}x > 1.0x): Hype green profit hit! Celebrate the cashout/multiplier with energetic slot streamer confidence ("Nice little green hit!", "Profit locked in squad!").`;
+    } else {
+      tierInstruction = `LOSS (${multiplier.toFixed(2)}x <= 1.0x): Casino streamer loss reaction! Scream or groan in funny dramatic disbelief ("NOOOOO!", "ARE YOU SERIOUS?!", "RIPPED! BROOO!"), then shake it off with slot streamer bounce-back energy ("We dust it off and run it right back!").`;
+    }
+
+    const prompt = `You are Hubie commentating live on stream as a crazy hype casino slot streamer sloth in DEMO mode.
 CRITICAL CONTEXT:
 - Game currently on screen: ${gameName}
-- Exact Round Outcome: ${won ? `WIN with ${multiplier.toFixed(2)}x` : `LOSS with 0.00x`}
+- Exact Round Outcome: ${won ? `WIN with ${multiplier.toFixed(2)}x` : `LOSS with ${multiplier.toFixed(2)}x`}
+- Multiplier: ${multiplier.toFixed(2)}x
 - Detail: ${detail}
 - Session streak: ${streak > 1 ? `${streak} wins in a row` : streak < -1 ? `${Math.abs(streak)} losses in a row` : 'neutral'}
 
-RULES:
-1. React ONLY to ${gameName}. NEVER mention other games like coinflip, limbo, etc.!
-2. If this was a LOSS (${!won}), you lost the bet. Be chill/philosophical like a sloth ("dust it off and run it back"). DO NOT celebrate a loss as a win!
-3. If this was a WIN (${won}), celebrate the ${multiplier.toFixed(2)}x hit on ${gameName}!
-4. Length: 1 to 2 short sentences (max 25 words).`;
+TONE & BEHAVIOR:
+${tierInstruction}
+1. React ONLY to ${gameName}. NEVER mention other games!
+2. Strict multiplier rule: Multipliers > 1.0x are wins, multipliers <= 1.0x are losses. Multipliers > 1.6x MUST SCREAM LIKE CRAZY!
+3. Length: 1 to 2 short punchy sentences (max 22 words) so it can be shouted cleanly over TTS.`;
 
     const aiText = await this.callOpenRouter(prompt);
     if (aiText) return aiText;
 
     // Authentic game-specific procedural fallback commentary
-    const gameKey = (gameName || '').toLowerCase().replace(/['\s-]/g, '_');
-    const specific = GAME_FALLBACK_COMMENTARY[gameKey];
-
-    if (specific) {
-      const pool = won ? specific.win : specific.loss;
-      return sample(pool).replace(/\{multiplier\}/g, multiplier.toFixed(2));
-    }
-
-    // Generic fallback with game and multiplier insertion
-    if (won) {
-      const template = multiplier >= 4.0 ? sample(GENERIC_WIN_BIG) : sample(GENERIC_WIN_SMALL);
-      return template.replace(/\{multiplier\}/g, multiplier.toFixed(2)).replace(/\{game\}/g, gameName);
+    if (isSuperWin) {
+      return sample(GENERIC_WIN_BIG).replace(/\{multiplier\}/g, multiplier.toFixed(2)).replace(/\{game\}/g, gameName);
+    } else if (won) {
+      const gameKey = (gameName || '').toLowerCase().replace(/['\s-]/g, '_');
+      const specific = GAME_FALLBACK_COMMENTARY[gameKey];
+      if (specific?.win) {
+        return sample(specific.win).replace(/\{multiplier\}/g, multiplier.toFixed(2));
+      }
+      return sample(GENERIC_WIN_SMALL).replace(/\{multiplier\}/g, multiplier.toFixed(2)).replace(/\{game\}/g, gameName);
     } else {
-      return sample(GENERIC_LOSS).replace(/\{game\}/g, gameName);
+      const gameKey = (gameName || '').toLowerCase().replace(/['\s-]/g, '_');
+      const specific = GAME_FALLBACK_COMMENTARY[gameKey];
+      if (specific?.loss && Math.random() < 0.4) {
+        return sample(specific.loss).replace(/\{multiplier\}/g, multiplier.toFixed(2));
+      }
+      return sample(GENERIC_LOSS).replace(/\{multiplier\}/g, multiplier.toFixed(2)).replace(/\{game\}/g, gameName);
     }
   }
 
@@ -521,9 +541,9 @@ Current live stream screen context:
 
 Viewer @${username} just said in the live stream chat: "${message}"
 
-Give a charismatic, genuine live streamer response directly to @${username} (1-2 sentences, max 25 words).
+Give a charismatic, genuine live streamer response directly to @${username} (1-2 sentences, max 20 words).
 Crucial instructions:
-1. Greet or shoutout @${username} by name.
+1. Talk like an authentic streamer talking back to chat (use natural spoken phrases, contractions, and direct shoutouts to @${username}).
 2. Naturally mention the game you are playing right now (${gameName}). NEVER mention a different game!
 3. If they ask about bets or winning, remind them this is demo mode for fun, math favors the house, and to gamble responsibly (18+).`;
 

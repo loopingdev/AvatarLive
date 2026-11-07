@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
+import { spawn } from 'child_process';
 import { EdgeTTS } from 'node-edge-tts';
 import { CONFIG } from '../config.js';
 
@@ -94,8 +95,93 @@ export class TTSEngine {
     }
   }
 
+  async synthesizeWithOpenRouter(text, filePath) {
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${CONFIG.OPENROUTER_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: CONFIG.OPENROUTER_TTS_MODEL || 'openai/gpt-audio-mini',
+        modalities: ['text', 'audio'],
+        audio: { voice: CONFIG.OPENROUTER_VOICE || 'onyx', format: 'pcm16' },
+        stream: true,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are Hubie, a crazy hype 24/7 live casino slot streamer sloth. Perform the spoken text with intense, natural live streamer vocal emotion: shout with crazy hype on big wins or all-caps, scream in funny disbelief on losses, and sound 100% human, lively, and energetic.'
+          },
+          { role: 'user', content: text }
+        ]
+      })
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`OpenRouter TTS status ${res.status}: ${errText.slice(0, 150)}`);
+    }
+
+    const reader = res.body.getReader();
+    const chunks = [];
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += new TextDecoder().decode(value);
+      const lines = buffer.split('\n');
+      buffer = lines.pop();
+
+      for (const line of lines) {
+        if (line.startsWith('data: ') && line.trim() !== 'data: [DONE]') {
+          try {
+            const json = JSON.parse(line.slice(6));
+            const audioData = json.choices?.[0]?.delta?.audio?.data;
+            if (audioData) {
+              chunks.push(Buffer.from(audioData, 'base64'));
+            }
+          } catch {}
+        }
+      }
+    }
+
+    const rawPcm = Buffer.concat(chunks);
+    if (rawPcm.length === 0) {
+      throw new Error('No audio PCM received from OpenRouter');
+    }
+
+    // Convert 24kHz 1ch 16-bit PCM to MP3 via ffmpeg pipe
+    await new Promise((resolve, reject) => {
+      const ffmpeg = spawn(CONFIG.FFMPEG_PATH, [
+        '-y',
+        '-f', 's16le',
+        '-ar', '24000',
+        '-ac', '1',
+        '-i', 'pipe:0',
+        '-b:a', '128k',
+        filePath
+      ]);
+
+      ffmpeg.stdin.on('error', () => {});
+      ffmpeg.stdin.write(rawPcm);
+      ffmpeg.stdin.end();
+
+      ffmpeg.on('close', (code) => {
+        if (code === 0 && fs.existsSync(filePath)) {
+          resolve();
+        } else {
+          reject(new Error(`FFmpeg exited with code ${code}`));
+        }
+      });
+      ffmpeg.on('error', reject);
+    });
+  }
+
   async synthesizeToFile(text) {
-    const hash = crypto.createHash('md5').update(`${text}_${this.voice}`).digest('hex').slice(0, 12);
+    const provider = CONFIG.TTS_PROVIDER || 'openrouter';
+    const voiceKey = provider === 'openrouter' ? `${provider}_${CONFIG.OPENROUTER_VOICE}` : `${provider}_${this.voice}`;
+    const hash = crypto.createHash('md5').update(`${text}_${voiceKey}`).digest('hex').slice(0, 12);
     const filename = `speech_${hash}.mp3`;
     const filePath = path.join(AUDIO_DIR, filename);
 
@@ -103,6 +189,17 @@ export class TTSEngine {
       return filename;
     }
 
+    // 1. Try OpenRouter Voice Model if configured
+    if (provider === 'openrouter' && CONFIG.OPENROUTER_API_KEY) {
+      try {
+        await this.synthesizeWithOpenRouter(text, filePath);
+        return filename;
+      } catch (err) {
+        console.warn(`[HubieTTS] OpenRouter voice synthesis failed (${err.message}). Falling back to Edge-TTS...`);
+      }
+    }
+
+    // 2. Edge-TTS (Fallback or Offline)
     try {
       await this.tts.ttsPromise(text, filePath);
       return filename;
