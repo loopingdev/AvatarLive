@@ -51,6 +51,9 @@ export class ChatManager {
     this.chatHistory = [];
     this.pendingQuestions = [];
     this.running = false;
+    this.lastInteractionTime = 0;
+    this.lastCommandTime = 0;
+    this.lastChatTime = 0;
 
     this.kickWs = null;
     this.twitchWs = null;
@@ -351,17 +354,34 @@ export class ChatManager {
       await this.onNewChat(msgObj);
     }
 
-    // Queue real messages / viewer questions for Hubie to answer live
-    if (cleanText.includes('?') || cleanText.toLowerCase().includes('hubie') || !isSimulated) {
-      if (this.pendingQuestions.length < 20) {
-        this.pendingQuestions.push({
-          user: username,
-          text: cleanText,
-          isSimulated,
-          platform
-        });
+    const isCommand = cleanText.startsWith('!');
+    this.lastInteractionTime = Date.now();
+
+    if (isCommand) {
+      this.lastCommandTime = Date.now();
+      // Viewer commands (!dance, !surf, !command) trigger avatar actions on overlay & Nightbot
+      // Do NOT queue command triggers into AI conversation questions
+    } else {
+      this.lastChatTime = Date.now();
+      // Queue real messages / viewer questions for Hubie AI to answer live
+      if (cleanText.includes('?') || cleanText.toLowerCase().includes('hubie') || !isSimulated) {
+        if (this.pendingQuestions.length < 20) {
+          this.pendingQuestions.push({
+            user: username,
+            text: cleanText,
+            isSimulated,
+            platform
+          });
+        }
       }
     }
+  }
+
+  hasRecentViewerActivity(windowMs = 15000) {
+    const now = Date.now();
+    const hasRecent = (now - this.lastInteractionTime) < windowMs;
+    const hasPendingReal = this.pendingQuestions.some(q => !q.isSimulated);
+    return hasRecent || hasPendingReal;
   }
 
   getNextQuestionToAnswer() {

@@ -314,8 +314,8 @@ export class HousebetsPlayer {
             platform: q.platform || 'stream'
           };
           const chatAnswer = await this.ai.answerChat(q.user, q.text, gameContext);
-          this.tts.speak(chatAnswer);
-          await this.tts.waitForSpeech(3500);
+          this.tts.speak(chatAnswer, { priority: true, isChat: true });
+          await this.tts.waitForSpeech(4500);
         }
 
         // 4. Play Round with AI Strategic Decisions & Choice Making
@@ -386,7 +386,6 @@ export class HousebetsPlayer {
     if (game.id === 'keno') {
       const choice = await this.ai.decideChoice('keno');
       console.log(`[HousebetsPlayer AI Choice] Keno: ${choice.numbers.join(', ')} -> "${choice.voiceLine}"`);
-      this.tts.speak(choice.voiceLine, true);
 
       await this.page.evaluate((numbers) => {
         window.scrollTo(0, 0);
@@ -421,7 +420,6 @@ export class HousebetsPlayer {
     if (game.id === 'coinflip') {
       const choice = await this.ai.decideChoice('coinflip');
       console.log(`[HousebetsPlayer AI Choice] Coinflip: ${choice.choice} -> "${choice.voiceLine}"`);
-      this.tts.speak(choice.voiceLine, true);
 
       await this.page.evaluate((sideChoice) => {
         const host = document.querySelector('[data-housegames-direct]');
@@ -441,7 +439,6 @@ export class HousebetsPlayer {
     if (game.id === 'roulette') {
       const choice = await this.ai.decideChoice('roulette');
       console.log(`[HousebetsPlayer AI Choice] Roulette: ${choice.choice} -> "${choice.voiceLine}"`);
-      this.tts.speak(choice.voiceLine, true);
 
       await this.page.evaluate(() => {
         const host = document.querySelector('[data-housegames-direct]');
@@ -645,7 +642,6 @@ export class HousebetsPlayer {
 
             const currentMult = (this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : minesOutcome.mult) || 1.20;
             console.log(`[HousebetsPlayer AI Choice] Mines: Tile SAFE at ${currentMult.toFixed(2)}x!`);
-            this.tts.speak(`Diamond revealed on tile #${choice.tileIndex + 1}! Safe navigation squad!`);
             state.canCashout = minesOutcome.canCashout;
             state.multiplier = currentMult;
             await this.page.waitForTimeout(800);
@@ -726,7 +722,6 @@ export class HousebetsPlayer {
 
             const currentMult = (this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : towerOutcome.mult) || 1.35;
             console.log(`[HousebetsPlayer AI Choice] Dragon Tower: Floor ${step + 1} SAFE at ${currentMult.toFixed(2)}x!`);
-            this.tts.speak(`Floor ${step + 1} egg is golden! Climbing safe at ${currentMult.toFixed(2)}x squad!`);
             state.canCashout = towerOutcome.canCashout;
             state.multiplier = currentMult;
             await this.page.waitForTimeout(800);
@@ -850,7 +845,6 @@ export class HousebetsPlayer {
           // Confirmed Safe Hop! Only announce navigation clear after verification
           const currentMult = (this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : hopOutcome.mult) || 1.25;
           console.log(`[HousebetsPlayer AI Choice] Hubie's Road: Buoy #${clickRes.pickIdx + 1} SAFE at ${currentMult.toFixed(2)}x!`);
-          this.tts.speak(`Buoy #${clickRes.pickIdx + 1} is clear! Navigation safe at ${currentMult.toFixed(2)}x squad!`);
           state.canCashout = hopOutcome.canCashout;
           state.multiplier = currentMult;
           await this.page.waitForTimeout(800);
@@ -948,7 +942,6 @@ export class HousebetsPlayer {
 
           const currentMult = (this.currentActiveMultiplier > 1.0 ? this.currentActiveMultiplier : hiloOutcome.mult) || 1.25;
           console.log(`[HousebetsPlayer AI Choice] Hilo: Correct card at ${currentMult.toFixed(2)}x!`);
-          this.tts.speak(`Read was spot on! Card went ${clickRes.chosen}, navigation safe squad!`);
           state.canCashout = hiloOutcome.canCashout;
           state.multiplier = currentMult;
           await this.page.waitForTimeout(800);
@@ -1029,10 +1022,17 @@ export class HousebetsPlayer {
       });
     }
 
-    // Spontaneous live commentary for the current game
-    const commentary = await this.ai.commentateRound(game.name, 10.0, outcome, { streak: this.streak });
-    this.tts.speak(commentary, true);
-    await this.tts.waitForSpeech(4500);
+    // Prioritizing chat interaction: suppress routine game commentary if viewers are chatting or using commands
+    const hasRecentChat = this.chat.hasRecentViewerActivity(14000);
+    const isNotable = (outcome.won && outcome.multiplier >= 2.0) || this.streak >= 3 || (this.totalRounds % 4 === 0);
+
+    if (!hasRecentChat && isNotable) {
+      const commentary = await this.ai.commentateRound(game.name, 10.0, outcome, { streak: this.streak });
+      this.tts.speak(commentary, { priority: false, isChat: false });
+      await this.tts.waitForSpeech(3500);
+    } else if (hasRecentChat) {
+      console.log(`[HousebetsPlayer] Prioritizing viewer interaction: routine round commentary silenced.`);
+    }
   }
 
   async extractOutcomeFromPage(game) {

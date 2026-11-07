@@ -16,6 +16,7 @@ export class TTSEngine {
     this.pitch = CONFIG.VOICE_PITCH;
     this.queue = [];
     this.isSpeaking = false;
+    this.lastChatSpeechTime = 0;
     this.onSpeechStart = onSpeechStart;
     this.onSpeechEnd = onSpeechEnd;
     this.running = false;
@@ -48,15 +49,36 @@ export class TTSEngine {
     return this.isSpeaking || this.queue.length > 0;
   }
 
-  speak(text, priority = false) {
+  speak(text, priorityOrOpts = false) {
     const clean = (text || '').trim();
     if (!clean) return;
 
+    const opts = typeof priorityOrOpts === 'boolean'
+      ? { priority: priorityOrOpts, isChat: false }
+      : (priorityOrOpts || {});
+
+    const isChat = Boolean(opts.isChat);
+    const priority = Boolean(opts.priority || isChat);
+
+    if (isChat) {
+      this.lastChatSpeechTime = Date.now();
+      // Immediately clear out backlog so chat response takes top priority
+      this.queue = [clean];
+      return;
+    }
+
+    // Routine background commentary check:
+    // If chat spoke recently (< 8s) or TTS is currently busy, drop routine commentary
+    if (!priority) {
+      const chatRecentlySpoke = (Date.now() - this.lastChatSpeechTime) < 8000;
+      if (chatRecentlySpoke || this.isBusy) {
+        return;
+      }
+    }
+
     if (priority) {
-      // Clear backlog immediately for priority commentary
       this.queue = [clean];
     } else {
-      // Keep only the freshest line (max 1 pending) to prevent audio lag behind gameplay
       if (this.queue.length > 0) {
         this.queue = [clean];
       } else {

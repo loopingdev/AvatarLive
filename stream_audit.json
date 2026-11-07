@@ -3759,5 +3759,36 @@
       "rounds_played": 74,
       "status": "LIVE_AND_HEALTHY"
     }
+  },
+  {
+    "event": "STREAM_SESSION_START",
+    "timestamp": "2026-11-07T04:53:04.750Z",
+    "uptime_seconds": 0,
+    "uptime": "00h 00m 00s",
+    "data": {
+      "time": "2026-11-07T04:53:04.750Z"
+    }
+  },
+  {
+    "event": "STREAM_SESSION_END",
+    "timestamp": "2026-11-07T04:59:36.924Z",
+    "uptime_seconds": 392,
+    "uptime": "00h 06m 32s",
+    "data": {
+      "uptime_seconds": 392,
+      "uptime_human": "00h 06m 32s",
+      "total_rounds": 14
+    }
+  },
+  {
+    "event": "AUTO_RECOVERY",
+    "timestamp": "2026-11-07T04:59:37.362Z",
+    "uptime_seconds": 392,
+    "uptime": "00h 06m 32s",
+    "data": {
+      "component": "housebets_browser",
+      "error": "page.waitForTimeout: Target page, context or browser has been closed",
+      "timestamp": "2026-11-07T04:59:37.362Z"
+    }
   }
 ]
