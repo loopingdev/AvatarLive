@@ -19,20 +19,6 @@
     <!-- 2. FLOATING AUTO-FADING STREAM CHAT (Zero static boxes, only appears when a message arrives) -->
     <div id="chat-messages" class="floating-chat-stream"></div>
 
-    <!-- 2b. INTERACTIVE STREAM COMMANDS PILL / TICKER (Visible at Bottom Right) -->
-    <div id="stream-commands-widget" class="commands-widget">
-      <div class="commands-header">
-        <span id="connection-status-dot" class="commands-pulse-dot" title="Live WebSocket Status"></span>
-        <span class="commands-badge">LIVE CONTROLS</span>
-        <span class="commands-prompt">Type <span class="cmd-highlight">!command</span> in chat</span>
-      </div>
-      <div id="commands-ticker" class="commands-ticker">
-        <span class="ticker-slide active">👕 <b>Outfits:</b> !costume &lt;classic | halloween&gt;</span>
-        <span class="ticker-slide">💪 <b>Poses:</b> !boss • !surf • !flex • !dance • !flag • !snack</span>
-        <span class="ticker-slide">💬 <b>Interactive:</b> @Hubie &lt;msg&gt; • !blush • !whistle • !inspect</span>
-      </div>
-    </div>
-
     <!-- 2d. STREAMER LOCAL TEST BAR (Quick testing from local browser / OBS Dock) -->
     <div id="streamer-test-dock" class="streamer-test-dock">
       <button id="toggle-test-dock" class="test-dock-toggle" title="Toggle Streamer Command Tester">🧪 Test Chat Commands</button>
@@ -55,50 +41,6 @@
           <input id="test-chat-input" type="text" placeholder="Type test command or message (!dance, @Hubie hello)..." autocomplete="off" />
           <button type="submit" class="test-send-btn">Send Test</button>
         </form>
-      </div>
-    </div>
-
-    <!-- 2c. FULL INTERACTIVE COMMANDS CHEATSHEET MODAL (Triggered by !commands or !help in chat) -->
-    <div id="commands-modal" class="commands-modal hidden">
-      <div class="modal-header">
-        <span class="modal-icon">🎮</span>
-        <h3>Hubie Live 24/7 — Viewer Interactive Commands</h3>
-        <span class="modal-close-hint">Auto-closes in 22s</span>
-      </div>
-      <div class="modal-grid">
-        <div class="modal-col">
-          <h4>👕 VIP Wardrobe Outfits</h4>
-          <ul>
-            <li><code>!costume classic</code> — Signature top hat & waistcoat (Hubie OG)</li>
-            <li><code>!costume halloween</code> — Spooky wizard cape & magic glow</li>
-            <li><i>(Outfits change automatically when switching games!)</i></li>
-          </ul>
-        </div>
-        <div class="modal-col">
-          <h4>⚡ Special Poses & FX</h4>
-          <ul>
-            <li><code>!boss</code> — Executive boss sloth stance (💼)</li>
-            <li><code>!surf</code> — Wave 2 surfboard champion (🏄)</li>
-            <li><code>!flex</code> — Strong bicep flex pose (Sparkles ✦)</li>
-            <li><code>!dance</code> — Disco celebration (Confetti 🎊)</li>
-            <li><code>!flag</code> — Waves Housebets victory flag 🚩</li>
-            <li><code>!snack</code> — Sits down to eat orange slices 🍊</li>
-            <li><code>!blush</code> — Blushing heart hands (Hearts 💕)</li>
-            <li><code>!whistle</code> — Whistling stroll (Music ♪ ♫)</li>
-            <li><code>!card</code> / <code>!highroller</code> — Golden chip & card 🃏</li>
-            <li><code>!magnifier</code> / <code>!inspect</code> — Inspects screen 🔍</li>
-            <li><code>@Hubie &lt;message&gt;</code> — Speaks to viewer by name</li>
-            <li><code>!flex</code> — Strong bicep flex pose (Sparkles ✦)</li>
-            <li><code>!dance</code> — Disco celebration (Confetti 🎊)</li>
-            <li><code>!flag</code> — Waves Housebets victory flag 🚩</li>
-            <li><code>!snack</code> — Sits down to eat orange slices 🍊</li>
-            <li><code>!blush</code> — Blushing heart hands (Hearts 💕)</li>
-            <li><code>!whistle</code> — Whistling stroll (Music ♪ ♫)</li>
-            <li><code>!card</code> / <code>!highroller</code> — Golden chip & card 🃏</li>
-            <li><code>!magnifier</code> / <code>!inspect</code> — Inspects screen 🔍</li>
-            <li><code>@Hubie &lt;message&gt;</code> — Speaks to viewer by name</li>
-          </ul>
-        </div>
       </div>
     </div>
 
@@ -326,33 +268,6 @@
         const div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
-      }
-
-      // Interactive Commands Modal & Ticker Controller
-      const commandsModal = document.getElementById('commands-modal');
-      let modalHideTimer = null;
-
-      // On-screen overlay modal disabled: commands are sent to Twitch chat via Nightbot
-      function showCommandsModal(durationMs = 0) {
-        // Suppressed so stream overlay remains clean for viewers
-        return;
-      }
-
-      function setupCommandsTicker() {
-        const slides = document.querySelectorAll('#commands-ticker .ticker-slide');
-        if (!slides || slides.length === 0) return;
-        let activeIdx = 0;
-        setInterval(() => {
-          slides[activeIdx].classList.remove('active');
-          activeIdx = (activeIdx + 1) % slides.length;
-          slides[activeIdx].classList.add('active');
-        }, 6500);
-      }
-      setupCommandsTicker();
-
-      const widgetEl = document.getElementById('stream-commands-widget');
-      if (widgetEl) {
-        widgetEl.addEventListener('click', () => showCommandsModal(12000));
       }
 
       // Streamer Interactive Local Command Tester
