@@ -80,6 +80,8 @@ export class HousebetsPlayer {
     const launchOptions = {
       headless: CONFIG.HEADLESS_BROWSER,
       viewport: { width: 1280, height: 720 },
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+      locale: 'en-US',
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
@@ -88,8 +90,6 @@ export class HousebetsPlayer {
         '--start-maximized',
         '--ignore-gpu-blocklist',
         '--enable-webgl',
-        '--use-gl=angle',
-        '--use-angle=swiftshader',
         '--enable-accelerated-2d-canvas',
         '--autoplay-policy=no-user-gesture-required'
       ]
