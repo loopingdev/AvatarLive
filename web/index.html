@@ -11,10 +11,11 @@
   <div id="stream-container">
     <!-- 1. FULLSCREEN EDGE-TO-EDGE LIVE HOUSEBETS SCREEN -->
     <div class="live-screen-wrapper">
-      <img id="live-screencast" alt="Live Housebets Gameplay" />
+      <img id="live-screencast" alt="" />
       <div class="screen-loading" id="screen-loading">
         <div class="spinner"></div>
-        <span>Connecting to Housebets Live Game...</span>
+        <div class="loading-title">Hubie Live 24/7</div>
+        <div class="loading-subtitle" id="loading-status">Connecting to Housebets Live Game...</div>
       </div>
     </div>
 
@@ -99,8 +100,11 @@
       connectWebSocket();
 
       function handleServerMessage(msg) {
-        if (msg.type === 'screencast_frame') {
+        if (msg.type === 'screencast_frame' && msg.data) {
           screencastImg.src = msg.data;
+          if (!screencastImg.classList.contains('loaded')) {
+            screencastImg.classList.add('loaded');
+          }
           if (screenLoading && screenLoading.style.display !== 'none') {
             screenLoading.style.display = 'none';
           }

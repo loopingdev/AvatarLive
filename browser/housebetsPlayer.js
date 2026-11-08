@@ -27,6 +27,8 @@ export class HousebetsPlayer {
     this.cashedOutOutcome = null;
     this.lastSafetyTime = Date.now();
     this.lastFrameBase64 = null;
+    this.lastFrameReceivedTime = 0;
+    this.frameWatchdogInterval = null;
   }
 
   get currentGame() {
@@ -47,6 +49,10 @@ export class HousebetsPlayer {
 
   stop() {
     this.running = false;
+    if (this.frameWatchdogInterval) {
+      clearInterval(this.frameWatchdogInterval);
+      this.frameWatchdogInterval = null;
+    }
     if (this.browserContext) {
       this.browserContext.close().catch(() => {});
     }
@@ -167,6 +173,9 @@ export class HousebetsPlayer {
 
   async setupScreencast() {
     try {
+      if (this.cdp) {
+        try { await this.cdp.detach(); } catch {}
+      }
       this.cdp = await this.page.context().newCDPSession(this.page);
       await this.cdp.send('Page.startScreencast', {
         format: 'jpeg',
@@ -178,6 +187,7 @@ export class HousebetsPlayer {
 
       this.cdp.on('Page.screencastFrame', async ({ data, sessionId }) => {
         this.lastFrameBase64 = data;
+        this.lastFrameReceivedTime = Date.now();
         if (this.onFrame) {
           this.onFrame(data);
         }
@@ -189,6 +199,33 @@ export class HousebetsPlayer {
     } catch (e) {
       console.warn('[HousebetsPlayer] Could not attach CDP screencast:', e.message);
     }
+
+    this.startFrameWatchdog();
+  }
+
+  startFrameWatchdog() {
+    if (this.frameWatchdogInterval) clearInterval(this.frameWatchdogInterval);
+    this.frameWatchdogInterval = setInterval(async () => {
+      if (!this.running || !this.page || this.page.isClosed()) return;
+      const now = Date.now();
+      // If no frame received via CDP for more than 1.5s, capture directly to keep stream responsive
+      if (now - this.lastFrameReceivedTime > 1500) {
+        try {
+          const buffer = await this.page.screenshot({
+            type: 'jpeg',
+            quality: 70,
+            scale: 'css',
+            timeout: 2500
+          });
+          const base64 = buffer.toString('base64');
+          this.lastFrameBase64 = base64;
+          this.lastFrameReceivedTime = now;
+          if (this.onFrame) {
+            this.onFrame(base64);
+          }
+        } catch {}
+      }
+    }, 500);
   }
 
   async acceptCookieBanner() {
