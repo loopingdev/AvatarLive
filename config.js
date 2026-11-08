@@ -99,5 +99,10 @@ export const CONFIG = {
   PORT: parseInt(process.env.PORT || '8080', 10),
   HOST: process.env.HOST || '0.0.0.0',
 
+  // Optional Proxy (Recommended for Datacenter VPS to bypass Cloudflare flags)
+  PROXY_SERVER: process.env.PROXY_SERVER || '',
+  PROXY_USERNAME: process.env.PROXY_USERNAME || '',
+  PROXY_PASSWORD: process.env.PROXY_PASSWORD || '',
+
   FFMPEG_PATH: findFFmpegPath()
 };

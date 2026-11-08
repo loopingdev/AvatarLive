@@ -101,6 +101,17 @@ export class HousebetsPlayer {
       launchOptions.channel = 'chrome';
     }
 
+    if (CONFIG.PROXY_SERVER) {
+      launchOptions.proxy = {
+        server: CONFIG.PROXY_SERVER
+      };
+      if (CONFIG.PROXY_USERNAME) {
+        launchOptions.proxy.username = CONFIG.PROXY_USERNAME;
+        launchOptions.proxy.password = CONFIG.PROXY_PASSWORD || '';
+      }
+      console.log(`[HousebetsPlayer] 🛡️ Routing browser via proxy: ${CONFIG.PROXY_SERVER}`);
+    }
+
     this.browserContext = await chromium.launchPersistentContext(userDataDir, launchOptions);
 
     // Restore saved cookies & auth tokens from session.json if provided
