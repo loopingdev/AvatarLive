@@ -193,12 +193,35 @@ wss.on('connection', (ws) => {
     }));
   }
 
-  ws.on('message', (data) => {
+  ws.on('message', async (data) => {
     supervisor.heartbeat('studio_websocket');
     try {
       const msg = JSON.parse(data.toString());
       if (msg.action === 'manual_chat') {
         chatManager.ingestMessage(msg.user || 'AdminViewer', msg.text || 'Let\'s go Hubie!', false);
+      } else if (msg.action === 'manual_click' && housebetsPlayer.page && !housebetsPlayer.page.isClosed()) {
+        const { x, y } = msg;
+        if (typeof x === 'number' && typeof y === 'number') {
+          await housebetsPlayer.page.mouse.click(x, y).catch(() => {});
+        }
+      } else if (msg.action === 'manual_type' && housebetsPlayer.page && !housebetsPlayer.page.isClosed()) {
+        if (msg.text) {
+          await housebetsPlayer.page.keyboard.type(msg.text, { delay: 40 }).catch(() => {});
+        }
+      } else if (msg.action === 'manual_key' && housebetsPlayer.page && !housebetsPlayer.page.isClosed()) {
+        if (msg.key) {
+          await housebetsPlayer.page.keyboard.press(msg.key).catch(() => {});
+        }
+      } else if (msg.action === 'manual_scroll' && housebetsPlayer.page && !housebetsPlayer.page.isClosed()) {
+        await housebetsPlayer.page.mouse.wheel(0, msg.deltaY || 100).catch(() => {});
+      } else if (msg.action === 'toggle_bot_pause') {
+        housebetsPlayer.isPaused = Boolean(msg.paused);
+        broadcast({ type: 'bot_pause_status', paused: housebetsPlayer.isPaused });
+      } else if (msg.action === 'save_session') {
+        const ok = await housebetsPlayer.saveSession();
+        broadcast({ type: 'session_saved', ok });
+      } else if (msg.action === 'manual_goto' && housebetsPlayer.page && !housebetsPlayer.page.isClosed() && msg.url) {
+        await housebetsPlayer.page.goto(msg.url, { timeout: 30000 }).catch(() => {});
       }
     } catch {}
   });
