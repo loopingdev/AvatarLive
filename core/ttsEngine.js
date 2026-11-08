@@ -21,6 +21,7 @@ export class TTSEngine {
     this.onSpeechStart = onSpeechStart;
     this.onSpeechEnd = onSpeechEnd;
     this.running = false;
+    this.cleanupInterval = null;
 
     this.tts = new EdgeTTS({
       voice: this.voice,
@@ -32,6 +33,8 @@ export class TTSEngine {
   start() {
     if (!this.running) {
       this.running = true;
+      this.cleanOldAudioFiles(30);
+      this.cleanupInterval = setInterval(() => this.cleanOldAudioFiles(30), 5 * 60 * 1000);
       this.processQueue();
       console.log(`[HubieTTS] Live TTS Engine started with voice: ${this.voice}`);
     }
@@ -39,7 +42,40 @@ export class TTSEngine {
 
   stop() {
     this.running = false;
+    if (this.cleanupInterval) {
+      clearInterval(this.cleanupInterval);
+      this.cleanupInterval = null;
+    }
     this.clearQueue();
+  }
+
+  cleanOldAudioFiles(minAgeMs = 60000, keepMinCount = 5) {
+    try {
+      if (!fs.existsSync(AUDIO_DIR)) return;
+      const now = Date.now();
+      const files = fs.readdirSync(AUDIO_DIR)
+        .filter(f => f.startsWith('speech_') && f.endsWith('.mp3'))
+        .map(f => {
+          const fp = path.join(AUDIO_DIR, f);
+          try {
+            return { name: f, path: fp, time: fs.statSync(fp).mtimeMs };
+          } catch {
+            return null;
+          }
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.time - a.time); // Newest first
+
+      files.forEach((file, index) => {
+        const ageMs = now - file.time;
+        // Never delete files younger than minAgeMs (1 minute) or top recent files
+        if (ageMs >= minAgeMs && index >= keepMinCount) {
+          try {
+            fs.unlinkSync(file.path);
+          } catch {}
+        }
+      });
+    } catch {}
   }
 
   clearQueue() {

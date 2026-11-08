@@ -88,7 +88,8 @@ export class Broadcaster {
         '--disable-dev-shm-usage',
         '--disable-gpu-vsync',
         '--disable-background-timer-throttling',
-        '--disable-renderer-backgrounding'
+        '--disable-renderer-backgrounding',
+        '--disk-cache-size=33554432'
       ];
 
       this.overlayProcess = spawn(chromeBin, overlayArgs, {

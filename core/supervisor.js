@@ -107,6 +107,9 @@ export class StreamSupervisor {
         }
       }
       entries.push(entry);
+      if (entries.length > 100) {
+        entries = entries.slice(-100);
+      }
       fs.writeFileSync(AUDIT_FILE, JSON.stringify(entries, null, 2), 'utf-8');
     } catch (err) {
       console.error('[HubieSupervisor] Failed to write audit log:', err.message);

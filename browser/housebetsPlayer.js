@@ -95,7 +95,9 @@ export class HousebetsPlayer {
         '--disable-gpu-vsync',
         '--disable-background-timer-throttling',
         '--disable-renderer-backgrounding',
-        '--disable-backgrounding-occluded-windows'
+        '--disable-backgrounding-occluded-windows',
+        '--disk-cache-size=33554432',
+        '--media-cache-size=33554432'
       ]
     };
     if (CONFIG.ENABLE_RTMP_BROADCAST && process.platform !== 'win32') {
