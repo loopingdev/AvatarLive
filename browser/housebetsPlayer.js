@@ -73,6 +73,9 @@ export class HousebetsPlayer {
         '--autoplay-policy=no-user-gesture-required'
       ]
     };
+    if (CONFIG.ENABLE_RTMP_BROADCAST && process.platform !== 'win32') {
+      launchOptions.args.push('--window-position=-2500,-2500');
+    }
     if (process.platform === 'win32') {
       launchOptions.channel = 'chrome';
     }

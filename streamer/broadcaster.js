@@ -1,4 +1,5 @@
-import { spawn } from 'child_process';
+import { spawn, execSync } from 'child_process';
+import { chromium } from 'playwright';
 import { CONFIG } from '../config.js';
 
 export class Broadcaster {
@@ -9,6 +10,7 @@ export class Broadcaster {
     this.streamKey = CONFIG.STREAM_KEY;
     this.isBroadcasting = false;
     this.process = null;
+    this.overlayBrowser = null;
     this.running = false;
   }
 
@@ -31,6 +33,10 @@ export class Broadcaster {
   stop() {
     this.running = false;
     this.killProcess();
+    if (this.overlayBrowser) {
+      this.overlayBrowser.close().catch(() => {});
+      this.overlayBrowser = null;
+    }
   }
 
   killProcess() {
@@ -44,6 +50,70 @@ export class Broadcaster {
     }
   }
 
+  async launchOverlayBrowser() {
+    if (this.overlayBrowser) return;
+    try {
+      console.log(`[HubieBroadcaster] Opening 1080p Kiosk Overlay Browser at http://localhost:${CONFIG.PORT}/overlay...`);
+      this.overlayBrowser = await chromium.launch({
+        headless: false,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--autoplay-policy=no-user-gesture-required',
+          '--kiosk',
+          `--window-size=${CONFIG.STREAM_WIDTH},${CONFIG.STREAM_HEIGHT}`,
+          '--window-position=0,0',
+          '--disable-infobars',
+          '--no-first-run',
+          '--check-for-update-interval=31536000'
+        ]
+      });
+
+      const page = await this.overlayBrowser.newPage({
+        viewport: { width: CONFIG.STREAM_WIDTH, height: CONFIG.STREAM_HEIGHT }
+      });
+      await page.goto(`http://localhost:${CONFIG.PORT}/overlay`, { timeout: 30000 });
+      console.log('[HubieBroadcaster] ✅ Live Kiosk Overlay active on virtual screen.');
+    } catch (err) {
+      console.warn('[HubieBroadcaster] Overlay browser notice:', err.message);
+    }
+  }
+
+  getAudioInputArgs() {
+    if (process.platform === 'win32') {
+      return ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100'];
+    }
+    try {
+      execSync('pactl info', { stdio: 'ignore' });
+      console.log('[HubieBroadcaster] 🎙️ PulseAudio sound server active. Capturing audio for stream.');
+      return ['-f', 'pulse', '-i', 'default'];
+    } catch {
+      console.warn('[HubieBroadcaster] PulseAudio not running. Using silent audio fallback (run pulseaudio for live voice).');
+      return ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100'];
+    }
+  }
+
+  getVideoInputArgs() {
+    if (process.platform === 'win32') {
+      return [
+        '-re',
+        '-f', 'lavfi',
+        '-i', `color=c=0x0b0e14:s=${CONFIG.STREAM_WIDTH}x${CONFIG.STREAM_HEIGHT}:r=${CONFIG.STREAM_FPS}`
+      ];
+    }
+    const display = process.env.DISPLAY || ':99';
+    const x11Display = display.includes('.') ? display : `${display}.0`;
+    console.log(`[HubieBroadcaster] 🎥 Capturing virtual screen from X11 (${x11Display}) at ${CONFIG.STREAM_WIDTH}x${CONFIG.STREAM_HEIGHT}@${CONFIG.STREAM_FPS}fps...`);
+    return [
+      '-f', 'x11grab',
+      '-draw_mouse', '0',
+      '-video_size', `${CONFIG.STREAM_WIDTH}x${CONFIG.STREAM_HEIGHT}`,
+      '-framerate', String(CONFIG.STREAM_FPS || 30),
+      '-i', x11Display
+    ];
+  }
+
   async broadcastLoop() {
     if (!CONFIG.ENABLE_RTMP_BROADCAST) {
       console.log('[HubieBroadcaster] RTMP Live Broadcast is in Standby mode (Studio preview available at http://localhost:8080).');
@@ -54,26 +124,36 @@ export class Broadcaster {
       return;
     }
 
+    // Wait a brief moment for HTTP server & WebSocket to be fully ready
+    await new Promise(r => setTimeout(r, 4000));
+
+    // Open fullscreen live kiosk overlay on X11 display
+    if (process.platform !== 'win32') {
+      await this.launchOverlayBrowser();
+      // Brief pause to allow overlay DOM and WebSocket to connect
+      await new Promise(r => setTimeout(r, 2500));
+    }
+
     let reconnectAttempts = 0;
     while (this.running) {
       this.supervisor.heartbeat('broadcaster');
       try {
         const targetUrl = this.getRTMPUrl();
-        console.log(`[HubieBroadcaster] Starting live RTMP stream to ${this.platform.toUpperCase()}...`);
+        console.log(`[HubieBroadcaster] 🚀 Starting live RTMP stream to ${this.platform.toUpperCase()}...`);
+
+        const videoInput = this.getVideoInputArgs();
+        const audioInput = this.getAudioInputArgs();
 
         const args = [
-          '-re',
-          '-f', 'lavfi',
-          '-i', `color=c=0x0b0e14:s=${CONFIG.STREAM_WIDTH}x${CONFIG.STREAM_HEIGHT}:r=${CONFIG.STREAM_FPS}`,
-          '-f', 'lavfi',
-          '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100',
+          ...videoInput,
+          ...audioInput,
           '-c:v', 'libx264',
           '-preset', 'veryfast',
           '-b:v', CONFIG.VIDEO_BITRATE,
           '-maxrate', CONFIG.VIDEO_BITRATE,
           '-bufsize', '9000k',
           '-pix_fmt', 'yuv420p',
-          '-g', String(CONFIG.STREAM_FPS * 2),
+          '-g', String((CONFIG.STREAM_FPS || 30) * 2),
           '-c:a', 'aac',
           '-b:a', CONFIG.AUDIO_BITRATE,
           '-ar', '44100',
@@ -81,13 +161,22 @@ export class Broadcaster {
           targetUrl
         ];
 
-        this.process = spawn(this.ffmpegPath, args, { stdio: 'ignore' });
+        this.process = spawn(this.ffmpegPath, args);
         this.isBroadcasting = true;
         reconnectAttempts = 0;
 
+        if (this.process.stderr) {
+          this.process.stderr.on('data', (d) => {
+            const text = d.toString();
+            if (text.includes('Error') || text.includes('failed') || text.includes('Connection refused') || text.includes('Cannot open')) {
+              console.error(`[HubieBroadcaster FFmpeg] ${text.trim()}`);
+            }
+          });
+        }
+
         await new Promise((resolve) => {
           this.process.on('close', (code) => {
-            console.warn(`[HubieBroadcaster] FFmpeg closed with code ${code}. Auto-reconnecting...`);
+            console.warn(`[HubieBroadcaster] FFmpeg exited (code ${code}). Auto-reconnecting in few seconds...`);
             this.supervisor.recordRecovery('broadcaster', `FFmpeg closed with code ${code}`);
             resolve();
           });
@@ -104,9 +193,8 @@ export class Broadcaster {
       }
 
       reconnectAttempts++;
-      const delay = Math.min(10000, 1500 * reconnectAttempts);
+      const delay = Math.min(10000, 2000 * reconnectAttempts);
       await new Promise(r => setTimeout(r, delay));
     }
   }
 }
-
