@@ -199,6 +199,12 @@ export class Broadcaster {
           videoFilter.push('-vf', `scale=${CONFIG.OUTPUT_WIDTH}:${CONFIG.OUTPUT_HEIGHT}`);
         }
 
+        const audioFilter = [];
+        if (CONFIG.AUDIO_DELAY_MS && CONFIG.AUDIO_DELAY_MS > 0) {
+          audioFilter.push(`adelay=${CONFIG.AUDIO_DELAY_MS}|${CONFIG.AUDIO_DELAY_MS}`);
+        }
+        audioFilter.push('aresample=async=1:first_pts=0');
+
         const args = [
           ...videoInput,
           ...audioInput,
@@ -215,7 +221,7 @@ export class Broadcaster {
           '-c:a', 'aac',
           '-b:a', CONFIG.AUDIO_BITRATE,
           '-ar', '44100',
-          '-af', 'aresample=async=1:first_pts=0',
+          '-af', audioFilter.join(','),
           '-f', 'flv',
           targetUrl
         ];

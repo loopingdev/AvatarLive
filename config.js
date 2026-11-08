@@ -83,6 +83,7 @@ export const CONFIG = {
   STREAM_FPS: parseInt(process.env.STREAM_FPS || '30', 10),
   VIDEO_BITRATE: process.env.VIDEO_BITRATE || '2200k',
   AUDIO_BITRATE: process.env.AUDIO_BITRATE || '128k',
+  AUDIO_DELAY_MS: parseInt(process.env.AUDIO_DELAY_MS || '1000', 10),
 
   // TTS Voice Engine: 'openrouter' (Human natural AI with screaming, hype & emotions) or 'edge-tts'
   TTS_PROVIDER: (process.env.TTS_PROVIDER || 'openrouter').toLowerCase(),
