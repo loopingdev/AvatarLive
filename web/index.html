@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Hubie Live 24/7 — Housebets Mascot Streamer</title>
   <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
   <div id="stream-container">
     <!-- 1. FULLSCREEN EDGE-TO-EDGE LIVE HOUSEBETS SCREEN -->
@@ -19,30 +21,6 @@
     <!-- 2. FLOATING AUTO-FADING STREAM CHAT (Zero static boxes, only appears when a message arrives) -->
     <div id="chat-messages" class="floating-chat-stream"></div>
 
-    <!-- 2d. STREAMER LOCAL TEST BAR (Quick testing from local browser / OBS Dock) -->
-    <div id="streamer-test-dock" class="streamer-test-dock">
-      <button id="toggle-test-dock" class="test-dock-toggle" title="Toggle Streamer Command Tester">🧪 Test Chat Commands</button>
-      <div id="test-dock-panel" class="test-dock-panel hidden">
-        <div class="test-dock-chips">
-          <button type="button" class="test-chip" data-cmd="!command">!command</button>
-          <button type="button" class="test-chip" data-cmd="!commands">!commands</button>
-          <button type="button" class="test-chip" data-cmd="!dance">!dance</button>
-          <button type="button" class="test-chip" data-cmd="!surf">!surf</button>
-          <button type="button" class="test-chip" data-cmd="!flex">!flex</button>
-          <button type="button" class="test-chip" data-cmd="!boss">!boss</button>
-          <button type="button" class="test-chip" data-cmd="!flag">!flag</button>
-          <button type="button" class="test-chip" data-cmd="!snack">!snack</button>
-          <button type="button" class="test-chip" data-cmd="!blush">!blush</button>
-          <button type="button" class="test-chip" data-cmd="!whistle">!whistle</button>
-          <button type="button" class="test-chip" data-cmd="!costume halloween">!costume halloween</button>
-          <button type="button" class="test-chip" data-cmd="!costume classic">!costume classic</button>
-        </div>
-        <form id="test-chat-form" class="test-chat-form">
-          <input id="test-chat-input" type="text" placeholder="Type test command or message (!dance, @Hubie hello)..." autocomplete="off" />
-          <button type="submit" class="test-send-btn">Send Test</button>
-        </form>
-      </div>
-    </div>
 
     <!-- 3. FULL-SCREEN AVATAR OVERLAY (Hubie Roams & Speaks Over Stream) -->
     <div id="avatar-stage">
@@ -98,7 +76,7 @@
         };
 
         ws.onerror = () => {
-          try { ws.close(); } catch {}
+          try { ws.close(); } catch { }
         };
       }
       connectWebSocket();
@@ -133,7 +111,7 @@
           avatar.setSpeaking(true, msg.text);
           if (msg.audio_url) {
             audioElement.src = msg.audio_url;
-            audioElement.play().catch(() => {});
+            audioElement.play().catch(() => { });
           }
         } else if (msg.type === 'hubie_speaking_end') {
           avatar.setSpeaking(false);
@@ -198,8 +176,8 @@
 
       // 16 Vibrant Streamer Username Colors (Persistent by username hash)
       const USER_COLORS = [
-        '#00ffcc', '#ff007f', '#ffd700', '#00e5ff', 
-        '#a855f7', '#ff6b00', '#38bdf8', '#4ade80', 
+        '#00ffcc', '#ff007f', '#ffd700', '#00e5ff',
+        '#a855f7', '#ff6b00', '#38bdf8', '#4ade80',
         '#f43f5e', '#ec4899', '#818cf8', '#2dd4bf',
         '#fbbf24', '#34d399', '#f87171', '#c084fc'
       ];
@@ -342,9 +320,10 @@
       setInterval(async () => {
         try {
           await fetch('/api/status');
-        } catch {}
+        } catch { }
       }, 2000);
     });
   </script>
 </body>
+
 </html>
