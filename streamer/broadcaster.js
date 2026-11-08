@@ -1,3 +1,4 @@
+import path from 'path';
 import { spawn, execSync } from 'child_process';
 import { chromium } from 'playwright';
 import { CONFIG } from '../config.js';
@@ -11,6 +12,7 @@ export class Broadcaster {
     this.isBroadcasting = false;
     this.process = null;
     this.overlayBrowser = null;
+    this.overlayProcess = null;
     this.running = false;
   }
 
@@ -33,6 +35,12 @@ export class Broadcaster {
   stop() {
     this.running = false;
     this.killProcess();
+    if (this.overlayProcess) {
+      try {
+        this.overlayProcess.kill('SIGKILL');
+      } catch {}
+      this.overlayProcess = null;
+    }
     if (this.overlayBrowser) {
       this.overlayBrowser.close().catch(() => {});
       this.overlayBrowser = null;
@@ -51,35 +59,44 @@ export class Broadcaster {
   }
 
   async launchOverlayBrowser() {
-    if (this.overlayBrowser) return;
+    if (this.overlayProcess || this.overlayBrowser) return;
     try {
-      console.log(`[HubieBroadcaster] Opening 1080p Kiosk Overlay Browser at http://localhost:${CONFIG.PORT}/overlay...`);
-      this.overlayBrowser = await chromium.launch({
-        headless: false,
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--autoplay-policy=no-user-gesture-required',
-          '--kiosk',
-          '--start-fullscreen',
-          '--hide-scrollbars',
-          '--disable-notifications',
-          '--disable-infobars',
-          '--no-first-run',
-          '--no-default-browser-check',
-          '--disable-session-crashed-bubble',
-          `--window-size=${CONFIG.STREAM_WIDTH},${CONFIG.STREAM_HEIGHT}`,
-          '--window-position=0,0',
-          '--check-for-update-interval=31536000'
-        ]
+      console.log(`[HubieBroadcaster] Opening 1080p Pure Kiosk Overlay (Zero URL Bar / Zero Tabs) at http://localhost:${CONFIG.PORT}/overlay...`);
+
+      const chromeBin = chromium.executablePath();
+      const profileDir = process.platform === 'win32'
+        ? path.join(CONFIG.BASE_DIR, 'scratch', 'overlay_profile')
+        : '/tmp/hubie_overlay_kiosk';
+
+      const overlayArgs = [
+        `--app=http://localhost:${CONFIG.PORT}/overlay`,
+        '--kiosk',
+        '--start-fullscreen',
+        '--hide-scrollbars',
+        '--disable-notifications',
+        '--disable-infobars',
+        '--no-first-run',
+        '--no-default-browser-check',
+        '--disable-session-crashed-bubble',
+        '--autoplay-policy=no-user-gesture-required',
+        `--window-size=${CONFIG.STREAM_WIDTH},${CONFIG.STREAM_HEIGHT}`,
+        '--window-position=0,0',
+        `--user-data-dir=${profileDir}`,
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage'
+      ];
+
+      this.overlayProcess = spawn(chromeBin, overlayArgs, {
+        env: { ...process.env, DISPLAY: process.env.DISPLAY || ':99' },
+        stdio: 'ignore'
       });
 
-      const page = await this.overlayBrowser.newPage({
-        viewport: { width: CONFIG.STREAM_WIDTH, height: CONFIG.STREAM_HEIGHT }
+      this.overlayProcess.on('error', (err) => {
+        console.warn('[HubieBroadcaster] Direct kiosk spawn notice:', err.message);
       });
-      await page.goto(`http://localhost:${CONFIG.PORT}/overlay`, { timeout: 30000 });
-      console.log('[HubieBroadcaster] ✅ Live Kiosk Overlay active on virtual screen.');
+
+      console.log('[HubieBroadcaster] ✅ Pure 1080p Borderless Kiosk Overlay active on virtual screen.');
     } catch (err) {
       console.warn('[HubieBroadcaster] Overlay browser notice:', err.message);
     }
