@@ -74,6 +74,7 @@ export const CONFIG = {
   TWITCH_RTMP_URL: 'rtmp://live.twitch.tv/app',
   STREAM_KEY: process.env.STREAM_KEY || '',
   ENABLE_RTMP_BROADCAST: ['true', '1', 'yes'].includes((process.env.ENABLE_RTMP_BROADCAST || 'false').toLowerCase()),
+  STREAM_START_DELAY_SECONDS: parseInt(process.env.STREAM_START_DELAY_SECONDS || '90', 10),
 
   STREAM_WIDTH: parseInt(process.env.STREAM_WIDTH || '1920', 10),
   STREAM_HEIGHT: parseInt(process.env.STREAM_HEIGHT || '1080', 10),

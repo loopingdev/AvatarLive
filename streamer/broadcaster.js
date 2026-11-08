@@ -156,6 +156,23 @@ export class Broadcaster {
       await new Promise(r => setTimeout(r, 2500));
     }
 
+    // Configurable delay before broadcasting to Twitch/Kick (allows game & avatar to fully load first)
+    const delaySec = CONFIG.STREAM_START_DELAY_SECONDS || 0;
+    if (delaySec > 0) {
+      console.log(`[HubieBroadcaster] ⏳ Jeda ${delaySec} detik sebelum stream ke ${this.platform.toUpperCase()} dimulai (memberi waktu game & avatar siap 100%)...`);
+      let remaining = delaySec;
+      while (remaining > 0 && this.running) {
+        this.supervisor.heartbeat('broadcaster');
+        const step = Math.min(10, remaining);
+        await new Promise(r => setTimeout(r, step * 1000));
+        remaining -= step;
+        if (remaining > 0 && remaining % 20 === 0) {
+          console.log(`[HubieBroadcaster] ⏳ Mulai stream ke Twitch dalam ${remaining} detik...`);
+        }
+      }
+      console.log(`[HubieBroadcaster] ✅ Waktu jeda selesai. Memulai live broadcast sekarang!`);
+    }
+
     let reconnectAttempts = 0;
     while (this.running) {
       this.supervisor.heartbeat('broadcaster');
