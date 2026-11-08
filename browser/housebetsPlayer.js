@@ -326,6 +326,26 @@ export class HousebetsPlayer {
     await this.page.evaluate(() => window.scrollTo(0, 0));
 
     try {
+      // 1. Housebets "Security check unavailable" modal
+      const continueInBrowser = await this.page.$('button:has-text("Continue in browser")');
+      if (continueInBrowser && await continueInBrowser.isVisible()) {
+        console.log('[HousebetsPlayer] 🛡️ Dismissing "Security check unavailable" modal via "Continue in browser"...');
+        await continueInBrowser.click({ force: true });
+        await this.page.waitForTimeout(1000);
+      }
+
+      // 2. Fallback for Try again if Continue in browser is not present
+      const tryAgain = await this.page.$('button:has-text("Try again")');
+      if (tryAgain && await tryAgain.isVisible()) {
+        const securityModal = await this.page.$('text="Security check unavailable"');
+        if (securityModal) {
+          console.log('[HousebetsPlayer] Clicking "Try again" on security check...');
+          await tryAgain.click({ force: true });
+          await this.page.waitForTimeout(1000);
+        }
+      }
+
+      // 3. Game launch confirmation & session modals
       const keepPlaying = await this.page.$('button:has-text("Keep playing")');
       if (keepPlaying && await keepPlaying.isVisible()) await keepPlaying.click({ force: true });
 
