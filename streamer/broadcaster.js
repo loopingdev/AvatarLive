@@ -199,6 +199,7 @@ export class Broadcaster {
           '-c:a', 'aac',
           '-b:a', CONFIG.AUDIO_BITRATE,
           '-ar', '44100',
+          '-af', 'aresample=async=1000',
           '-f', 'flv',
           targetUrl
         ];

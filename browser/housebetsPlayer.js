@@ -219,7 +219,7 @@ export class HousebetsPlayer {
       this.cdp = await this.page.context().newCDPSession(this.page);
       await this.cdp.send('Page.startScreencast', {
         format: 'jpeg',
-        quality: 75,
+        quality: 65,
         maxWidth: 1280,
         maxHeight: 720,
         everyNthFrame: 1
