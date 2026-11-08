@@ -109,7 +109,7 @@ export class Broadcaster {
     try {
       execSync('pactl info', { stdio: 'ignore' });
       console.log('[HubieBroadcaster] 🎙️ PulseAudio sound server active. Capturing audio for stream.');
-      return ['-f', 'pulse', '-i', 'default'];
+      return ['-thread_queue_size', '1024', '-f', 'pulse', '-i', 'default'];
     } catch {
       console.warn('[HubieBroadcaster] PulseAudio not running. Using silent audio fallback (run pulseaudio for live voice).');
       return ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100'];
@@ -128,6 +128,7 @@ export class Broadcaster {
     const x11Display = display.includes('.') ? display : `${display}.0`;
     console.log(`[HubieBroadcaster] 🎥 Capturing virtual screen from X11 (${x11Display}) at ${CONFIG.STREAM_WIDTH}x${CONFIG.STREAM_HEIGHT}@${CONFIG.STREAM_FPS}fps...`);
     return [
+      '-thread_queue_size', '1024',
       '-f', 'x11grab',
       '-draw_mouse', '0',
       '-video_size', `${CONFIG.STREAM_WIDTH}x${CONFIG.STREAM_HEIGHT}`,
@@ -187,12 +188,14 @@ export class Broadcaster {
           ...videoInput,
           ...audioInput,
           '-c:v', 'libx264',
-          '-preset', 'veryfast',
+          '-preset', 'ultrafast',
+          '-tune', 'zerolatency',
           '-b:v', CONFIG.VIDEO_BITRATE,
           '-maxrate', CONFIG.VIDEO_BITRATE,
-          '-bufsize', '9000k',
+          '-bufsize', '6000k',
           '-pix_fmt', 'yuv420p',
           '-g', String((CONFIG.STREAM_FPS || 30) * 2),
+          '-threads', '0',
           '-c:a', 'aac',
           '-b:a', CONFIG.AUDIO_BITRATE,
           '-ar', '44100',

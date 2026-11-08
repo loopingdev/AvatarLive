@@ -78,8 +78,8 @@ export const CONFIG = {
 
   STREAM_WIDTH: parseInt(process.env.STREAM_WIDTH || '1920', 10),
   STREAM_HEIGHT: parseInt(process.env.STREAM_HEIGHT || '1080', 10),
-  STREAM_FPS: parseInt(process.env.STREAM_FPS || '60', 10),
-  VIDEO_BITRATE: process.env.VIDEO_BITRATE || '4500k',
+  STREAM_FPS: parseInt(process.env.STREAM_FPS || '30', 10),
+  VIDEO_BITRATE: process.env.VIDEO_BITRATE || '3500k',
   AUDIO_BITRATE: process.env.AUDIO_BITRATE || '160k',
 
   // TTS Voice Engine: 'openrouter' (Human natural AI with screaming, hype & emotions) or 'edge-tts'
