@@ -1,0 +1,1 @@
+Jakarta Static IP: 35.219.125.109

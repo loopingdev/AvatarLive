@@ -62,18 +62,23 @@ export class Broadcaster {
           '--disable-dev-shm-usage',
           '--autoplay-policy=no-user-gesture-required',
           '--kiosk',
+          '--start-fullscreen',
+          '--hide-scrollbars',
+          '--disable-notifications',
           `--window-size=${CONFIG.STREAM_WIDTH},${CONFIG.STREAM_HEIGHT}`,
           '--window-position=0,0',
           '--disable-infobars',
           '--no-first-run',
-          '--check-for-update-interval=31536000'
+          '--check-for-update-interval=31536000',
+          `--app=http://localhost:${CONFIG.PORT}/overlay`
         ]
       });
 
-      const page = await this.overlayBrowser.newPage({
-        viewport: { width: CONFIG.STREAM_WIDTH, height: CONFIG.STREAM_HEIGHT }
-      });
-      await page.goto(`http://localhost:${CONFIG.PORT}/overlay`, { timeout: 30000 });
+      const pages = this.overlayBrowser.contexts()[0]?.pages() || [];
+      const page = pages.length > 0 ? pages[0] : await this.overlayBrowser.newPage();
+      if (!pages.length) {
+        await page.goto(`http://localhost:${CONFIG.PORT}/overlay`, { timeout: 30000 });
+      }
       console.log('[HubieBroadcaster] ✅ Live Kiosk Overlay active on virtual screen.');
     } catch (err) {
       console.warn('[HubieBroadcaster] Overlay browser notice:', err.message);
