@@ -64,7 +64,13 @@ export class HousebetsPlayer {
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
         '--disable-blink-features=AutomationControlled',
-        '--start-maximized'
+        '--start-maximized',
+        '--ignore-gpu-blocklist',
+        '--enable-webgl',
+        '--use-gl=angle',
+        '--use-angle=swiftshader',
+        '--enable-accelerated-2d-canvas',
+        '--autoplay-policy=no-user-gesture-required'
       ]
     };
     if (process.platform === 'win32') {

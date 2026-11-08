@@ -40,6 +40,23 @@
       window.avatar = avatar;
       const audioElement = document.getElementById('tts-audio');
 
+      // Audio Autoplay Policy Unlock (browser requires user gesture to play sound)
+      let audioUnlocked = false;
+      function unlockAudio() {
+        if (audioUnlocked) return;
+        audioUnlocked = true;
+        audioElement.play().then(() => {
+          audioElement.pause();
+          audioElement.currentTime = 0;
+        }).catch(() => {});
+        window.removeEventListener('click', unlockAudio);
+        window.removeEventListener('touchstart', unlockAudio);
+        window.removeEventListener('keydown', unlockAudio);
+      }
+      window.addEventListener('click', unlockAudio);
+      window.addEventListener('touchstart', unlockAudio);
+      window.addEventListener('keydown', unlockAudio);
+
       const screencastImg = document.getElementById('live-screencast');
       const screenLoading = document.getElementById('screen-loading');
       const chatMessagesEl = document.getElementById('chat-messages');
@@ -111,7 +128,9 @@
           avatar.setSpeaking(true, msg.text);
           if (msg.audio_url) {
             audioElement.src = msg.audio_url;
-            audioElement.play().catch(() => { });
+            audioElement.play().catch((err) => {
+              console.warn('[Hubie Audio] Autoplay blocked by browser. Click anywhere on the overlay to enable sound:', err);
+            });
           }
         } else if (msg.type === 'hubie_speaking_end') {
           avatar.setSpeaking(false);
