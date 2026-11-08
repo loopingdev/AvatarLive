@@ -91,7 +91,11 @@ export class HousebetsPlayer {
         '--use-gl=angle',
         '--use-angle=swiftshader',
         '--enable-accelerated-2d-canvas',
-        '--autoplay-policy=no-user-gesture-required'
+        '--autoplay-policy=no-user-gesture-required',
+        '--disable-gpu-vsync',
+        '--disable-background-timer-throttling',
+        '--disable-renderer-backgrounding',
+        '--disable-backgrounding-occluded-windows'
       ]
     };
     if (CONFIG.ENABLE_RTMP_BROADCAST && process.platform !== 'win32') {
@@ -219,10 +223,10 @@ export class HousebetsPlayer {
       this.cdp = await this.page.context().newCDPSession(this.page);
       await this.cdp.send('Page.startScreencast', {
         format: 'jpeg',
-        quality: 65,
-        maxWidth: 1280,
-        maxHeight: 720,
-        everyNthFrame: 1
+        quality: 50,
+        maxWidth: 960,
+        maxHeight: 540,
+        everyNthFrame: 2
       });
 
       this.cdp.on('Page.screencastFrame', async ({ data, sessionId }) => {
@@ -235,7 +239,7 @@ export class HousebetsPlayer {
           await this.cdp.send('Page.screencastFrameAck', { sessionId });
         } catch {}
       });
-      console.log('[HousebetsPlayer] Real-time CDP Screencast stream linked to live preview.');
+      console.log('[HousebetsPlayer] Real-time CDP Screencast stream linked to live preview (optimized: 540p @ 15fps).');
     } catch (e) {
       console.warn('[HousebetsPlayer] Could not attach CDP screencast:', e.message);
     }
@@ -248,12 +252,12 @@ export class HousebetsPlayer {
     this.frameWatchdogInterval = setInterval(async () => {
       if (!this.running || !this.page || this.page.isClosed()) return;
       const now = Date.now();
-      // If no frame received via CDP for more than 1.5s, capture directly to keep stream responsive
-      if (now - this.lastFrameReceivedTime > 1500) {
+      // If no frame received via CDP for more than 2.0s, capture directly to keep stream responsive
+      if (now - this.lastFrameReceivedTime > 2000) {
         try {
           const buffer = await this.page.screenshot({
             type: 'jpeg',
-            quality: 70,
+            quality: 50,
             scale: 'css',
             timeout: 2500
           });
@@ -265,7 +269,7 @@ export class HousebetsPlayer {
           }
         } catch {}
       }
-    }, 500);
+    }, 1000);
   }
 
   async acceptCookieBanner() {

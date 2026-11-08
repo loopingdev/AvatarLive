@@ -1,3 +1,4 @@
+import os from 'os';
 import path from 'path';
 import { spawn, execSync } from 'child_process';
 import { chromium } from 'playwright';
@@ -84,7 +85,10 @@ export class Broadcaster {
         `--user-data-dir=${profileDir}`,
         '--no-sandbox',
         '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage'
+        '--disable-dev-shm-usage',
+        '--disable-gpu-vsync',
+        '--disable-background-timer-throttling',
+        '--disable-renderer-backgrounding'
       ];
 
       this.overlayProcess = spawn(chromeBin, overlayArgs, {
@@ -109,7 +113,7 @@ export class Broadcaster {
     try {
       execSync('pactl info', { stdio: 'ignore' });
       console.log('[HubieBroadcaster] 🎙️ PulseAudio sound server active. Capturing audio for stream.');
-      return ['-thread_queue_size', '1024', '-f', 'pulse', '-i', 'default'];
+      return ['-thread_queue_size', '4096', '-f', 'pulse', '-i', 'default'];
     } catch {
       console.warn('[HubieBroadcaster] PulseAudio not running. Using silent audio fallback (run pulseaudio for live voice).');
       return ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100'];
@@ -128,7 +132,7 @@ export class Broadcaster {
     const x11Display = display.includes('.') ? display : `${display}.0`;
     console.log(`[HubieBroadcaster] 🎥 Capturing virtual screen from X11 (${x11Display}) at ${CONFIG.STREAM_WIDTH}x${CONFIG.STREAM_HEIGHT}@${CONFIG.STREAM_FPS}fps...`);
     return [
-      '-thread_queue_size', '1024',
+      '-thread_queue_size', '4096',
       '-f', 'x11grab',
       '-draw_mouse', '0',
       '-video_size', `${CONFIG.STREAM_WIDTH}x${CONFIG.STREAM_HEIGHT}`,
@@ -175,31 +179,42 @@ export class Broadcaster {
     }
 
     let reconnectAttempts = 0;
+    const cpuCount = os.cpus()?.length || 2;
+    // Cap FFmpeg threads so it doesn't starve the audio system and Chromium
+    const ffmpegThreads = String(Math.max(1, Math.min(4, cpuCount > 2 ? cpuCount - 1 : 2)));
+
     while (this.running) {
       this.supervisor.heartbeat('broadcaster');
       try {
         const targetUrl = this.getRTMPUrl();
-        console.log(`[HubieBroadcaster] 🚀 Starting live RTMP stream to ${this.platform.toUpperCase()}...`);
+        console.log(`[HubieBroadcaster] 🚀 Starting live RTMP stream to ${this.platform.toUpperCase()} (${ffmpegThreads} encoding threads)...`);
 
         const videoInput = this.getVideoInputArgs();
         const audioInput = this.getAudioInputArgs();
 
+        const videoFilter = [];
+        if (CONFIG.OUTPUT_WIDTH && CONFIG.OUTPUT_HEIGHT &&
+            (CONFIG.OUTPUT_WIDTH !== CONFIG.STREAM_WIDTH || CONFIG.OUTPUT_HEIGHT !== CONFIG.STREAM_HEIGHT)) {
+          videoFilter.push('-vf', `scale=${CONFIG.OUTPUT_WIDTH}:${CONFIG.OUTPUT_HEIGHT}`);
+        }
+
         const args = [
           ...videoInput,
           ...audioInput,
+          ...videoFilter,
           '-c:v', 'libx264',
           '-preset', 'ultrafast',
           '-tune', 'zerolatency',
           '-b:v', CONFIG.VIDEO_BITRATE,
           '-maxrate', CONFIG.VIDEO_BITRATE,
-          '-bufsize', '6000k',
+          '-bufsize', '4000k',
           '-pix_fmt', 'yuv420p',
           '-g', String((CONFIG.STREAM_FPS || 30) * 2),
-          '-threads', '0',
+          '-threads', ffmpegThreads,
           '-c:a', 'aac',
           '-b:a', CONFIG.AUDIO_BITRATE,
           '-ar', '44100',
-          '-af', 'aresample=async=1000',
+          '-af', 'aresample=async=1:first_pts=0',
           '-f', 'flv',
           targetUrl
         ];

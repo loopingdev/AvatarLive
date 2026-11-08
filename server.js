@@ -40,11 +40,11 @@ function broadcast(msg) {
   }
 }
 
-// Throttle video frame broadcast to avoid buffer bloat
+// Throttle video frame broadcast to avoid buffer bloat & save CPU
 let lastFrameSentTime = 0;
 function broadcastFrame(base64Data) {
   const now = Date.now();
-  if (now - lastFrameSentTime < 33) return; // ~30 fps cap
+  if (now - lastFrameSentTime < 50) return; // ~20 fps cap (reduces Node.js WebSocket stringification & CPU load)
   lastFrameSentTime = now;
   broadcast({ type: 'screencast_frame', data: `data:image/jpeg;base64,${base64Data}` });
 }
