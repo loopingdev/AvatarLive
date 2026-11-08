@@ -5,4 +5,3 @@ __pycache__/
 *.log
 
 /chrome_data
-storage_state.json

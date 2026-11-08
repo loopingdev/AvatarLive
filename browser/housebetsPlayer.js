@@ -30,7 +30,6 @@ export class HousebetsPlayer {
     this.lastFrameBase64 = null;
     this.lastFrameReceivedTime = 0;
     this.frameWatchdogInterval = null;
-    this.isPaused = false;
   }
 
   get currentGame() {
@@ -49,13 +48,8 @@ export class HousebetsPlayer {
     }
   }
 
-  async stop() {
+  stop() {
     this.running = false;
-    await this.saveSession();
-    if (this.autoSaveInterval) {
-      clearInterval(this.autoSaveInterval);
-      this.autoSaveInterval = null;
-    }
     if (this.frameWatchdogInterval) {
       clearInterval(this.frameWatchdogInterval);
       this.frameWatchdogInterval = null;
@@ -63,20 +57,6 @@ export class HousebetsPlayer {
     if (this.browserContext) {
       this.browserContext.close().catch(() => {});
     }
-  }
-
-  async saveSession() {
-    try {
-      if (this.browserContext) {
-        const statePath = path.join(CONFIG.BASE_DIR, 'storage_state.json');
-        await this.browserContext.storageState({ path: statePath });
-        console.log(`[HousebetsPlayer] 💾 Session cookies & storage state permanently saved to ${statePath}`);
-        return true;
-      }
-    } catch (err) {
-      console.warn('[HousebetsPlayer] Could not save storageState:', err.message);
-    }
-    return false;
   }
 
   async initBrowser() {
@@ -122,28 +102,6 @@ export class HousebetsPlayer {
     }
 
     this.browserContext = await chromium.launchPersistentContext(userDataDir, launchOptions);
-
-    // Restore saved cookies & session from storage_state.json if available
-    const statePath = path.join(CONFIG.BASE_DIR, 'storage_state.json');
-    if (fs.existsSync(statePath)) {
-      try {
-        const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
-        if (state.cookies && state.cookies.length > 0) {
-          await this.browserContext.addCookies(state.cookies);
-          console.log(`[HousebetsPlayer] 🍪 Restored ${state.cookies.length} session cookies from storage_state.json.`);
-        }
-      } catch (e) {
-        console.warn('[HousebetsPlayer] Error restoring storage_state:', e.message);
-      }
-    }
-
-    // Auto-save session cookies every 60s
-    if (this.autoSaveInterval) clearInterval(this.autoSaveInterval);
-    this.autoSaveInterval = setInterval(() => {
-      if (this.running && this.browserContext) {
-        this.saveSession().catch(() => {});
-      }
-    }, 60000);
 
     const pages = this.browserContext.pages();
     this.page = pages.length > 0 ? pages[0] : await this.browserContext.newPage();
@@ -375,11 +333,7 @@ export class HousebetsPlayer {
       try {
         this.supervisor.heartbeat('game_engine');
 
-        // Check if user has paused automation for manual control/login
-        if (this.isPaused) {
-          await new Promise(r => setTimeout(r, 1000));
-          continue;
-        }
+        // 1. Check Game Rotation across all 14 House Games
         if (this.roundsInCurrentGame >= CONFIG.ROUNDS_PER_GAME) {
           const oldName = this.currentGame.name;
           this.currentGameIndex = (this.currentGameIndex + 1) % CONFIG.HOUSE_GAMES.length;
