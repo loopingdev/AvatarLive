@@ -126,8 +126,15 @@ export class HousebetsPlayer {
       try {
         const sessionData = JSON.parse(fs.readFileSync(sessionFilePath, 'utf8'));
         if (sessionData.cookies && sessionData.cookies.length > 0) {
-          await this.browserContext.addCookies(sessionData.cookies);
-          console.log(`[HousebetsPlayer] 🍪 Restored ${sessionData.cookies.length} session cookies from session.json.`);
+          const sevenDaysFromNow = Math.floor(Date.now() / 1000) + (7 * 86400);
+          const extendedCookies = sessionData.cookies.map(c => {
+            if (c.expires && c.expires > 0 && c.expires < sevenDaysFromNow) {
+              return { ...c, expires: sevenDaysFromNow };
+            }
+            return c;
+          });
+          await this.browserContext.addCookies(extendedCookies);
+          console.log(`[HousebetsPlayer] 🍪 Restored ${extendedCookies.length} session cookies from session.json (valid for at least 7 days).`);
         }
       } catch (e) {
         console.warn('[HousebetsPlayer] Notice loading session.json:', e.message);

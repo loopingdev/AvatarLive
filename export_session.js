@@ -148,8 +148,21 @@ async function main() {
 
   if (fs.existsSync(sessionFilePath)) {
     const data = JSON.parse(fs.readFileSync(sessionFilePath, 'utf8'));
+    const sevenDaysFromNow = Math.floor(Date.now() / 1000) + (7 * 86400);
+
+    // Automatically extend short-lived cookies (like __cf_bm) to at least 7 days
+    if (data.cookies && data.cookies.length > 0) {
+      data.cookies = data.cookies.map(c => {
+        if (c.expires && c.expires > 0 && c.expires < sevenDaysFromNow) {
+          return { ...c, expires: sevenDaysFromNow };
+        }
+        return c;
+      });
+      fs.writeFileSync(sessionFilePath, JSON.stringify(data, null, 2), 'utf8');
+    }
+
     const cookieCount = data.cookies ? data.cookies.length : 0;
-    console.log(`\n[3/3] ✅ SUKSES! Berhasil mengekstrak ${cookieCount} cookies ke:`);
+    console.log(`\n[3/3] ✅ SUKSES! Berhasil mengekstrak ${cookieCount} cookies (diperpanjang 7 hari) ke:`);
     console.log(`      ${sessionFilePath}\n`);
     console.log('📋 LANGKAH SELANJUTNYA UNTUK VPS:');
     console.log('Upload file session.json yang baru ke VPS:');

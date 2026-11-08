@@ -111,14 +111,32 @@ export class Broadcaster {
     if (process.platform === 'win32') {
       return ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100'];
     }
+
+    let active = false;
     try {
       execSync('pactl info', { stdio: 'ignore' });
-      console.log('[HubieBroadcaster] 🎙️ PulseAudio sound server active. Capturing audio for stream.');
-      return ['-thread_queue_size', '4096', '-f', 'pulse', '-i', 'default'];
+      active = true;
     } catch {
-      console.warn('[HubieBroadcaster] PulseAudio not running. Using silent audio fallback (run pulseaudio for live voice).');
-      return ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100'];
+      // Attempt auto-recovery of PulseAudio daemon if it was stopped
+      try {
+        console.log('[HubieBroadcaster] 🔄 Attempting to start PulseAudio sound daemon...');
+        execSync('pulseaudio --start --exit-idle-time=-1 2>/dev/null || pulseaudio -D --system --disallow-exit 2>/dev/null', { stdio: 'ignore' });
+        execSync('pactl info', { stdio: 'ignore' });
+        active = true;
+      } catch {}
     }
+
+    if (active) {
+      console.log('[HubieBroadcaster] 🎙️ PulseAudio sound server active. Capturing audio for stream.');
+      try {
+        // Ensure dummy output sink exists for headless playback
+        execSync('pactl load-module module-null-sink sink_name=Virtual_Sink 2>/dev/null', { stdio: 'ignore' });
+      } catch {}
+      return ['-thread_queue_size', '4096', '-f', 'pulse', '-i', 'default'];
+    }
+
+    console.warn('[HubieBroadcaster] PulseAudio not running. Using silent audio fallback (run pulseaudio for live voice).');
+    return ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100'];
   }
 
   getVideoInputArgs() {
