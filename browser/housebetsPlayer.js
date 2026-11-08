@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import { chromium } from 'playwright';
 import { CONFIG } from '../config.js';
@@ -61,6 +62,20 @@ export class HousebetsPlayer {
   async initBrowser() {
     const userDataDir = path.join(CONFIG.BASE_DIR, 'chrome_data');
     console.log(`[HousebetsPlayer] Launching persistent Chrome profile: ${userDataDir}`);
+
+    // Clean up stale Chromium lock files on Linux/Windows so profile lock popup never blocks
+    try {
+      const lockFiles = ['SingletonLock', 'SingletonSocket', 'SingletonCookie'];
+      for (const f of lockFiles) {
+        const p = path.join(userDataDir, f);
+        if (fs.existsSync(p)) {
+          fs.unlinkSync(p);
+          console.log(`[HousebetsPlayer] Cleaned up stale lock file: ${f}`);
+        }
+      }
+    } catch (e) {
+      console.warn('[HousebetsPlayer] Lock cleanup note:', e.message);
+    }
 
     const launchOptions = {
       headless: CONFIG.HEADLESS_BROWSER,
