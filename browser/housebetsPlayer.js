@@ -103,6 +103,20 @@ export class HousebetsPlayer {
 
     this.browserContext = await chromium.launchPersistentContext(userDataDir, launchOptions);
 
+    // Restore saved cookies & auth tokens from session.json if provided
+    const sessionFilePath = path.join(CONFIG.BASE_DIR, 'session.json');
+    if (fs.existsSync(sessionFilePath)) {
+      try {
+        const sessionData = JSON.parse(fs.readFileSync(sessionFilePath, 'utf8'));
+        if (sessionData.cookies && sessionData.cookies.length > 0) {
+          await this.browserContext.addCookies(sessionData.cookies);
+          console.log(`[HousebetsPlayer] 🍪 Restored ${sessionData.cookies.length} session cookies from session.json.`);
+        }
+      } catch (e) {
+        console.warn('[HousebetsPlayer] Notice loading session.json:', e.message);
+      }
+    }
+
     const pages = this.browserContext.pages();
     this.page = pages.length > 0 ? pages[0] : await this.browserContext.newPage();
 
